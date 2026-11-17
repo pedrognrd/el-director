@@ -31,6 +31,54 @@ BETA = "https://betafiction.es/cine/el-director/"
 TAQUILLA = "https://www.taquilla.com/entradas/el-director-2026"
 YOUTUBE = "https://www.youtube.com/@DavidJimenezElDirector"
 
+# ---------- Imágenes con licencia libre (Wikimedia Commons) ----------
+FOTOS = {
+    "david-jimenez": ("David Jiménez en 2019", "Cristina Pozo García (eldiario.es)", "CC BY-SA 3.0 ES",
+                      "https://creativecommons.org/licenses/by-sa/3.0/es/",
+                      "https://commons.wikimedia.org/wiki/File:El_exdirector_de_El_Mundo_David_Jim%C3%A9nez.jpg"),
+    "alberto-san-juan": ("Alberto San Juan en Valladolid, 2018", "MiguelAlanCS", "CC BY-SA 4.0",
+                         "https://creativecommons.org/licenses/by-sa/4.0/",
+                         "https://commons.wikimedia.org/wiki/File:Alberto_San_Juan_-_Valladolid_2018.jpg"),
+    "david-verdaguer": ("David Verdaguer en los Premios Goya 2024", "Pedro J Pacheco", "CC BY-SA 4.0",
+                        "https://creativecommons.org/licenses/by-sa/4.0/",
+                        "https://commons.wikimedia.org/wiki/File:Goyas_2024_-_David_Verdaguer.jpg"),
+    "dani-de-la-orden": ("Dani de la Orden en 2013", "Barcelona.cat", "CC BY 3.0",
+                         "https://creativecommons.org/licenses/by/3.0/",
+                         "https://commons.wikimedia.org/wiki/File:(Dani_de_la_Orden)_La_hist%C3%B2ria_rom%C3%A0ntica_de_Barcelona.jpg"),
+}
+
+def foto(clave, rotulo, ficcion=False, carga="lazy"):
+    alt, autor, lic, lic_url, origen = FOTOS[clave]
+    clase = "foto ficcion" if ficcion else "foto"
+    return (f'<figure class="{clase}"><div class="marco"><img src="{{r}}assets/img/{clave}.jpg" alt="{alt}" width="480" height="600" loading="{carga}" decoding="async"></div>'
+            f'<figcaption><strong>{rotulo}</strong>Foto: <a href="{origen}" rel="noopener">{autor}</a>, '
+            f'<a href="{lic_url}" rel="noopener license">{lic}</a>. Recortada.</figcaption></figure>')
+
+def silueta(rotulo):
+    return (f'<figure class="foto"><div class="marco"><img src="{{r}}assets/img/silueta.svg" alt="Silueta: no hay foto con licencia libre" width="480" height="600" loading="lazy"></div>'
+            f'<figcaption><strong>{rotulo}</strong>Sin fotografía con licencia libre.</figcaption></figure>')
+
+# ---------- Vídeos (YouTube, modo de privacidad mejorada) ----------
+VIDEOS = {
+    "PUQzmris2CE": ("El Director · Teaser tráiler", "Beta Fiction Spain", "PT1M7S", "2026-07-09", "1:07"),
+    "NT7O8rzR3PU": ("El Director, 20 de noviembre, solo en cines", "Beta Fiction Spain", "PT30S", "2026-11-10", "0:30"),
+    "ORXNiBTK5rc": ("El Director · Tráiler presentado por David Jiménez", "El Director - David Jiménez", "PT1M7S", "2026-11-16", "1:07"),
+    "CgmhIDMm-B4": ("David Verdaguer presenta El director en Europa FM", "Europa FM", "PT15M50S", "2026-11-13", "15:50"),
+}
+
+def video(vid):
+    titulo, canal, _, _, dur = VIDEOS[vid]
+    return (f'<div class="video"><button type="button" data-video="{vid}" data-titulo="{titulo}" aria-label="Reproducir: {titulo}">'
+            f'<img src="https://i.ytimg.com/vi/{vid}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">'
+            f'<span class="play" aria-hidden="true"></span><span class="rotulo">{titulo}<small>{canal} · {dur}</small></span></button></div>'
+            f'<p class="video-pie">Vídeo de YouTube. Se carga al pulsar reproducir. <a href="https://www.youtube.com/watch?v={vid}" rel="noopener">Verlo en YouTube</a>.</p>')
+
+def video_ld(vid):
+    titulo, canal, dur, fecha, _ = VIDEOS[vid]
+    return {"@type": "VideoObject", "name": titulo, "description": f"{titulo}. Publicado por {canal} en YouTube.",
+            "thumbnailUrl": f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg", "uploadDate": fecha, "duration": dur,
+            "embedUrl": f"https://www.youtube-nocookie.com/embed/{vid}", "contentUrl": f"https://www.youtube.com/watch?v={vid}"}
+
 F = {
     "wiki_libro": ("Wikipedia: El director (libro)", "https://es.wikipedia.org/wiki/El_director"),
     "wiki_peli": ("Wikipedia: El director (película)", "https://es.wikipedia.org/wiki/El_director_(pel%C3%ADcula)"),
@@ -119,13 +167,19 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 <meta property="og:title" content="{html.escape(titulo)}">
 <meta property="og:description" content="{html.escape(descripcion)}">
 <meta property="og:url" content="{canonica}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="{SITE}assets/img/og-el-director.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="El Director. Del libro a la película">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{SITE}assets/img/og-el-director.png">
 <link rel="icon" href="{r}assets/icono.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Oswald:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="{r}assets/estilos.css">
 <script type="application/ld+json">{json.dumps(grafo, ensure_ascii=False)}</script>
+<script src="{r}assets/video.js" defer></script>
 </head>
 <body>
 <a class="salto" href="#contenido">Saltar al contenido</a>
@@ -144,7 +198,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
     <div>
       <p><strong>Sobre esta web.</strong> “El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez.</p>
       <p>La relación entre personas reales y personajes se basa en fuentes públicas enlazadas en cada página, con su grado de certeza. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
-      <p><strong>Sin fines comerciales.</strong> Sin publicidad, sin enlaces de afiliado y sin cookies. Los enlaces a librerías y cines son solo informativos.</p>
+      <p><strong>Sin fines comerciales.</strong> Sin publicidad, sin enlaces de afiliado y sin cookies propias. Los vídeos de YouTube solo se cargan si pulsas reproducir. Los enlaces a librerías y cines son solo informativos. Fotos con licencia libre: <a href="{r}metodologia-y-fuentes/#creditos">créditos</a>.</p>
     </div>
     <ul>
       <li><a href="{r}personajes/">Quién es quién</a></li>
@@ -201,14 +255,14 @@ PAGINAS[""] = dict(
   <h2>Vida real, libro y película</h2>
   <div class="pares">
     <a class="par" href="{{r}}personajes/cardenal/">
-      <div><div class="eti">Vida real</div><div class="nombre">Antonio Fernández-Galiano</div><div class="detalle">En el libro: “El Cardenal”</div></div>
+      <div class="lado"><img class="miniatura" src="{{r}}assets/img/silueta.svg" alt="" width="56" height="70"><div><div class="eti">Vida real</div><div class="nombre">Antonio Fernández-Galiano</div><div class="detalle">En el libro: “El Cardenal”</div></div></div>
       <div class="igual" aria-hidden="true">=</div>
-      <div class="der"><div class="eti">Película</div><div class="nombre">Cardenal</div><div class="detalle">Alberto San Juan</div></div>
+      <div class="lado der"><img class="miniatura" src="{{r}}assets/img/alberto-san-juan.jpg" alt="" width="56" height="70"><div><div class="eti">Película</div><div class="nombre">Cardenal</div><div class="detalle">Alberto San Juan</div></div></div>
     </a>
     <a class="par" href="{{r}}personajes/david-jimenez/">
-      <div><div class="eti">Vida real</div><div class="nombre">David Jiménez</div><div class="detalle">En el libro: el narrador</div></div>
+      <div class="lado"><img class="miniatura" src="{{r}}assets/img/david-jimenez.jpg" alt="" width="56" height="70"><div><div class="eti">Vida real</div><div class="nombre">David Jiménez</div><div class="detalle">En el libro: el narrador</div></div></div>
       <div class="igual" aria-hidden="true">=</div>
-      <div class="der"><div class="eti">Película</div><div class="nombre">David Jiménez</div><div class="detalle">David Verdaguer</div></div>
+      <div class="lado der"><img class="miniatura" src="{{r}}assets/img/david-verdaguer.jpg" alt="" width="56" height="70"><div><div class="eti">Película</div><div class="nombre">David Jiménez</div><div class="detalle">David Verdaguer</div></div></div>
     </a>
     <a class="par" href="{{r}}personajes/#pendientes">
       <div><div class="eti">En el libro</div><div class="nombre">La Digna, El Señorito, Rasputín…</div><div class="detalle">Apodos de periodistas y directivos</div></div>
@@ -218,6 +272,9 @@ PAGINAS[""] = dict(
   </div>
   <p class="nota">Solo mostramos como confirmadas las relaciones que publican el autor, la productora o varios medios. <a href="{{r}}metodologia-y-fuentes/">Cómo trabajamos</a>.</p>
 
+  <h2>El teaser</h2>
+  {video("PUQzmris2CE")}
+
   <div class="rejilla" style="margin-top:44px">
     <div class="tarjeta"><h3>El libro</h3><p><i>El director</i> (Libros del K.O., 2019) relata el año de Jiménez al frente de <i>El Mundo</i> y el sistema de pactos entre prensa, empresas y política que él llama “Los Acuerdos”.</p><p><a href="{{r}}libro/">Sobre el libro</a></p></div>
     <div class="tarjeta"><h3>La película</h3><p>Thriller de Dani de la Orden con David Verdaguer y Alberto San Juan. Llega a los cines el 20 de noviembre de 2026.</p><p><a href="{{r}}pelicula/">Ficha y reparto</a></p></div>
@@ -225,7 +282,7 @@ PAGINAS[""] = dict(
   </div>
 </div>
 """,
-    ld=[LIBRO_LD, PELI_LD], portada=True,
+    ld=[LIBRO_LD, PELI_LD, video_ld("PUQzmris2CE")], portada=True,
 )
 
 # ---------------- PERSONAJES ----------------
@@ -296,10 +353,10 @@ PAGINAS["personajes/cardenal/"] = dict(
 <p class="entradilla"><strong>El Cardenal es Antonio Fernández-Galiano</strong>, presidente de Unidad Editorial, la empresa que publica <i>El Mundo</i>, cuando David Jiménez dirigió el periódico. En la película se llama Cardenal y lo interpreta <strong>Alberto San Juan</strong>.</p>
 <p><span class="sello s-conf">Confirmado</span></p>
 </div>
-<div class="ficha-cabecera">
-  <div><div class="antetitulo">Vida real</div><div class="par" style="border:0;padding:0;display:block"><div class="nombre">Antonio Fernández-Galiano</div><div class="detalle">Presidente de Unidad Editorial</div></div></div>
-  <div class="igual" style="font-family:var(--f-display);font-size:2rem;color:var(--oro)" aria-hidden="true">=</div>
-  <div class="der"><div class="antetitulo">Película</div><div class="par" style="border:0;padding:0;display:block"><div class="nombre">Cardenal</div><div class="detalle">Alberto San Juan</div></div></div>
+<div class="careo">
+  {silueta("Antonio Fernández-Galiano · vida real")}
+  <div class="igual" aria-hidden="true">=</div>
+  {foto("alberto-san-juan", "Alberto San Juan · Cardenal", ficcion=True, carga="eager")}
 </div>
 <dl class="datos">
   <dt>En el libro</dt><dd>“El Cardenal”, apodo</dd>
@@ -344,6 +401,11 @@ PAGINAS["personajes/david-jimenez/"] = dict(
 <p class="entradilla">Periodista y escritor, nacido en Barcelona en 1971. Fue corresponsal de <i>El Mundo</i> en Asia durante casi dos décadas y dirigió el periódico entre abril de 2015 y mayo de 2016. Es el autor del libro y el protagonista de la película, donde lo interpreta <strong>David Verdaguer</strong>.</p>
 <p><span class="sello s-conf">Confirmado</span></p>
 </div>
+<div class="careo">
+  {foto("david-jimenez", "David Jiménez · vida real", carga="eager")}
+  <div class="igual" aria-hidden="true">=</div>
+  {foto("david-verdaguer", "David Verdaguer · David Jiménez", ficcion=True, carga="eager")}
+</div>
 <dl class="datos">
   <dt>En el libro</dt><dd>Narrador en primera persona</dd>
   <dt>En la película</dt><dd>David Jiménez</dd>
@@ -365,8 +427,9 @@ PAGINAS["personajes/david-jimenez/"] = dict(
 <li><i>Días salvajes</i> (2024)</li>
 </ul>
 <h2>Hoy</h2>
-<p>Mantiene un <a href="{YOUTUBE}" rel="noopener">canal de YouTube</a> con su nombre, dedicado a la actualidad política y mediática.</p>
+<p>Mantiene un <a href="{YOUTUBE}" rel="noopener">canal de YouTube</a> con su nombre, dedicado a la actualidad política y mediática. Allí presentó el tráiler de la película días antes del estreno.</p>
 </div>
+{video("ORXNiBTK5rc")}
 <div class="acciones"><a class="btn" href="{{r}}libro/#donde-leer">Dónde leer el libro</a><a class="btn sec" href="{{r}}pelicula/#donde-ver">Dónde ver la película</a></div>
 {fuentes("wiki_autor", "wiki_libro", "wiki_peli", "youtube")}
 {siguiente(("Ficha", "El Cardenal", "personajes/cardenal/"), ("Libro", "El director (2019)", "libro/"), ("Contexto", "La historia real", "historia-real/"))}
@@ -374,7 +437,8 @@ PAGINAS["personajes/david-jimenez/"] = dict(
     ld=[ld_migas([("Inicio", ""), ("Quién es quién", "personajes/"), ("David Jiménez", "personajes/david-jimenez/")]),
         {"@type": "Person", "@id": SITE + "personajes/david-jimenez/#persona", "name": "David Jiménez García",
          "birthDate": "1971-01-11", "birthPlace": "Barcelona", "jobTitle": "Periodista y escritor",
-         "sameAs": [F["wiki_autor"][1], YOUTUBE]}],
+         "image": SITE + "assets/img/david-jimenez.jpg",
+         "sameAs": [F["wiki_autor"][1], YOUTUBE]}, video_ld("ORXNiBTK5rc")],
 )
 
 # ---------------- LIBRO ----------------
@@ -417,7 +481,8 @@ PAGINAS["pelicula/"] = dict(
     titulo="El director (2026), la película: reparto, estreno y personajes",
     desc="El director, película de Dani de la Orden con David Verdaguer y Alberto San Juan, basada en el libro de David Jiménez. Estreno en cines el 20 de noviembre de 2026.",
     activo="pelicula/",
-    cuerpo=f"""<div class="contenedor">
+    cuerpo=f"""<div class="banda" style="margin-top:-40px"><div class="contenedor"><p class="antetitulo" style="color:var(--papel)">20 de noviembre · solo en cines</p></div></div>
+<div class="contenedor" style="margin-top:28px">
 {migas(("Inicio", ""), ("La película", None))}
 <p class="antetitulo">La película · Estreno el 20 de noviembre de 2026</p>
 <h1><span class="el">El</span> director <span style="font-size:.45em;display:block;letter-spacing:.14em;color:var(--oro);margin-top:8px">La verdad tiene un precio</span></h1>
@@ -434,7 +499,18 @@ PAGINAS["pelicula/"] = dict(
   <dt>Género</dt><dd>Thriller, drama</dd>
   <dt>Estreno</dt><dd>20 de noviembre de 2026, en cines. Algunos medios publicaron el 27; el cartel oficial dice 20.</dd>
 </dl>
+<h2>Teaser y avances</h2>
+{video("PUQzmris2CE")}
+<div class="videos" style="margin-top:22px">
+  <div>{video("NT7O8rzR3PU")}</div>
+  <div>{video("CgmhIDMm-B4")}</div>
+</div>
 <h2>Reparto</h2>
+<div class="careo" style="max-width:640px">
+  {foto("david-verdaguer", "David Verdaguer · David Jiménez", ficcion=True)}
+  <div class="igual" aria-hidden="true">·</div>
+  {foto("alberto-san-juan", "Alberto San Juan · Cardenal", ficcion=True)}
+</div>
 <div class="tabla"><table>
 <thead><tr><th>Actor o actriz</th><th>Personaje</th><th>Inspirado en</th></tr></thead>
 <tbody>
@@ -445,6 +521,10 @@ PAGINAS["pelicula/"] = dict(
 <tr><td>Carmen Machi · Emma Vilarasau · Guillermo Toledo · Fernando Cayo</td><td>Colaboración especial · por confirmar</td><td>—</td></tr>
 <tr><td>Anna Alarcón · Nacho Fresneda · Pau Durà · Marc Rodríguez · David Vert · Mia Sala-Patau</td><td>Por confirmar</td><td>—</td></tr>
 </tbody></table></div>
+<div class="careo" style="grid-template-columns:minmax(0,180px) minmax(0,1fr);max-width:640px">
+  {foto("dani-de-la-orden", "Dani de la Orden · director")}
+  <p class="nota" style="margin:0">Director de <i>Barcelona, noche de verano</i> y <i>Litus</i>.</p>
+</div>
 <div class="lectura">
 <h2>Cómo se ve</h2>
 <p>La crítica destaca una fotografía de luz fría y planos muy abiertos que aíslan al protagonista en salas de reuniones, el uso de imágenes de archivo de informativos y un ritmo de thriller. El proyecto nació como serie antes de convertirse en película.</p>
@@ -455,7 +535,7 @@ PAGINAS["pelicula/"] = dict(
 {fuentes("beta", "av451", "wiki_peli", "infobae", "cineconn", "cinemagavia", "ecartelera")}
 {siguiente(("Tabla", "Quién es quién", "personajes/"), ("Libro", "El director (2019)", "libro/"), ("Contexto", "La historia real", "historia-real/"))}
 </div>""",
-    ld=[ld_migas([("Inicio", ""), ("La película", "pelicula/")]), PELI_LD],
+    ld=[ld_migas([("Inicio", ""), ("La película", "pelicula/")]), PELI_LD, video_ld("PUQzmris2CE"), video_ld("NT7O8rzR3PU"), video_ld("CgmhIDMm-B4")],
 )
 
 # ---------------- HISTORIA REAL ----------------
@@ -532,7 +612,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <h1>Metodología, fuentes y aviso legal</h1>
 <div class="lectura">
 <h2>Qué es esta web</h2>
-<p>“El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez. No tiene publicidad, enlaces de afiliado ni cookies, y no recibe dinero de nadie. Los enlaces a librerías y cines son solo informativos.</p>
+<p>“El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez. No tiene publicidad, enlaces de afiliado ni cookies propias, y no recibe dinero de nadie. Los enlaces a librerías y cines son solo informativos.</p>
 <h2>Cómo verificamos</h2>
 <ul>
 <li><span class="sello s-conf">Confirmado</span> Lo publican el autor, la productora o la distribuidora, o al menos dos medios independientes.</li>
@@ -540,7 +620,13 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <li><span class="sello s-pend">Pendiente</span> No hay fuentes suficientes. No asociamos a ninguna persona real con un apodo o un personaje hasta tenerlas.</li>
 </ul>
 <p>Recogemos lo que ya han publicado el autor y otros medios, enlazamos las fuentes en cada página e indicamos la fecha de actualización. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
-<p>No usamos fotografías de personas reales ni material gráfico de la película sin autorización. Las marcas y títulos citados pertenecen a sus titulares.</p>
+<h2 id="imagenes">Imágenes y vídeos</h2>
+<p>Solo usamos fotografías con licencia libre (Creative Commons), citando autor y licencia junto a cada imagen. Las mostramos recortadas y en duotono; las fotos de personas reales se presentan separadas de las de los actores. Si no hay una foto libre de una persona, usamos una silueta.</p>
+<p>No publicamos el cartel, fotogramas ni la portada del libro sin autorización de sus titulares. Las ilustraciones de papel triturado, butacas y siluetas son propias.</p>
+<p>Los vídeos son publicaciones públicas de YouTube incrustadas desde el modo de privacidad mejorada (youtube-nocookie.com). El reproductor y sus cookies solo se cargan si pulsas reproducir; hasta entonces solo se muestra la miniatura, servida por YouTube.</p>
+<p>Las marcas y títulos citados pertenecen a sus titulares.</p>
+<h2 id="creditos">Créditos de las fotografías</h2>
+<ul>{"".join(f'<li>{v[0]}: <a href="{v[4]}" rel="noopener">{v[1]}</a>, <a href="{v[3]}" rel="noopener license">{v[2]}</a>, vía Wikimedia Commons. Recortada y convertida a duotono en la web.</li>' for v in FOTOS.values())}</ul>
 <h2 id="rectificaciones">Rectificaciones</h2>
 <p>Si eres una de las personas mencionadas o ves un error, <a href="{ISSUES}" rel="noopener">abre una incidencia en el repositorio de la web</a> (necesitas una cuenta de GitHub). Revisaremos cada petición en un máximo de 72 horas y corregiremos lo que proceda, indicando la fecha del cambio.</p>
 <h2>Fuentes consultadas</h2>
@@ -564,6 +650,8 @@ def main():
     os.makedirs(os.path.join(docs, "assets"))
     base = os.path.dirname(os.path.abspath(__file__))
     shutil.copy(os.path.join(base, "assets", "estilos.css"), os.path.join(docs, "assets", "estilos.css"))
+    shutil.copy(os.path.join(base, "assets", "video.js"), os.path.join(docs, "assets", "video.js"))
+    shutil.copytree(os.path.join(base, "assets", "img"), os.path.join(docs, "assets", "img"))
     open(os.path.join(docs, "assets", "icono.svg"), "w").write(ICONO)
     open(os.path.join(docs, ".nojekyll"), "w").write("")
     for ruta, p in PAGINAS.items():
@@ -573,7 +661,7 @@ def main():
             fh.write(plantilla(ruta, p["titulo"], p["desc"], p["cuerpo"], p.get("ld"), p.get("activo"), p.get("portada", False)))
     # 404 con rutas absolutas (GitHub Pages la sirve en cualquier profundidad)
     pagina404 = plantilla("", "Página no encontrada · El Director", "Página no encontrada.", NO_ENCONTRADA.format(repo=REPO))
-    pagina404 = pagina404.replace('href="assets/', f'href="/{REPO}/assets/').replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex">')
+    pagina404 = pagina404.replace('href="assets/', f'href="/{REPO}/assets/').replace('src="assets/', f'src="/{REPO}/assets/').replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex">')
     for u, _ in MENU + [("metodologia-y-fuentes/", ""), ("personajes/", ""), ("libro/", ""), ("pelicula/", ""), ("historia-real/", ""), ("personajes/david-jimenez/", ""), ("preguntas-frecuentes/", ""), ("metodologia-y-fuentes/#rectificaciones", "")]:
         pagina404 = pagina404.replace(f'href="{u}"', f'href="/{REPO}/{u}"')
     pagina404 = pagina404.replace('<a class="marca" href="">', f'<a class="marca" href="/{REPO}/">')
