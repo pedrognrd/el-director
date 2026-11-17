@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pedrognrd.github.io/el-director/sitemap.xml
