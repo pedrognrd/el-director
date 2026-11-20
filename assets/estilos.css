@@ -424,3 +424,5 @@ main.sin-relleno{padding-block:0}
 .obras-v3:not(.js) .obra-panel+.obra-panel{margin-top:24px}
 @media (max-width:760px){.obras-v3 .volteo{max-width:300px}}
 @media (prefers-reduced-motion:reduce){.volteo-carta{transition:none}}
+.obras-v3 .obras-textos{grid-template-rows:1fr auto;align-content:stretch}
+.obras-v3 .volteo{align-self:start;width:100%}
