@@ -441,3 +441,29 @@ main.sin-relleno{padding-block:0}
 .vrlp.js .activa .vrlp-capa{animation:vrlp-desliza 1.3s .2s cubic-bezier(.22,.8,.28,1) both}
 @keyframes vrlp-desliza{to{transform:translateX(0)}}
 @media (prefers-reduced-motion:reduce){.vrlp.js .vrlp-capa{transform:none!important;animation:none!important}}
+
+/* ---------- Menú y hero (diseño de noviembre, v4) ---------- */
+.sitio{border-bottom:1px solid rgba(236,232,223,.85)}
+.sitio .contenedor{padding-block:16px}
+.marca{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px;text-decoration:none}
+.marca img{height:34px;width:auto}
+.marca span{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:.72rem;letter-spacing:.01em;color:var(--papel);line-height:1}
+.menu{gap:6px 34px;font-size:1.12rem;letter-spacing:.02em;font-weight:700}
+.menu a{color:var(--oro)}
+.menu a:hover,.menu a[aria-current="page"]{color:var(--papel);box-shadow:inset 0 -2px 0 var(--oro)}
+/* En la portada, la cabecera va encima de la foto del hero */
+.es-portada .arriba{position:absolute;top:0;left:0;right:0;z-index:5}
+.es-portada .sitio{background:rgba(10,31,33,.6);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.es-portada .hero-v3{padding-top:170px;min-height:min(62vw,860px)}
+.hero-v3::before{background:linear-gradient(90deg,rgba(4,13,15,.96) 0%,rgba(4,13,15,.86) 30%,rgba(4,13,15,.55) 52%,rgba(4,13,15,.18) 75%,rgba(4,13,15,.05) 100%),linear-gradient(180deg,rgba(4,13,15,.55) 0%,transparent 28%,transparent 72%,rgba(4,13,15,.6) 100%)}
+.hero-v3 .hero-texto>*{max-width:600px}
+.hero-firmas{font-family:Verdana,Geneva,sans-serif;font-weight:700;font-size:.74rem;letter-spacing:.06em;margin-bottom:4px}
+.hero-v3 h1 .sub-v3{border-top:4px solid var(--papel);border-bottom:4px solid var(--papel);margin-top:18px;padding:12px 0 14px;font-weight:700;font-size:clamp(1.7rem,3.3vw,2.6rem);letter-spacing:.01em;line-height:1}
+.hero-v3 .entradilla{font-weight:700;font-size:clamp(1.05rem,1.6vw,1.32rem);line-height:1.45;margin-top:18px}
+.hero-v3 .flechas{justify-content:space-between;flex-wrap:nowrap;gap:12px 20px;margin-top:40px}
+.hero-v3 .flechas a{font-weight:700;font-size:1.02rem;letter-spacing:.01em}
+@media (max-width:760px){
+  .es-portada .hero-v3{padding-top:190px}
+  .menu{gap:4px 18px;font-size:.95rem}
+  .hero-v3 .flechas{flex-wrap:wrap;justify-content:flex-start;gap:14px 28px}
+}
