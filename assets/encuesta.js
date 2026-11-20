@@ -1,6 +1,9 @@
 // Encuesta "¿Quién es quién?": emparejar un personaje de la película con uno del libro.
-// MODO PRUEBA: los votos se guardan solo en este navegador (localStorage). Nada se envía a ningún servidor.
-// Para pasar a votos reales basta con cambiar el objeto `almacen` por llamadas a la base de datos.
+// Dos modos:
+// · PRUEBA (sin clave de Supabase): los votos se guardan solo en este navegador (localStorage).
+// · REAL (con data-supabase-url y data-supabase-key): cada voto se envía a Supabase y los porcentajes
+//   salen de la función resultados(), que solo devuelve recuentos. En el navegador solo se recuerda
+//   qué personajes has votado ya, para no votar dos veces el mismo.
 (function () {
   var raiz = document.getElementById("encuesta");
   if (!raiz) return;
@@ -8,6 +11,28 @@
   var base = raiz.getAttribute("data-base");
   var CLAVE = "el-director-encuesta-prueba-v1";
   var memoria = { votos: [] };
+  var SB_URL = raiz.getAttribute("data-supabase-url"), SB_KEY = raiz.getAttribute("data-supabase-key");
+  var REAL = !!(SB_URL && SB_KEY);
+  if (REAL) CLAVE = "el-director-encuesta-v1";
+  var remotos = [];   // [{peli, libro, votos}] desde Supabase
+  function cabeceras() {
+    var h = { "apikey": SB_KEY, "Content-Type": "application/json" };
+    if (SB_KEY.indexOf("eyJ") === 0) h["Authorization"] = "Bearer " + SB_KEY;
+    return h;
+  }
+  function cargarRemotos() {
+    if (!REAL) return Promise.resolve();
+    return fetch(SB_URL + "/rest/v1/rpc/resultados", { method: "POST", headers: cabeceras(), body: "{}" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) { remotos = d || []; })
+      .catch(function () { vivo.textContent = "No se han podido cargar los resultados."; });
+  }
+  function enviar(peli, libro) {
+    if (!REAL) return Promise.resolve(true);
+    var h = cabeceras(); h["Prefer"] = "return=minimal";
+    return fetch(SB_URL + "/rest/v1/votos", { method: "POST", headers: h, body: JSON.stringify({ peli: peli, libro: libro }) })
+      .then(function (r) { return r.ok; }).catch(function () { return false; });
+  }
 
   var almacen = {
     cargar: function () {
@@ -65,7 +90,8 @@
   }
   function recuento(idPeli) {
     var c = {}, n = 0;
-    memoria.votos.forEach(function (v) { if (v.peli === idPeli) { c[v.libro] = (c[v.libro] || 0) + 1; n++; } });
+    if (REAL) remotos.forEach(function (v) { if (v.peli === idPeli) { c[v.libro] = (c[v.libro] || 0) + Number(v.votos); n += Number(v.votos); } });
+    else memoria.votos.forEach(function (v) { if (v.peli === idPeli) { c[v.libro] = (c[v.libro] || 0) + 1; n++; } });
     var filas = Object.keys(c).map(function (k) { return { id: k, n: c[k], pct: Math.round(c[k] * 1000 / n) / 10 }; });
     filas.sort(function (a, b) { return b.n - a.n; });
     return { n: n, filas: filas };
@@ -78,9 +104,9 @@
         '<span class="enc-barra"><span style="width:' + f.pct + '%"></span></span><span class="enc-pct">' + String(f.pct).replace(".", ",") + ' %</span></li>';
     }).join("") + '</ol><p class="enc-sub">' + r.n + (r.n === 1 ? " voto" : " votos") + '</p>';
   }
-  function paso3(idPeli, idLibro) {
+  function paso3(idPeli, idLibro, yaVotado) {
     var p = PELI[idPeli], l = LIBRO[idLibro];
-    paso.innerHTML = '<p class="antetitulo">Tu respuesta</p><h2 class="enc-titulo">' + esc(p.nombre) + ' = ' + esc(l.nombre) + '</h2>' +
+    paso.innerHTML = '<p class="antetitulo">' + (yaVotado ? "Ya votaste este personaje" : "Tu respuesta") + '</p><h2 class="enc-titulo">' + esc(p.nombre) + ' = ' + esc(l.nombre) + '</h2>' +
       '<p class="enc-sub">Así han respondido sobre ' + esc(p.nombre) + ' (' + esc(p.actor) + '):</p>' + barras(idPeli, idLibro) +
       '<div class="flechas"><button type="button" class="enc-otro">Emparejar otro personaje</button></div>';
     enfocar(".enc-titulo");
@@ -99,8 +125,21 @@
   raiz.addEventListener("click", function (e) {
     var b = e.target.closest("button");
     if (!b) return;
-    if (b.dataset.peli) paso2(b.dataset.peli);
-    else if (b.dataset.libro) { var idp = paso.getAttribute("data-peli"); almacen.votar(idp, b.dataset.libro, true); paso3(idp, b.dataset.libro); }
+    if (b.dataset.peli) {
+      var ya = miVoto(b.dataset.peli);
+      // En modo real solo se vota una vez por personaje: si ya votaste, se muestran los resultados.
+      if (REAL && ya) { cargarRemotos().then(function () { paso3(b.dataset.peli, ya, true); }); }
+      else paso2(b.dataset.peli);
+    }
+    else if (b.dataset.libro) {
+      var idp = paso.getAttribute("data-peli"), idl = b.dataset.libro;
+      b.disabled = true;
+      enviar(idp, idl).then(function (ok) {
+        if (!ok) { b.disabled = false; vivo.textContent = "No se ha podido guardar el voto. Inténtalo de nuevo."; alert("No se ha podido guardar el voto. Inténtalo de nuevo."); return; }
+        almacen.votar(idp, idl, true);
+        return cargarRemotos().then(function () { paso3(idp, idl); });
+      });
+    }
     else if (b.classList.contains("enc-volver") || b.classList.contains("enc-otro")) { paso1(); enfocar(".enc-titulo"); }
   });
   var simular = document.getElementById("enc-simular"), borrar = document.getElementById("enc-borrar");
@@ -116,4 +155,5 @@
   });
   if (borrar) borrar.addEventListener("click", function () { almacen.borrar(); vivo.textContent = "Votos de prueba borrados."; resumen(); paso1(); });
   paso1(); resumen();
+  if (REAL) cargarRemotos().then(resumen);
 })();

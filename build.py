@@ -16,6 +16,10 @@ import hashlib
 _BASE = os.path.dirname(os.path.abspath(__file__))
 # Versión de los recursos para evitar que el navegador use CSS/JS antiguos en caché
 VERSION = hashlib.md5(b"".join(open(os.path.join(_BASE, "assets", f), "rb").read() for f in ("estilos.css", "video.js", "slider.js", "encuesta.js"))).hexdigest()[:8]
+# Supabase (encuesta). La clave es la pública (publishable / anon): va en la web por diseño.
+# Si la clave está vacía, la encuesta funciona en modo prueba (votos solo en el navegador).
+SUPABASE_URL = "https://chfqajnvbydhopqglsfj.supabase.co"
+SUPABASE_KEY = ""
 CREDITOS_LIBRO = json.load(open(os.path.join(_BASE, "datos", "creditos-libro.json"), encoding="utf-8"))
 SALIDA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs")
 
@@ -957,6 +961,12 @@ def datos_encuesta():
              for i, n, t, sx, d in LIBRO_ENCUESTA]
     return json.dumps({"peli": peli, "libro": libro}, ensure_ascii=False).replace("</", "<\\/")
 
+AVISO_ENCUESTA = ('<div class="aviso enc-aviso"><p><strong>Cómo funciona.</strong> Puedes votar una vez por cada personaje de la película. '
+    'Solo guardamos la pareja que eliges y la fecha: ni tu nombre, ni tu correo, ni cookies. El servicio que guarda los votos (Supabase) registra técnicamente la IP de la conexión, como cualquier servidor web.</p></div>'
+    if SUPABASE_KEY else
+    '<div class="aviso enc-aviso"><p><strong>Modo de prueba.</strong> Tus respuestas se guardan solo en este navegador y no se envían a ningún sitio. Los porcentajes solo cuentan los votos hechos aquí.</p>'
+    '<p class="enc-herramientas"><button type="button" class="btn sec" id="enc-simular">Simular 50 votos</button> <button type="button" class="btn sec" id="enc-borrar">Borrar votos de prueba</button></p></div>')
+
 PAGINAS["encuesta/"] = dict(
     titulo="Encuesta: ¿quién es quién en El Director? · Juega a emparejar",
     activo="encuesta/",
@@ -968,9 +978,8 @@ PAGINAS["encuesta/"] = dict(
 <div class="lectura">
 <p class="entradilla">La película cambia casi todos los nombres del libro. Elige un personaje de la película y dinos qué personaje del libro crees que es. <strong>Ayúdanos a descubrirlos.</strong></p>
 </div>
-<div class="aviso enc-aviso"><p><strong>Modo de prueba.</strong> Tus respuestas se guardan solo en este navegador y no se envían a ningún sitio. Los porcentajes solo cuentan los votos hechos aquí.</p>
-<p class="enc-herramientas"><button type="button" class="btn sec" id="enc-simular">Simular 50 votos</button> <button type="button" class="btn sec" id="enc-borrar">Borrar votos de prueba</button></p></div>
-<section id="encuesta" class="encuesta" data-base="{{r}}" aria-label="Juego de emparejar personajes">
+{AVISO_ENCUESTA}
+<section id="encuesta" class="encuesta" data-base="{{r}}"{f' data-supabase-url="{SUPABASE_URL}" data-supabase-key="{SUPABASE_KEY}"' if SUPABASE_KEY else ""} aria-label="Juego de emparejar personajes">
   <div class="enc-paso"><noscript><p>La encuesta necesita JavaScript.</p></noscript></div>
   <p class="enc-vivo" aria-live="polite"></p>
 </section>
