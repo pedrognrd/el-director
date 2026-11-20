@@ -176,7 +176,7 @@ LIBRO_LD = {
     "@type": "Book", "@id": SITE + "libro/#libro",
     "name": "El director: secretos e intrigas de la prensa narrados por el exdirector de El Mundo",
     "author": {"@type": "Person", "@id": SITE + "personajes/david-jimenez/#persona", "name": "David Jiménez García"},
-    "publisher": {"@type": "Organization", "name": "Libros del K.O."},
+    "publisher": {"@type": "Organization", "name": "Libros del K.O.", "url": LIBROSDELKO},
     "datePublished": "2019-04-08", "inLanguage": "es", "isbn": "9788417678081", "numberOfPages": 328,
     "genre": "No ficción",
 }
@@ -203,7 +203,7 @@ WIKI = "https://es.wikipedia.org/wiki/"
 ENLACES = [
     ("David Jiménez", WIKI + "David_Jim%C3%A9nez_Garc%C3%ADa"),
     ("El Mundo", WIKI + "El_Mundo_(Espa%C3%B1a)"),
-    ("Libros del K.O.", WIKI + "Libros_del_K.O."),
+    ("Libros del K.O.", LIBROSDELKO),
     ("Beta Fiction Spain", "https://betafiction.es/"),
     ("Dani de la Orden", WIKI + "Dani_de_la_Orden"),
     ("David Verdaguer", WIKI + "David_Verdaguer"),
@@ -226,6 +226,8 @@ ENLACES = [
     ("RTVE", WIKI + "RTVE"),
     ("3Cat", WIKI + "3Cat"),
 ]
+# Nombres que se enlazan en todas sus menciones, no solo en la primera de cada página
+ENLAZAR_SIEMPRE = {"Libros del K.O."}
 _NO_ENLAZAR = {"small", "a", "h1", "h2", "h3", "button", "script", "figcaption", "dt", "time", "caption", "th", "nav", "title", "summary"}
 
 def enlazar(html_txt):
@@ -258,7 +260,8 @@ def enlazar(html_txt):
             mm, nombre, url = mejor
             salida += trozo[:mm.start()] + f'<a class="ref" href="{url}" rel="noopener">{nombre}</a>'
             trozo = trozo[mm.end():]
-            hechos.add(nombre)
+            if nombre not in ENLAZAR_SIEMPRE:
+                hechos.add(nombre)
         trozo = salida + trozo
         partes[i] = trozo
     return "".join(partes)
@@ -346,7 +349,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
   <div class="contenedor">
     <p class="pie-marca"><img class="pie-logo" src="{r}assets/img/portada/logo-web.png" alt="El Director" width="258" height="54" loading="lazy"><span>Del libro a la película</span></p>
     <div class="pie-aviso">
-      <p><strong>Sobre esta web.</strong> “El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez.</p>
+      <p><strong>Sobre esta web.</strong> “El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a <a href="{LIBROSDELKO}">Libros del K.O.</a>, Beta Fiction Spain ni David Jiménez.</p>
       <p>La relación entre personas reales y personajes se basa en fuentes públicas enlazadas en cada página, con su grado de certeza. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
       <p><strong>Sin fines comerciales.</strong> Sin publicidad, sin enlaces de afiliado y sin cookies propias. Los vídeos de YouTube solo se cargan si pulsas reproducir. Los enlaces a librerías y cines son solo informativos. Fotos con licencia libre: <a href="{r}metodologia-y-fuentes/#creditos">créditos</a>.</p>
     </div>
@@ -1007,6 +1010,14 @@ def con_hero(ruta, cuerpo):
     if m2:
         entradilla, resto = m2.group(2), m2.group(1) + "\n" + resto[m2.end():]
     estilo = f'object-position:{encuadre}' + (';transform:scaleX(-1)' if voltear else '')
+    prioridad = ' fetchpriority="high"'
+    if ruta == "libro/":
+        # La cubierta repetida: 4 en escritorio, 3 en tableta y 1 en móvil (el CSS oculta las que sobran)
+        fondo = ('<div class="hero-fondo hero-mosaico" aria-hidden="true">' +
+                 "".join(f'<img src="{{r}}assets/img/portada/libro-el-director.jpg" alt="" width="780" height="1200" decoding="async"{prioridad if i == 0 else ""}>' for i in range(4)) +
+                 '</div>')
+    else:
+        fondo = None
     alt = "David Jiménez en 2019" if ruta == "personajes/david-jimenez/" else ""
     # Las migas salen del hero a una franja propia entre el hero y el contenido.
     mg = re.search(r'<nav class="migas".*?</nav>', cabeza, re.S)
@@ -1015,7 +1026,7 @@ def con_hero(ruta, cuerpo):
         cabeza = cabeza.replace(mg.group(0), "")
         franja = f'<div class="migas-franja"><div class="contenedor">{mg.group(0)}</div></div>\n'
     return (f'<section class="hero hero-v3 hero-pagina">'
-            f'<img class="hero-fondo" src="{{r}}assets/img/cabeceras/{img}" alt="{alt}" width="{w}" height="{h}" style="{estilo}" fetchpriority="high" decoding="async">'
+            + (fondo or f'<img class="hero-fondo" src="{{r}}assets/img/cabeceras/{img}" alt="{alt}" width="{w}" height="{h}" style="{estilo}" fetchpriority="high" decoding="async">') +
             f'<div class="contenedor hero-texto">{cabeza}{entradilla}</div></section>\n'
             f'{franja}<div class="contenedor">\n{resto}')
 
