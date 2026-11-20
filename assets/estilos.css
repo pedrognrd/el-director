@@ -301,3 +301,53 @@ a.ref:hover{color:var(--oro)}
 .actor-tarjeta .inspira.pend{color:var(--gris);font-family:var(--f-teletipo);font-size:.66rem;text-transform:uppercase;letter-spacing:.06em}
 .fotogramas{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));margin-top:18px}
 .fotogramas img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block}
+
+/* ---------- Portada v3 (layout de noviembre) ---------- */
+main.sin-relleno{padding-block:0}
+.marca img{display:block;height:36px;width:auto}
+.flechas{display:flex;flex-wrap:wrap;gap:12px 34px;margin-top:26px}
+.flechas a{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.04em;font-size:.92rem;color:var(--papel);text-decoration:none;display:inline-flex;align-items:center;gap:12px}
+.flechas a::after{content:"";width:30px;height:2px;background:currentColor}
+.flechas a{position:relative;padding-right:1px}
+.flechas a::before{content:"";position:absolute;right:0;top:50%;width:7px;height:7px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:translateY(-50%) rotate(45deg)}
+.flechas a:hover{color:var(--oro)}
+.hero-v3{position:relative;isolation:isolate;overflow:hidden;min-height:min(52vw,720px);display:flex;align-items:center;padding-block:64px;border-bottom:0}
+.hero-v3::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(6,18,20,.94) 0%,rgba(6,18,20,.8) 38%,rgba(6,18,20,.15) 70%,rgba(6,18,20,0) 100%),linear-gradient(0deg,rgba(6,18,20,.6),transparent 35%)}
+.hero-fondo,.banda-fondo{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover}
+.hero-fondo{object-position:70% center}
+.hero-v3 .hero-texto{width:100%;padding-bottom:0}
+.hero-v3 .hero-texto>*{max-width:560px}
+.hero-firmas{display:flex;justify-content:space-between;font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:.72rem;margin-bottom:6px}
+.hero-v3 h1{margin:0;padding-bottom:16px;border-bottom:2px solid var(--papel)}
+.hero-v3 h1 img{display:block;width:100%;height:auto}
+.hero-v3 .entradilla{font-family:var(--f-display);font-weight:500;font-size:1.08rem;line-height:1.5;letter-spacing:.01em;margin:22px 0 0;color:var(--papel)}
+.hero-v3 .entradilla strong{text-transform:uppercase;font-weight:600}
+.banda-foto{position:relative;isolation:isolate;overflow:hidden;padding-block:clamp(48px,7vw,96px)}
+.banda-foto::before{content:"";position:absolute;inset:0;z-index:-1}
+.banda-foto h2{font-size:clamp(1.8rem,3.4vw,2.6rem)}
+.teaser-v3::before{background:linear-gradient(90deg,rgba(6,18,20,.75),rgba(6,18,20,.15) 60%,rgba(6,18,20,.3))}
+.teaser-v3 .contenedor{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);gap:32px;align-items:center}
+.teaser-v3 .video{margin:0;max-width:none;border:0;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.teaser-v3 .video .play{background:var(--petroleo);width:92px;height:92px}
+.teaser-v3 .video .play::before{border-color:transparent transparent transparent var(--oro)}
+.teaser-v3 .video button img{opacity:.92}
+.peli-v3::before{background:linear-gradient(90deg,rgba(15,42,44,.92) 0%,rgba(15,42,44,.82) 55%,rgba(15,42,44,.35) 100%)}
+.peli-v3 .banda-fondo{object-position:right center}
+.peli-v3 .contenedor{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,48px);align-items:stretch}
+.peli-v3 .cartel-oficial{margin:0}
+.peli-texto{display:flex;flex-direction:column;border-top:3px solid var(--papel);border-bottom:3px solid var(--papel);padding-block:24px}
+.peli-texto .peli-entrada{font-family:var(--f-display);font-weight:500;font-size:1.15rem;line-height:1.5;margin:14px 0 4px}
+.peli-texto .datos{font-family:var(--f-display);letter-spacing:.04em;font-size:.9rem}
+.peli-texto .datos dt{font-family:var(--f-display);font-weight:600;color:var(--oro);font-size:.78rem}
+.peli-texto .flechas{margin-top:auto;padding-top:24px}
+.pie{background:#000;border-top:0}
+.pie-logo{display:block;margin:6px auto 22px;width:258px;max-width:70%;height:auto}
+@media (max-width:760px){
+  .hero-v3{min-height:0;padding-block:48px 56px}
+  .hero-v3::before{background:linear-gradient(0deg,rgba(6,18,20,.95) 30%,rgba(6,18,20,.55) 100%)}
+  .hero-fondo{object-position:72% center}
+  .teaser-v3 .contenedor,.peli-v3 .contenedor{grid-template-columns:1fr}
+  .peli-v3 .cartel-oficial{max-width:300px}
+  .peli-v3::before{background:rgba(15,42,44,.88)}
+  .hero-firmas{font-size:.62rem}
+}

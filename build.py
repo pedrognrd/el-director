@@ -118,10 +118,12 @@ VIDEOS = {
     "CgmhIDMm-B4": ("David Verdaguer presenta El director en Europa FM", "Europa FM", "PT15M50S", "2026-11-13", "15:50"),
 }
 
-def video(vid):
+def video(vid, miniatura=None):
     titulo, canal, _, _, dur = VIDEOS[vid]
+    img = (f'<img src="{{r}}assets/img/{miniatura}" alt="" width="1280" height="720" loading="lazy" decoding="async">' if miniatura
+           else f'<img src="https://i.ytimg.com/vi/{vid}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">')
     return (f'<div class="video"><button type="button" data-video="{vid}" data-titulo="{titulo}" aria-label="Reproducir: {titulo}">'
-            f'<img src="https://i.ytimg.com/vi/{vid}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">'
+            f'{img}'
             f'<span class="play" aria-hidden="true"></span><span class="rotulo">{titulo}<small>{canal} · {dur}</small></span></button></div>')
 
 def video_ld(vid):
@@ -308,7 +310,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 <div class="cinta">En cines desde el 20 de noviembre de 2026 · <a href="{r}metodologia-y-fuentes/">Web informativa e independiente</a></div>
 <header class="sitio">
   <div class="contenedor">
-    <a class="marca" href="{r}"><span class="el">El</span> Director<small>Del libro a la película</small></a>
+    <a class="marca" href="{r}"><img src="{r}assets/img/portada/logo-web.png" alt="El Director. Del libro a la película" width="172" height="36"></a>
     <nav aria-label="Principal"><ul class="menu">{menu}</ul></nav>
   </div>
 </header>
@@ -317,6 +319,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 </main>
 <footer class="pie">
   <div class="contenedor">
+    <img class="pie-logo" src="{r}assets/img/portada/logo-web.png" alt="El Director. Del libro a la película" width="258" height="54" loading="lazy">
     <div class="pie-aviso">
       <p><strong>Sobre esta web.</strong> “El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez.</p>
       <p>La relación entre personas reales y personajes se basa en fuentes públicas enlazadas en cada página, con su grado de certeza. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
@@ -420,17 +423,16 @@ PAGINAS[""] = dict(
     titulo="El Director: quién es quién del libro a la película",
     desc="Qué persona real hay detrás de cada personaje de El Director, el libro de David Jiménez y la película de Dani de la Orden. Con fuentes y grado de certeza.",
     cuerpo=f"""
-<section class="hero" style="margin-top:-40px">
-  <div class="hero-fotos" aria-hidden="true">{"".join(f'<img src="{{r}}assets/img/{c[0]}" alt="" width="900" height="500" decoding="async">' for c in CABECERA)}</div>
+<section class="hero hero-v3">
+  <img class="hero-fondo" src="{{r}}assets/img/portada/hero-butacas.jpg" alt="" width="1920" height="1079" fetchpriority="high" decoding="async">
   <div class="contenedor hero-texto">
-    <p class="antetitulo">Libro de David Jiménez (2019) · Película de Dani de la Orden (2026)</p>
-    <h1><span class="el">El</span> Director</h1>
-    <p class="sub">Del libro a la película</p>
-    <p class="entradilla lectura">En 2015, David Jiménez dejó de ser corresponsal de guerra para dirigir <i>El Mundo</i>. <strong>Duró un año.</strong> Lo contó todo en un libro. Ahora llega al cine. Aquí te contamos quién es quién.</p>
-    <div class="acciones">
-      <a class="btn" href="{{r}}personajes/">Ver quién es quién</a>
-      <a class="btn sec" href="{{r}}pelicula/#donde-ver">Dónde ver la película</a>
-      <a class="btn sec" href="{{r}}libro/#donde-leer">Dónde leer el libro</a>
+    <div class="hero-firmas"><span>David Jiménez (2019)</span><span>Dani de la Orden (2026)</span></div>
+    <h1><img src="{{r}}assets/img/portada/logo-web.png" alt="El Director. Del libro a la película" width="860" height="181"></h1>
+    <p class="entradilla">En 2015, David Jiménez dejó de ser corresponsal de guerra para dirigir <i>El Mundo</i>. <strong>Duró un año.</strong> Lo contó todo en un libro. Ahora llega al cine. Aquí te contamos <strong>quién es quién</strong>.</p>
+    <div class="flechas">
+      <a href="{{r}}personajes/">Ver quién es quién</a>
+      <a href="{{r}}pelicula/#donde-ver">Dónde ver la película</a>
+      <a href="{{r}}libro/#donde-leer">Dónde leer el libro</a>
     </div>
   </div>
 </section>
@@ -459,49 +461,26 @@ PAGINAS[""] = dict(
   <div class="faldon"><div class="contenedor"><p><span class="sello s-conf">Confirmado</span> Solo mostramos como confirmadas las relaciones que publican el autor, la productora o varios medios. En las fotos de personas reales usamos blanco y negro; en las de los actores, color. <a href="{{r}}metodologia-y-fuentes/">Cómo trabajamos</a>.</p></div></div>
 </section>
 
-<div class="contenedor">
-  <h2>El teaser</h2>
-  {video("PUQzmris2CE")}
+<section class="banda-foto teaser-v3" aria-labelledby="h-teaser">
+  <img class="banda-fondo" src="{{r}}assets/img/portada/fondo-edificios.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async">
+  <div class="contenedor">
+    <h2 id="h-teaser">El teaser</h2>
+    {video("PUQzmris2CE", "portada/teaser.jpg")}
+  </div>
+</section>
 
-  <section class="obras" aria-label="El libro y la película">
-    <article class="obra">
-      <figure class="cubierta libro-generico" aria-label="Recreación de un libro">
-        <div class="tapa"><span class="autor">David Jiménez</span><span class="titulo">El director</span><span class="subt">Secretos e intrigas de la prensa</span></div>
-        <figcaption>Recreación. No es la portada original.</figcaption>
-      </figure>
-      <div class="obra-texto">
-        <p class="antetitulo">El libro · 2019</p>
-        <h2>El libro</h2>
-        <p><i>El director</i> (Libros del K.O., 2019) relata el año de Jiménez al frente de <i>El Mundo</i> y el sistema de pactos entre prensa, empresas y política que él llama “Los Acuerdos”.</p>
-        <dl class="datos"><dt>Autor</dt><dd>David Jiménez</dd><dt>Editorial</dt><dd>Libros del K.O.</dd><dt>Páginas</dt><dd>328</dd></dl>
-        <div class="acciones"><a class="btn" href="{{r}}libro/">Sobre el libro</a><a class="btn sec" href="{{r}}libro/#donde-leer">Dónde leerlo</a></div>
-      </div>
-    </article>
-    <article class="obra">
-      <figure class="cubierta cartel-oficial">
-        <img src="{{r}}assets/img/cartel-el-director.jpg" alt="Cartel oficial de El Director" width="560" height="800" loading="lazy" decoding="async">
-      </figure>
-      <div class="obra-texto">
-        <p class="antetitulo">La película · 2026</p>
-        <h2>La película</h2>
-        <p>Thriller de Dani de la Orden con David Verdaguer y Alberto San Juan, con guion de Alejandro Hernández y Michel Gaztambide. En cines desde el 20 de noviembre de 2026.</p>
-        <dl class="datos"><dt>Dirección</dt><dd>Dani de la Orden</dd><dt>Reparto</dt><dd>David Verdaguer, Alberto San Juan, Fernando Colomo, Carmen Machi…</dd><dt>Duración</dt><dd>1 h 55 min</dd><dt>Distribución</dt><dd>Beta Fiction Spain</dd></dl>
-        <div class="acciones"><a class="btn" href="{{r}}pelicula/">Ficha y reparto</a><a class="btn sec" href="{{r}}pelicula/#donde-ver">Dónde verla</a></div>
-      </div>
-    </article>
-  </section>
-
-  <section class="historia" aria-labelledby="h-historia">
-    <p class="antetitulo">Cronología</p>
-    <h2 id="h-historia">La historia real</h2>
-    <div class="linea-tiempo">
-      <ol>
-        {"".join(f'<li><time>{a}</time><p>{t}</p></li>' for a, t in HITOS)}
-      </ol>
+<section class="banda-foto peli-v3" aria-labelledby="h-peli">
+  <img class="banda-fondo" src="{{r}}assets/img/portada/fondo-exterior.jpg" alt="" width="1920" height="1082" loading="lazy" decoding="async">
+  <div class="contenedor">
+    <figure class="cartel-oficial"><img src="{{r}}assets/img/cartel-el-director.jpg" alt="Cartel oficial de El Director" width="560" height="800" loading="lazy" decoding="async"></figure>
+    <div class="peli-texto">
+      <h2 id="h-peli">La película</h2>
+      <p class="peli-entrada">Thriller de Dani de la Orden con David Verdaguer y Alberto San Juan, con guion de Alejandro Hernández y Michel Gaztambide. En cines desde el 20 de noviembre de 2026.</p>
+      <dl class="datos"><dt>Dirección</dt><dd>Dani de la Orden</dd><dt>Reparto</dt><dd>David Verdaguer, Alberto San Juan, Fernando Colomo, Carmen Machi…</dd><dt>Duración</dt><dd>1 h 55 min</dd><dt>Distribución</dt><dd>Beta Fiction Spain</dd></dl>
+      <div class="flechas"><a href="{{r}}pelicula/">Ficha y reparto</a><a href="{{r}}pelicula/#donde-ver">Dónde verla</a></div>
     </div>
-    <p><a class="btn sec" href="{{r}}historia-real/">Ver la cronología completa</a></p>
-  </section>
-</div>
+  </div>
+</section>
 """,
     ld=[LIBRO_LD, PELI_LD, video_ld("PUQzmris2CE")], portada=True,
 )
@@ -846,7 +825,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <caption>Todas las imágenes de terceros que usa la web</caption>
 <thead><tr><th>Imagen</th><th>Dónde aparece</th><th>Autor y fuente</th><th>Licencia</th><th>Cambios</th></tr></thead>
 <tbody>
-{"".join(f'<tr><td>{c[1]}</td><td>Portada, cabecera</td><td><a href="{c[5]}" rel="noopener">{c[2]}</a></td><td><a href="{c[4]}" rel="noopener license">{c[3]}</a></td><td>Redimensionada, en blanco y negro</td></tr>' for c in CABECERA)}
+<tr><td>Fotogramas de fondo (patio de butacas, edificios, exterior) y miniatura del teaser</td><td>Portada</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, material promocional</a></td><td>Material de prensa</td><td>Redimensionados y oscurecidos</td></tr>
 {"".join(f'<tr><td>{v[0]}</td><td>{DONDE_FOTO[k]}</td><td><a href="{v[4]}" rel="noopener">{v[1]}</a> (Wikimedia Commons)</td><td><a href="{v[3]}" rel="noopener license">{v[2]}</a></td><td>Recortada; en la portada, con el fondo eliminado</td></tr>' for k, v in FOTOS.items())}
 {"".join(f'<tr><td>{c[1]}</td><td>Portada, cartelera y cartel recreado</td><td><a href="{c[5]}" rel="noopener">{c[2]}</a></td><td><a href="{c[4]}" rel="noopener license">{c[3]}</a></td><td>Solo el contorno, rellenado con un color plano. No representa a ninguna persona concreta</td></tr>' for c in SILUETAS)}
 <tr><td>Cartel oficial</td><td>Portada, película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionado</td></tr>
@@ -855,7 +834,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 {"".join(f'<tr><td>Miniatura: {VIDEOS[v][0]}</td><td>{DONDE_VIDEO[v]}</td><td><a href="https://www.youtube.com/watch?v={v}" rel="noopener">{VIDEOS[v][1]}</a> (YouTube)</td><td>Inserción permitida por YouTube</td><td>Ninguno</td></tr>' for v in VIDEOS)}
 </tbody></table></div>
 <div class="lectura">
-<p>Son ilustraciones propias, sin derechos de terceros: el papel triturado, el patio de butacas, la silueta “sin foto”, la imagen para redes sociales y las recreaciones de libro y de cartel de la portada, que no son la portada ni el cartel oficiales.</p>
+<p>Son ilustraciones propias, sin derechos de terceros: el papel triturado, el patio de butacas ilustrado, la silueta “sin foto” y la imagen para redes sociales.</p>
 <h2 id="rectificaciones">Rectificaciones</h2>
 <p>Si eres una de las personas mencionadas o ves un error, <a href="{ISSUES}" rel="noopener">abre una incidencia en el repositorio de la web</a> (necesitas una cuenta de GitHub). Revisaremos cada petición en un máximo de 72 horas y corregiremos lo que proceda, indicando la fecha del cambio.</p>
 <h2>Fuentes consultadas</h2>
