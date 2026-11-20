@@ -61,7 +61,7 @@
   }
   function foto(p, clase) {
     return p.foto ? '<img class="' + clase + '" src="' + base + p.foto + '" alt="" width="300" height="300" loading="lazy" decoding="async">'
-                  : '<img class="' + clase + ' sin-foto" src="' + base + 'assets/img/' + (p.sexo === "m" ? "silueta-mujer.png" : p.sexo === "h" ? "silueta-hombre.png" : "silueta.svg") + '" alt="" width="300" height="300" loading="lazy">';
+                  : '<img class="' + clase + ' sin-foto" src="' + base + 'assets/img/' + (p.sexo === "m" ? "silueta-mujer.png" : "silueta-hombre.png") + '" alt="" width="300" height="300" loading="lazy">';
   }
   function enfocar(sel) { var h = raiz.querySelector(sel); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); raiz.scrollIntoView({ behavior: "smooth", block: "start" }); } }
 
