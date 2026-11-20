@@ -47,6 +47,43 @@ FOTOS = {
                          "https://commons.wikimedia.org/wiki/File:(Dani_de_la_Orden)_La_hist%C3%B2ria_rom%C3%A0ntica_de_Barcelona.jpg"),
 }
 
+# Fotos ilustrativas de la cabecera y figuras recortadas
+CABECERA = [
+    ("cabecera-rotativa.jpg", "Rotativa del diario Euzkadi", "Theklan", "CC BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0/",
+     "https://commons.wikimedia.org/wiki/File:Euzkadi_egunkariaren_errotatiba_02.jpg"),
+    ("cabecera-redaccion.jpg", "Redacción de un diario", "JD Lasica", "CC BY 2.0", "https://creativecommons.org/licenses/by/2.0/",
+     "https://commons.wikimedia.org/wiki/File:El_Mercurio_newsroom_(6098651486).jpg"),
+    ("cabecera-rueda-prensa.jpg", "Fotógrafos en una rueda de prensa", "Arne Schambeck / Bundesarchiv", "CC BY-SA 3.0 DE",
+     "https://creativecommons.org/licenses/by-sa/3.0/de/",
+     "https://commons.wikimedia.org/wiki/File:Bundesarchiv_B_145_Bild-F083629-0025,_Bonn,_Fotoreporter_auf_Pressekonferenz_P%C3%B6hl.jpg"),
+]
+SILUETAS = [
+    ("silueta-hombre.png", "Silueta de hombre", "Burst (StockSnap)", "CC0", "https://creativecommons.org/publicdomain/zero/1.0/",
+     "https://stocksnap.io/photo/businessman-thinking-TGG4JHNHB8"),
+    ("silueta-mujer.png", "Silueta de mujer", "StockSnap", "CC0", "https://creativecommons.org/publicdomain/zero/1.0/",
+     "https://stocksnap.io/photo/business-woman-FPQIEQBMPA"),
+]
+
+def credito_corto(clave):
+    _, autor, lic, lic_url, origen = FOTOS[clave]
+    return f'{autor}, {lic}'  # sin enlaces: va dentro de una tarjeta enlazada; los enlaces están en Créditos
+
+def luchador(img, alt, real=False, duda=False, lado="izq"):
+    clases = "luchador " + lado + (" real" if real else "") + (" duda" if duda else "")
+    return f'<figure class="{clases}"><img src="{{r}}assets/img/{img}" alt="{alt}" loading="lazy" decoding="async"></figure>'
+
+def combate(enlace, izq, der, nombres, credito, signo="="):
+    (n1, d1), (n2, d2) = nombres
+    return f"""<a class="combate" href="{{r}}{enlace}">
+  <div class="esquinas"><span>Vida real</span><span>Película</span></div>
+  <div class="ring">{izq}<span class="contra" aria-hidden="true">{signo}</span>{der}</div>
+  <div class="nombres">
+    <div><strong>{n1}</strong><span>{d1}</span></div>
+    <div class="der"><strong>{n2}</strong><span>{d2}</span></div>
+  </div>
+  <p class="credito">{credito}</p>
+</a>"""
+
 def foto(clave, rotulo, ficcion=False, carga="lazy"):
     alt, autor, lic, lic_url, origen = FOTOS[clave]
     clase = "foto ficcion" if ficcion else "foto"
@@ -70,8 +107,7 @@ def video(vid):
     titulo, canal, _, _, dur = VIDEOS[vid]
     return (f'<div class="video"><button type="button" data-video="{vid}" data-titulo="{titulo}" aria-label="Reproducir: {titulo}">'
             f'<img src="https://i.ytimg.com/vi/{vid}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">'
-            f'<span class="play" aria-hidden="true"></span><span class="rotulo">{titulo}<small>{canal} · {dur}</small></span></button></div>'
-            f'<p class="video-pie">Vídeo de YouTube. Se carga al pulsar reproducir. <a href="https://www.youtube.com/watch?v={vid}" rel="noopener">Verlo en YouTube</a>.</p>')
+            f'<span class="play" aria-hidden="true"></span><span class="rotulo">{titulo}<small>{canal} · {dur}</small></span></button></div>')
 
 def video_ld(vid):
     titulo, canal, dur, fecha, _ = VIDEOS[vid]
@@ -183,7 +219,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 </head>
 <body>
 <a class="salto" href="#contenido">Saltar al contenido</a>
-<div class="cinta">Estreno en cines: 20 de noviembre de 2026 · <a href="{r}metodologia-y-fuentes/">Web informativa e independiente</a></div>
+<div class="cinta">En cines desde el 20 de noviembre de 2026 · <a href="{r}metodologia-y-fuentes/">Web informativa e independiente</a></div>
 <header class="sitio">
   <div class="contenedor">
     <a class="marca" href="{r}"><span class="el">El</span> Director<small>Del libro a la película</small></a>
@@ -195,21 +231,24 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 </main>
 <footer class="pie">
   <div class="contenedor">
-    <div>
+    <div class="pie-aviso">
       <p><strong>Sobre esta web.</strong> “El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez.</p>
       <p>La relación entre personas reales y personajes se basa en fuentes públicas enlazadas en cada página, con su grado de certeza. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
       <p><strong>Sin fines comerciales.</strong> Sin publicidad, sin enlaces de afiliado y sin cookies propias. Los vídeos de YouTube solo se cargan si pulsas reproducir. Los enlaces a librerías y cines son solo informativos. Fotos con licencia libre: <a href="{r}metodologia-y-fuentes/#creditos">créditos</a>.</p>
     </div>
-    <ul>
-      <li><a href="{r}personajes/">Quién es quién</a></li>
-      <li><a href="{r}libro/">El libro</a></li>
-      <li><a href="{r}pelicula/">La película</a></li>
-      <li><a href="{r}historia-real/">Historia real</a></li>
-      <li><a href="{r}personajes/david-jimenez/">David Jiménez</a></li>
-      <li><a href="{r}preguntas-frecuentes/">Preguntas frecuentes</a></li>
-      <li><a href="{r}metodologia-y-fuentes/">Metodología, fuentes y aviso legal</a></li>
-      <li><a href="{r}metodologia-y-fuentes/#rectificaciones">Rectificaciones</a></li>
-    </ul>
+    <hr>
+    <nav aria-label="Pie de página">
+      <ul class="pie-menu">
+        <li><a href="{r}personajes/">Quién es quién</a></li>
+        <li><a href="{r}libro/">El libro</a></li>
+        <li><a href="{r}pelicula/">La película</a></li>
+        <li><a href="{r}historia-real/">Historia real</a></li>
+        <li><a href="{r}personajes/david-jimenez/">David Jiménez</a></li>
+        <li><a href="{r}preguntas-frecuentes/">Preguntas frecuentes</a></li>
+        <li><a href="{r}metodologia-y-fuentes/">Metodología y aviso legal</a></li>
+        <li><a href="{r}metodologia-y-fuentes/#rectificaciones">Rectificaciones</a></li>
+      </ul>
+    </nav>
   </div>
 </footer>
 </body>
@@ -233,13 +272,24 @@ DONDE_VER = f"""<div class="donde">
 
 PAGINAS = {}
 
+HITOS = [
+    ("1998", "Jiménez abre en Hong Kong la primera delegación de <i>El Mundo</i> en Asia."),
+    ("2014", "Pedro J. Ramírez deja la dirección del periódico. Le sustituye Casimiro García-Abadillo."),
+    ("2015", "El 30 de abril, Jiménez es nombrado director a propuesta de Antonio Fernández-Galiano."),
+    ("2016", "El 25 de mayo deja la dirección tras su despido. Le sucede Pedro García Cuartango."),
+    ("2019", "Libros del K.O. publica <i>El director</i>."),
+    ("2025", "Beta Fiction adquiere los derechos de adaptación."),
+    ("2026", "Rodaje en febrero, teaser en julio y estreno en cines el 20 de noviembre."),
+]
+
 # ---------------- PORTADA ----------------
 PAGINAS[""] = dict(
     titulo="El Director: quién es quién del libro a la película",
     desc="Qué persona real hay detrás de cada personaje de El Director, el libro de David Jiménez y la película de Dani de la Orden. Con fuentes y grado de certeza.",
     cuerpo=f"""
-<section class="portada" style="margin-top:-40px">
-  <div class="contenedor">
+<section class="hero" style="margin-top:-40px">
+  <div class="hero-fotos" aria-hidden="true">{"".join(f'<img src="{{r}}assets/img/{c[0]}" alt="" width="900" height="500" decoding="async">' for c in CABECERA)}</div>
+  <div class="contenedor hero-texto">
     <p class="antetitulo">Libro de David Jiménez (2019) · Película de Dani de la Orden (2026)</p>
     <h1><span class="el">El</span> Director</h1>
     <p class="sub">Del libro a la película</p>
@@ -250,36 +300,76 @@ PAGINAS[""] = dict(
       <a class="btn sec" href="{{r}}libro/#donde-leer">Dónde leer el libro</a>
     </div>
   </div>
+  <p class="contenedor hero-creditos">Imágenes ilustrativas: {" · ".join(f'{c[1]} (<a href="{c[5]}" rel="noopener">{c[2]}</a>, <a href="{c[4]}" rel="noopener license">{c[3]}</a>)' for c in CABECERA)}</p>
 </section>
-<div class="contenedor">
-  <h2>Vida real, libro y película</h2>
-  <div class="pares">
-    <a class="par" href="{{r}}personajes/cardenal/">
-      <div class="lado"><img class="miniatura" src="{{r}}assets/img/silueta.svg" alt="" width="56" height="70"><div><div class="eti">Vida real</div><div class="nombre">Antonio Fernández-Galiano</div><div class="detalle">En el libro: “El Cardenal”</div></div></div>
-      <div class="igual" aria-hidden="true">=</div>
-      <div class="lado der"><img class="miniatura" src="{{r}}assets/img/alberto-san-juan.jpg" alt="" width="56" height="70"><div><div class="eti">Película</div><div class="nombre">Cardenal</div><div class="detalle">Alberto San Juan</div></div></div>
-    </a>
-    <a class="par" href="{{r}}personajes/david-jimenez/">
-      <div class="lado"><img class="miniatura" src="{{r}}assets/img/david-jimenez.jpg" alt="" width="56" height="70"><div><div class="eti">Vida real</div><div class="nombre">David Jiménez</div><div class="detalle">En el libro: el narrador</div></div></div>
-      <div class="igual" aria-hidden="true">=</div>
-      <div class="lado der"><img class="miniatura" src="{{r}}assets/img/david-verdaguer.jpg" alt="" width="56" height="70"><div><div class="eti">Película</div><div class="nombre">David Jiménez</div><div class="detalle">David Verdaguer</div></div></div>
-    </a>
-    <a class="par" href="{{r}}personajes/#pendientes">
-      <div><div class="eti">En el libro</div><div class="nombre">La Digna, El Señorito, Rasputín…</div><div class="detalle">Apodos de periodistas y directivos</div></div>
-      <div class="igual duda" aria-hidden="true">?</div>
-      <div class="der"><div class="eti">Película</div><div class="nombre">Por confirmar</div><div class="detalle">Tras el estreno</div></div>
-    </a>
-  </div>
-  <p class="nota">Solo mostramos como confirmadas las relaciones que publican el autor, la productora o varios medios. <a href="{{r}}metodologia-y-fuentes/">Cómo trabajamos</a>.</p>
 
+<section class="cartelera">
+  <div class="contenedor">
+    <h2>Vida real, libro y película</h2>
+    <div class="combates">
+      {combate("personajes/cardenal/",
+               luchador("silueta-hombre.png", "Silueta: no hay foto libre de Antonio Fernández-Galiano", real=True),
+               luchador("figura-alberto-san-juan.png", "Alberto San Juan", lado="der"),
+               (("Antonio Fernández-Galiano", "En el libro: “El Cardenal”"), ("Cardenal", "Alberto San Juan")),
+               "Foto de Alberto San Juan: " + credito_corto("alberto-san-juan"))}
+      {combate("personajes/david-jimenez/",
+               luchador("figura-david-jimenez.png", "David Jiménez", real=True),
+               luchador("figura-david-verdaguer.png", "David Verdaguer", lado="der"),
+               (("David Jiménez", "En el libro: el narrador"), ("David Jiménez", "David Verdaguer")),
+               "Fotos: " + credito_corto("david-jimenez") + " · " + credito_corto("david-verdaguer"))}
+      {combate("personajes/#pendientes",
+               luchador("silueta-mujer.png", "Silueta genérica", real=True),
+               luchador("silueta-hombre.png", "Silueta genérica", lado="der", duda=True),
+               (("La Digna, El Señorito, Rasputín…", "Apodos del libro"), ("Por confirmar", "Tras el estreno")),
+               "Siluetas genéricas", signo="?")}
+    </div>
+  </div>
+  <div class="faldon"><div class="contenedor"><p><span class="sello s-conf">Confirmado</span> Solo mostramos como confirmadas las relaciones que publican el autor, la productora o varios medios. En las fotos de personas reales usamos blanco y negro; en las de los actores, color. <a href="{{r}}metodologia-y-fuentes/">Cómo trabajamos</a>.</p></div></div>
+</section>
+
+<div class="contenedor">
   <h2>El teaser</h2>
   {video("PUQzmris2CE")}
 
-  <div class="rejilla" style="margin-top:44px">
-    <div class="tarjeta"><h3>El libro</h3><p><i>El director</i> (Libros del K.O., 2019) relata el año de Jiménez al frente de <i>El Mundo</i> y el sistema de pactos entre prensa, empresas y política que él llama “Los Acuerdos”.</p><p><a href="{{r}}libro/">Sobre el libro</a></p></div>
-    <div class="tarjeta"><h3>La película</h3><p>Thriller de Dani de la Orden con David Verdaguer y Alberto San Juan. Llega a los cines el 20 de noviembre de 2026.</p><p><a href="{{r}}pelicula/">Ficha y reparto</a></p></div>
-    <div class="tarjeta"><h3>La historia real</h3><p>Del despido de Pedro J. Ramírez a la salida de Jiménez en mayo de 2016: lo que pasó en el periódico, en orden.</p><p><a href="{{r}}historia-real/">Cronología</a></p></div>
-  </div>
+  <section class="obras" aria-label="El libro y la película">
+    <article class="obra">
+      <figure class="cubierta libro-generico" aria-label="Recreación de un libro">
+        <div class="tapa"><span class="autor">David Jiménez</span><span class="titulo">El director</span><span class="subt">Secretos e intrigas de la prensa</span></div>
+        <figcaption>Recreación. No es la portada original.</figcaption>
+      </figure>
+      <div class="obra-texto">
+        <p class="antetitulo">El libro · 2019</p>
+        <h2>El libro</h2>
+        <p><i>El director</i> (Libros del K.O., 2019) relata el año de Jiménez al frente de <i>El Mundo</i> y el sistema de pactos entre prensa, empresas y política que él llama “Los Acuerdos”.</p>
+        <dl class="datos"><dt>Autor</dt><dd>David Jiménez</dd><dt>Editorial</dt><dd>Libros del K.O.</dd><dt>Páginas</dt><dd>328</dd></dl>
+        <div class="acciones"><a class="btn" href="{{r}}libro/">Sobre el libro</a><a class="btn sec" href="{{r}}libro/#donde-leer">Dónde leerlo</a></div>
+      </div>
+    </article>
+    <article class="obra">
+      <figure class="cubierta poster-generico" aria-label="Recreación de un cartel de cine">
+        <div class="tapa"><img src="{{r}}assets/img/silueta-hombre.png" alt="" loading="lazy"><span class="claim">La verdad tiene un precio</span><span class="titulo">El director</span><span class="fecha">20 de noviembre · solo en cines</span></div>
+        <figcaption>Recreación. No es el cartel oficial.</figcaption>
+      </figure>
+      <div class="obra-texto">
+        <p class="antetitulo">La película · 2026</p>
+        <h2>La película</h2>
+        <p>Thriller de Dani de la Orden con David Verdaguer y Alberto San Juan, con guion de Alejandro Hernández y Michel Gaztambide. En cines desde el 20 de noviembre de 2026.</p>
+        <dl class="datos"><dt>Dirección</dt><dd>Dani de la Orden</dd><dt>Reparto</dt><dd>David Verdaguer, Alberto San Juan, Fernando Colomo, Carmen Machi…</dd><dt>Distribución</dt><dd>Beta Fiction Spain</dd></dl>
+        <div class="acciones"><a class="btn" href="{{r}}pelicula/">Ficha y reparto</a><a class="btn sec" href="{{r}}pelicula/#donde-ver">Dónde verla</a></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="historia" aria-labelledby="h-historia">
+    <p class="antetitulo">Cronología</p>
+    <h2 id="h-historia">La historia real</h2>
+    <div class="linea-tiempo">
+      <ol>
+        {"".join(f'<li><time>{a}</time><p>{t}</p></li>' for a, t in HITOS)}
+      </ol>
+    </div>
+    <p><a class="btn sec" href="{{r}}historia-real/">Ver la cronología completa</a></p>
+  </section>
 </div>
 """,
     ld=[LIBRO_LD, PELI_LD, video_ld("PUQzmris2CE")], portada=True,
@@ -626,7 +716,12 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <p>Los vídeos son publicaciones públicas de YouTube incrustadas desde el modo de privacidad mejorada (youtube-nocookie.com). El reproductor y sus cookies solo se cargan si pulsas reproducir; hasta entonces solo se muestra la miniatura, servida por YouTube.</p>
 <p>Las marcas y títulos citados pertenecen a sus titulares.</p>
 <h2 id="creditos">Créditos de las fotografías</h2>
-<ul>{"".join(f'<li>{v[0]}: <a href="{v[4]}" rel="noopener">{v[1]}</a>, <a href="{v[3]}" rel="noopener license">{v[2]}</a>, vía Wikimedia Commons. Recortada y convertida a duotono en la web.</li>' for v in FOTOS.values())}</ul>
+<ul>{"".join(f'<li>{v[0]}: <a href="{v[4]}" rel="noopener">{v[1]}</a>, <a href="{v[3]}" rel="noopener license">{v[2]}</a>, vía Wikimedia Commons. Recortada; en la portada, también con el fondo eliminado.</li>' for v in FOTOS.values())}</ul>
+<h3>Imágenes ilustrativas</h3>
+<ul>{"".join(f'<li>{c[1]}: <a href="{c[5]}" rel="noopener">{c[2]}</a>, <a href="{c[4]}" rel="noopener license">{c[3]}</a>. Redimensionada y en duotono.</li>' for c in CABECERA)}</ul>
+<h3>Siluetas</h3>
+<ul>{"".join(f'<li>{c[1]}: contorno extraído de una foto de <a href="{c[5]}" rel="noopener">{c[2]}</a> (<a href="{c[4]}" rel="noopener license">{c[3]}</a>) y rellenado con un color plano. No representa a ninguna persona concreta.</li>' for c in SILUETAS)}</ul>
+<p>La recreación de libro y de cartel de la portada son ilustraciones propias, no la portada ni el cartel oficiales.</p>
 <h2 id="rectificaciones">Rectificaciones</h2>
 <p>Si eres una de las personas mencionadas o ves un error, <a href="{ISSUES}" rel="noopener">abre una incidencia en el repositorio de la web</a> (necesitas una cuenta de GitHub). Revisaremos cada petición en un máximo de 72 horas y corregiremos lo que proceda, indicando la fecha del cambio.</p>
 <h2>Fuentes consultadas</h2>
