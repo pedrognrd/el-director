@@ -25,6 +25,7 @@ MENU = [
     ("pelicula/", "La película"),
     ("historia-real/", "Historia real"),
     ("preguntas-frecuentes/", "Preguntas"),
+    ("encuesta/", "Encuesta"),
 ]
 
 # ---------- Enlaces externos ----------
@@ -955,6 +956,7 @@ def datos_encuesta():
 
 PAGINAS["encuesta/"] = dict(
     titulo="Encuesta: ¿quién es quién en El Director? · Juega a emparejar",
+    activo="encuesta/",
     desc="Elige un personaje de la película El Director y di qué personaje del libro de David Jiménez crees que es. Un juego de opinión, con resultados.",
     cuerpo=f"""<div class="contenedor">
 {migas(("Inicio", ""), ("Encuesta", None))}
