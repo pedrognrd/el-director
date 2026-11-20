@@ -505,3 +505,6 @@ h3{font-size:1.02rem;letter-spacing:.02em}
 .nombres strong{font-size:clamp(.95rem,1.6vw,1.2rem)}
 .linea-tiempo time{font-size:1.5rem}
 @media (max-width:760px){.vrlp-titulo{font-size:1.1rem}.vrlp-texto strong{font-size:1rem}.vrlp-texto span{font-size:.8rem}.menu{font-size:.8rem}}
+.hero-v3 .hero-texto>*{max-width:640px}
+.hero-v3 .flechas a{font-size:.74rem}
+.vrlp-texto{max-width:min(46%,600px)}
