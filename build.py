@@ -261,6 +261,25 @@ def enlazar(html_txt):
         partes[i] = trozo
     return "".join(partes)
 
+def externos_nueva_pestana(html_txt):
+    """Los enlaces que salen de la web se abren en una pestaña nueva (target=_blank, rel=noopener)."""
+    import re
+    def ajustar(m):
+        etiqueta = m.group(0)
+        href = re.search(r'href="([^"]+)"', etiqueta).group(1)
+        if not href.startswith(("http://", "https://")) or href.startswith(SITE) or "target=" in etiqueta:
+            return etiqueta
+        rel = re.search(r'rel="([^"]*)"', etiqueta)
+        if rel:
+            valores = rel.group(1).split()
+            for v in ("noopener", "noreferrer"):
+                if v not in valores: valores.append(v)
+            etiqueta = etiqueta.replace(rel.group(0), f'rel="{" ".join(valores)}"')
+        else:
+            etiqueta = etiqueta[:-1] + ' rel="noopener noreferrer">'
+        return etiqueta[:-1] + ' target="_blank">'
+    return re.sub(r'<a\s[^>]*href="[^"]+"[^>]*>', ajustar, html_txt)
+
 def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=False):
     profundidad = ruta.count("/")
     r = "../" * profundidad
@@ -275,7 +294,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
          "isPartOf": {"@id": SITE + "#web"}, "dateModified": ACTUALIZADO, "inLanguage": "es"},
     ] + (ld or [])}
     cuerpo = enlazar(cuerpo.replace("{r}", r))
-    return f"""<!doctype html>
+    return externos_nueva_pestana(f"""<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -343,7 +362,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 </footer>
 </body>
 </html>
-"""
+""")
 
 def siguiente(*items):
     a = "".join(f'<a href="{{r}}{u}"><span class="antetitulo">{e}</span><strong>{t}</strong></a>' for e, t, u in items)
