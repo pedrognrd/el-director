@@ -583,3 +583,22 @@ p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{
 .fuentes.horizontal ul{display:flex;flex-wrap:wrap;gap:6px 0;list-style:none;padding-left:0;margin:.4rem 0}
 .fuentes.horizontal li{margin:0}
 .fuentes.horizontal li+li::before{content:"·";margin:0 .7em;color:var(--petroleo-3)}
+/* Menú hamburguesa en móvil */
+.menu-boton{display:none}
+@media (max-width:760px){
+  .js .menu-boton{display:inline-flex;align-items:center;gap:10px;background:transparent;border:1px solid rgba(236,232,223,.5);color:var(--papel);padding:8px 12px;font-family:var(--f-teletipo);text-transform:uppercase;letter-spacing:.06em;font-size:.85rem;cursor:pointer}
+  .menu-icono,.menu-icono::before,.menu-icono::after{display:block;width:22px;height:2px;background:currentColor;position:relative;transition:transform .2s,background .2s}
+  .menu-icono::before,.menu-icono::after{content:"";position:absolute;left:0}
+  .menu-icono::before{top:-7px}
+  .menu-icono::after{top:7px}
+  .menu-abierto .menu-icono{background:transparent}
+  .menu-abierto .menu-icono::before{transform:translateY(7px) rotate(45deg)}
+  .menu-abierto .menu-icono::after{transform:translateY(-7px) rotate(-45deg)}
+  .js .sitio .contenedor{flex-wrap:wrap}
+  .js .sitio nav{display:none;flex-basis:100%}
+  .js .menu-abierto nav{display:block}
+  .js .sitio .menu{flex-direction:column;gap:0;padding-top:6px}
+  .js .sitio .menu li{margin:0;border-top:1px solid var(--petroleo-3)}
+  .js .sitio .menu a{display:block;padding:12px 0;font-size:1.15rem}
+  .js .sitio .menu a[aria-current="page"],.js .sitio .menu a:hover{box-shadow:none;color:var(--papel)}
+}

@@ -308,6 +308,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{html.escape(titulo)}</title>
 <meta name="description" content="{html.escape(descripcion)}">
@@ -344,7 +345,8 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 <header class="sitio">
   <div class="contenedor">
     <a class="marca" href="{r}"><img src="{r}assets/img/portada/logo-web.png" alt="El Director" width="172" height="36"><span>Del libro a la película</span></a>
-    <nav aria-label="Principal"><ul class="menu">{menu}</ul></nav>
+    <button type="button" class="menu-boton" aria-expanded="false" aria-controls="menu-principal"><span class="menu-icono" aria-hidden="true"></span><span class="menu-texto">Menú</span></button>
+    <nav id="menu-principal" aria-label="Principal"><ul class="menu">{menu}</ul></nav>
   </div>
 </header>
 </div>

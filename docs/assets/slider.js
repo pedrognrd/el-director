@@ -1,3 +1,17 @@
+// Menú hamburguesa (móvil): abre y cierra la navegación principal.
+(function () {
+  var boton = document.querySelector(".menu-boton");
+  if (!boton) return;
+  var cabecera = boton.closest(".sitio");
+  function fijar(abierto) {
+    cabecera.classList.toggle("menu-abierto", abierto);
+    boton.setAttribute("aria-expanded", abierto ? "true" : "false");
+  }
+  boton.addEventListener("click", function () { fijar(boton.getAttribute("aria-expanded") !== "true"); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && boton.getAttribute("aria-expanded") === "true") { fijar(false); boton.focus(); } });
+  window.matchMedia("(min-width:761px)").addEventListener("change", function (m) { if (m.matches) fijar(false); });
+})();
+
 // Slider "Vida real, libro y película": cambia cada 5 s, pausa al pasar el ratón o con el foco,
 // y no avanza solo si la persona prefiere reducir el movimiento.
 (function () {
