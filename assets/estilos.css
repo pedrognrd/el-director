@@ -11,7 +11,7 @@
   --butaca:#c8434a;
   --ok:#6fbf8e;
   --f-cabecera:"UnifrakturCook","Old English Text MT",serif;
-  --f-display:Impact,"Anton","Haettenschweiler","Arial Narrow Bold",sans-serif;
+  --f-display: "Oswald","Anton","Haettenschweiler","Arial Narrow Bold",sans-serif;
   --f-texto:"Oswald","Arial Narrow",sans-serif;
   --f-teletipo:Impact,"Anton","Haettenschweiler","Arial Narrow Bold",sans-serif;
   color-scheme:dark;
@@ -459,7 +459,7 @@ main.sin-relleno{padding-block:0}
 .hero-v3 .hero-texto>*{max-width:600px}
 .hero-firmas{font-family:Verdana,Geneva,sans-serif;font-weight:700;font-size:.74rem;letter-spacing:.06em;margin-bottom:4px}
 .hero-v3 h1 .sub-v3{border-top:4px solid var(--papel);border-bottom:4px solid var(--papel);margin-top:18px;padding:12px 0 14px;font-weight:700;font-size:clamp(1.7rem,3.3vw,2.6rem);letter-spacing:.01em;line-height:1}
-.hero-v3 .entradilla{font-weight:700;font-size:clamp(1.05rem,1.6vw,1.32rem);line-height:1.45;margin-top:18px}
+.hero-v3 .entradilla{font-weight:700;font-size:clamp(1.05rem,1.6vw,1.32rem);line-height: 1.3;margin-top:18px}
 .hero-v3 .flechas{justify-content:space-between;flex-wrap:nowrap;gap:12px 20px;margin-top:40px}
 .hero-v3 .flechas a{font-weight:700;font-size:1.02rem;letter-spacing:.01em}
 @media (max-width:760px){
@@ -489,7 +489,7 @@ main.con-hero{padding-top:0}
 .hero-pagina .migas a{color:var(--papel)}
 .hero-pagina .antetitulo{color:var(--oro);font-weight:700}
 .hero-pagina h1{padding-bottom:14px;border-bottom:4px solid var(--papel);text-shadow:0 2px 2px rgba(0,0,0,.6)}
-.hero-pagina .entradilla{font-weight:700;font-size:clamp(.95rem,1.3vw,1.08rem);margin-top:16px;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.hero-pagina .entradilla{font-weight:700;font-size: clamp(.95rem,1.3vw,1.4rem);margin-top:16px;text-shadow:0 1px 2px rgba(0,0,0,.6)}
 @media (max-width:760px){
   .con-hero .arriba{position:static}
   .con-hero .sitio{background:var(--noche);-webkit-backdrop-filter:none;backdrop-filter:none}
