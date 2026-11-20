@@ -467,3 +467,5 @@ main.sin-relleno{padding-block:0}
   .menu{gap:4px 18px;font-size:.95rem}
   .hero-v3 .flechas{flex-wrap:wrap;justify-content:flex-start;gap:14px 28px}
 }
+.hero-v3 .flechas a{white-space:nowrap;gap:10px}
+.hero-v3 .flechas a::after{width:26px}
