@@ -72,9 +72,13 @@ def credito_corto(clave):
     _, autor, lic, lic_url, origen = FOTOS[clave]
     return f'{autor}, {lic}'  # sin enlaces: va dentro de una tarjeta enlazada; los enlaces están en Créditos
 
+TAM_FIGURAS = {"silueta-hombre.png": (337, 640), "silueta-mujer.png": (403, 640), "figura-alberto-san-juan.png": (478, 640),
+               "figura-david-jimenez.png": (640, 611), "figura-david-verdaguer.png": (512, 640)}
+
 def luchador(img, alt, real=False, duda=False, lado="izq"):
     clases = "luchador " + lado + (" real" if real else "") + (" duda" if duda else "")
-    return f'<figure class="{clases}"><img src="{{r}}assets/img/{img}" alt="{alt}" loading="lazy" decoding="async"></figure>'
+    w, h = TAM_FIGURAS[img]
+    return f'<figure class="{clases}"><img src="{{r}}assets/img/{img}" alt="{alt}" width="{w}" height="{h}" decoding="async"></figure>'
 
 def combate(enlace, izq, der, nombres, credito, signo="="):
     (n1, d1), (n2, d2) = nombres
