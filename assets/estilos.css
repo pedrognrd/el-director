@@ -49,7 +49,7 @@ h1 .el{font-family:var(--f-cabecera);text-transform:none;letter-spacing:0;font-w
 h2{font-size:clamp(1.6rem,3.6vw,2.3rem);margin-top:2.6rem}
 h3{font-size:1.2rem;letter-spacing:.05em;color:var(--oro);margin-top:1.8rem}
 p{margin:.9rem 0}
-.antetitulo{font-family:var(--f-teletipo);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gris)}
+.antetitulo{font-family:var(--f-teletipo);font-size: 1.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gris)}
 .entradilla{font-size:1.22rem;line-height:1.55;color:var(--papel)}
 .nota{color:var(--gris);font-size:.9rem}
 .mono{font-family:var(--f-teletipo);font-size:.85em}
@@ -199,7 +199,7 @@ dl.faq dd{margin:.4rem 0 0}
 .hero-fotos{position:absolute;inset:0;z-index:-2;display:grid;grid-template-columns:1.2fr 1fr 1fr}
 .hero-fotos img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(.85)}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(15,42,44,.96) 0%,rgba(15,42,44,.86) 45%,rgba(15,42,44,.55) 100%),linear-gradient(0deg,rgba(15,42,44,.9),transparent 40%);mix-blend-mode:normal}
-.hero h1{font-size:clamp(3rem,10vw,6.8rem);line-height:.95}
+.hero h1{font-size: clamp(3rem,10vw,5rem);line-height:.95}
 .hero .sub{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.2em;color:var(--oro);font-size:clamp(1rem,2.4vw,1.45rem);margin-top:10px}
 .hero-texto{padding-bottom:28px}
 .hero-creditos{font-family:var(--f-teletipo);font-size:.62rem;letter-spacing:.03em;color:var(--gris);margin:0}
@@ -321,7 +321,7 @@ main.sin-relleno{padding-block:0}
 .hero-v3 h1{margin:0;padding-bottom:0}
 .hero-v3 h1 .sub-v3{display:block;border-top:2px solid var(--papel);margin-top:14px;padding-top:12px;text-align:center;font-size:clamp(1.2rem,2.3vw,1.7rem);letter-spacing:.03em}
 .hero-v3 h1 img{display:block;width:100%;height:auto}
-.hero-v3 .entradilla{font-family:var(--f-display);font-weight:500;font-size:1.08rem;line-height:1.5;letter-spacing:.01em;margin:22px 0 0;color:var(--papel)}
+.hero-v3 .entradilla{font-family:var(--f-display);font-weight:500;font-size:1.08rem;line-height:1.5;letter-spacing: .02em;margin:22px 0 0;color:var(--papel)}
 .hero-v3 .entradilla strong{text-transform:uppercase;font-weight:600}
 .banda-foto{position:relative;isolation:isolate;overflow:hidden;padding-block:clamp(48px,7vw,96px)}
 .banda-foto::before{content:"";position:absolute;inset:0;z-index:-1}
@@ -483,7 +483,7 @@ main.sin-relleno{padding-block:0}
 .con-hero .arriba{position:absolute;top:0;left:0;right:0;z-index:5}
 .con-hero .sitio{background:rgba(10,31,33,.6);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
 main.con-hero{padding-top:0}
-.hero-pagina{min-height:min(46vw,620px);padding-top:150px;padding-bottom:56px;margin-bottom:40px;align-items:flex-end}
+.hero-pagina{min-height: min(46vw,800px);padding-top:150px;padding-bottom:56px;margin-bottom:0;align-items: end;}
 .hero-pagina .hero-texto>*{max-width:720px}
 .hero-pagina .migas{margin-bottom:14px;color:var(--papel)}
 .hero-pagina .migas a{color:var(--papel)}
@@ -548,3 +548,10 @@ h1,h2,h3{letter-spacing:.01em}
 .enc-vivo{position:absolute;left:-9999px}
 @media (max-width:560px){.enc-rejilla{grid-template-columns:repeat(2,minmax(0,1fr))}.enc-barras li{grid-template-columns:1fr 3.8em}.enc-barra{grid-column:1/-1;grid-row:2}.enc-img-peq{width:64px;height:64px}}
 .enc-img.sin-foto{object-fit:contain;object-position:50% 100%;padding:12px 12px 0;opacity:.55}
+
+/* Migas de pan en una franja entre el hero y el contenido */
+.migas-franja{background:var(--noche);border-bottom:1px solid var(--petroleo-3);margin-bottom:40px}
+.migas-franja .migas{margin:0;padding-block:12px;font-size:.85rem;color:var(--gris)}
+.migas-franja .migas a{color:var(--papel);text-decoration:none}
+.migas-franja .migas a:hover{color:var(--oro)}
+.migas-franja [aria-current="page"]{color:var(--oro)}

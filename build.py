@@ -1006,10 +1006,16 @@ def con_hero(ruta, cuerpo):
         entradilla, resto = m2.group(2), m2.group(1) + "\n" + resto[m2.end():]
     estilo = f'object-position:{encuadre}' + (';transform:scaleX(-1)' if voltear else '')
     alt = "David Jiménez en 2019" if ruta == "personajes/david-jimenez/" else ""
+    # Las migas salen del hero a una franja propia entre el hero y el contenido.
+    mg = re.search(r'<nav class="migas".*?</nav>', cabeza, re.S)
+    franja = ""
+    if mg:
+        cabeza = cabeza.replace(mg.group(0), "")
+        franja = f'<div class="migas-franja"><div class="contenedor">{mg.group(0)}</div></div>\n'
     return (f'<section class="hero hero-v3 hero-pagina">'
             f'<img class="hero-fondo" src="{{r}}assets/img/cabeceras/{img}" alt="{alt}" width="{w}" height="{h}" style="{estilo}" fetchpriority="high" decoding="async">'
             f'<div class="contenedor hero-texto">{cabeza}{entradilla}</div></section>\n'
-            f'<div class="contenedor">\n{resto}')
+            f'{franja}<div class="contenedor">\n{resto}')
 
 def main():
     docs = SALIDA
