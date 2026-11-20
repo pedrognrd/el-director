@@ -12,7 +12,7 @@
   --ok:#6fbf8e;
   --f-cabecera:"UnifrakturCook","Old English Text MT",serif;
   --f-display:Impact,"Anton","Haettenschweiler","Arial Narrow Bold",sans-serif;
-  --f-texto:Impact,"Anton","Haettenschweiler","Arial Narrow Bold",sans-serif;
+  --f-texto:"Oswald","Arial Narrow",sans-serif;
   --f-teletipo:Impact,"Anton","Haettenschweiler","Arial Narrow Bold",sans-serif;
   color-scheme:dark;
 }
@@ -563,3 +563,8 @@ h1,h2,h3{letter-spacing:.01em}
 .hero-mosaico img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block}
 @media (max-width:1024px){.hero-mosaico{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-mosaico img:nth-child(n+4){display:none}}
 @media (max-width:760px){.hero-mosaico{grid-template-columns:1fr}.hero-mosaico img:nth-child(n+2){display:none}}
+
+/* Textos de lectura en Oswald (misma familia estrecha que Impact, más ligera); titulares y etiquetas siguen en Impact */
+body{font-weight:400;letter-spacing:.01em;line-height:1.6}
+.lectura p,.lectura li,dl.faq dd,td{letter-spacing:.01em}
+p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{font-weight:600}
