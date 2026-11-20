@@ -321,7 +321,7 @@ main.sin-relleno{padding-block:0}
 .hero-v3 h1{margin:0;padding-bottom:0}
 .hero-v3 h1 .sub-v3{display:block;border-top:2px solid var(--papel);margin-top:14px;padding-top:12px;text-align:center;font-size:clamp(1.2rem,2.3vw,1.7rem);letter-spacing:.03em}
 .hero-v3 h1 img{display:block;width:100%;height:auto}
-.hero-v3 .entradilla{font-family:var(--f-display);font-weight:500;font-size:1.08rem;line-height:1.5;letter-spacing: .02em;margin:22px 0 0;color:var(--papel)}
+.hero-v3 .entradilla{font-family:var(--f-display);font-weight:500;font-size:1.08rem;line-height:1.5;letter-spacing:.01em;margin:22px 0 0;color:var(--papel)}
 .hero-v3 .entradilla strong{text-transform:uppercase;font-weight:600}
 .banda-foto{position:relative;isolation:isolate;overflow:hidden;padding-block:clamp(48px,7vw,96px)}
 .banda-foto::before{content:"";position:absolute;inset:0;z-index:-1}
@@ -369,7 +369,7 @@ main.sin-relleno{padding-block:0}
 .vrlp-texto.izq{left:8.3%;top:24%}
 .vrlp-texto.der{right:8.2%;top:64%;text-align:right}
 .vrlp-texto strong{display:block;font-weight:600;font-size:clamp(1.05rem,2.3vw,2.25rem);line-height:1.05;letter-spacing:.01em;text-shadow: 0 2px 2px rgba(0,0,0,1);}
-.vrlp-texto span{display:block;color:var(--oro);text-transform:none;font-weight:500;font-size:clamp(.85rem,1.35vw,1.3rem);letter-spacing:.04em;margin-top:4px;text-shadow: 0 2px 2px rgba(0,0,0,1);}
+.vrlp-texto span{display:block;color:var(--oro);text-transform:none;font-weight:500;font-size: clamp(.85rem,1.35vw,1.8rem);letter-spacing:.04em;margin-top:4px;text-shadow: 0 2px 2px rgba(0,0,0,1);line-height: .6em;}
 .vrlp-texto:hover strong{color:var(--oro)}
 .vrlp-slide:last-child::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.55),transparent 22%)}
 .vrlp-control{position:absolute;z-index:3;left:50%;bottom:14px;transform:translateX(-50%);display:none;gap:10px;align-items:center}
@@ -459,7 +459,7 @@ main.sin-relleno{padding-block:0}
 .hero-v3 .hero-texto>*{max-width:600px}
 .hero-firmas{font-family:Verdana,Geneva,sans-serif;font-weight:700;font-size:.74rem;letter-spacing:.06em;margin-bottom:4px}
 .hero-v3 h1 .sub-v3{border-top:4px solid var(--papel);border-bottom:4px solid var(--papel);margin-top:18px;padding:12px 0 14px;font-weight:700;font-size:clamp(1.7rem,3.3vw,2.6rem);letter-spacing:.01em;line-height:1}
-.hero-v3 .entradilla{font-weight: 700;font-size:clamp(1.05rem,1.6vw,1.32rem);line-height:1.45;margin-top:18px}
+.hero-v3 .entradilla{font-weight:700;font-size:clamp(1.05rem,1.6vw,1.32rem);line-height:1.45;margin-top:18px}
 .hero-v3 .flechas{justify-content:space-between;flex-wrap:nowrap;gap:12px 20px;margin-top:40px}
 .hero-v3 .flechas a{font-weight:700;font-size:1.02rem;letter-spacing:.01em}
 @media (max-width:760px){
