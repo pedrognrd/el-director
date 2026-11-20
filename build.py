@@ -355,7 +355,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
     <div class="pie-aviso">
       <p><strong>Sobre esta web.</strong> “El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a <a href="{LIBROSDELKO}">Libros del K.O.</a>, Beta Fiction Spain ni David Jiménez.</p>
       <p>La relación entre personas reales y personajes se basa en fuentes públicas enlazadas en cada página, con su grado de certeza. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
-      <p><strong>Sin fines comerciales.</strong> Sin publicidad, sin enlaces de afiliado y sin cookies propias. Los vídeos de YouTube solo se cargan si pulsas reproducir. Los enlaces a librerías y cines son solo informativos. Fotos con licencia libre: <a href="{r}metodologia-y-fuentes/#creditos">créditos</a>.</p>
+      <p><strong>Web no monetizada.</strong> Sin publicidad y sin cookies propias. Los vídeos de YouTube solo se cargan si pulsas reproducir. Los enlaces a librerías y cines son solo informativos. Fotos con licencia libre: <a href="{r}metodologia-y-fuentes/#creditos">créditos</a>.</p>
     </div>
     <hr>
     <nav aria-label="Pie de página">
@@ -844,7 +844,7 @@ FAQ = [
     ("¿Qué periódico es el de El Director?", "El libro trata de El Mundo, el diario que Jiménez dirigió. En la película se presenta como un importante diario nacional."),
     ("¿Qué son “Los Acuerdos”?", "Es el nombre que Jiménez da al sistema de pactos y favores entre el poder económico, el político y la prensa que describe en el libro."),
     ("¿Quiénes son La Digna, El Señorito o Rasputín?", "Son apodos que Jiménez usa en el libro para periodistas y directivos del periódico. Aún no tenemos fuentes suficientes para confirmar a quién corresponden ni su personaje en la película."),
-    ("¿Es esta la web oficial?", "No. Es un proyecto informativo e independiente, sin publicidad ni enlaces de afiliado."),
+    ("¿Es esta la web oficial?", "No. Es un proyecto informativo e independiente, no monetizado."),
 ]
 PAGINAS["preguntas-frecuentes/"] = dict(
     titulo="Preguntas frecuentes sobre El Director, libro y película",
@@ -871,7 +871,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <h1>Metodología, fuentes y aviso legal</h1>
 <div class="lectura">
 <h2>Qué es esta web</h2>
-<p>“El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez. No tiene publicidad, enlaces de afiliado ni cookies propias, y no recibe dinero de nadie. Los enlaces a librerías y cines son solo informativos.</p>
+<p>“El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez. Es una web no monetizada: no tiene publicidad ni cookies propias y no recibe dinero de nadie. Los enlaces a librerías y cines son solo informativos.</p>
 <h2>Cómo verificamos</h2>
 <ul>
 <li><span class="sello s-conf">Confirmado</span> Lo publican el autor, la productora o la distribuidora, o al menos dos medios independientes.</li>
