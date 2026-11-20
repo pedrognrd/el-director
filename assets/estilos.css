@@ -474,3 +474,4 @@ main.sin-relleno{padding-block:0}
   .es-portada .sitio{background:var(--noche);-webkit-backdrop-filter:none;backdrop-filter:none}
   .es-portada .hero-v3{padding-top:44px}
 }
+.hero-firmas small{font-size:inherit}

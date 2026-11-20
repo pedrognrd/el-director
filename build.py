@@ -224,7 +224,7 @@ ENLACES = [
     ("RTVE", WIKI + "RTVE"),
     ("3Cat", WIKI + "3Cat"),
 ]
-_NO_ENLAZAR = {"a", "h1", "h2", "h3", "button", "script", "figcaption", "dt", "time", "caption", "th", "nav", "title", "summary"}
+_NO_ENLAZAR = {"small", "a", "h1", "h2", "h3", "button", "script", "figcaption", "dt", "time", "caption", "th", "nav", "title", "summary"}
 
 def enlazar(html_txt):
     import re
@@ -474,7 +474,7 @@ PAGINAS[""] = dict(
 <section class="hero hero-v3">
   <img class="hero-fondo" src="{{r}}assets/img/portada/hero-butacas.jpg" alt="" width="1920" height="1079" fetchpriority="high" decoding="async">
   <div class="contenedor hero-texto">
-    <div class="hero-firmas"><span>David Jiménez (2019)</span><span>Dani de la Orden (2026)</span></div>
+    <div class="hero-firmas"><small>David Jiménez (2019)</small><small>Dani de la Orden (2026)</small></div>
     <h1><img src="{{r}}assets/img/portada/logo-web.png" alt="El Director" width="860" height="181"><span class="sub-v3">Del libro a la película</span></h1>
     <p class="entradilla">En 2015, David Jiménez dejó de ser corresponsal de guerra para dirigir <i>El Mundo</i>. <strong>Duró un año.</strong> Lo contó todo en un libro. Ahora llega al cine. Aquí te contamos <strong>quién es quién</strong>.</p>
     <div class="flechas">
