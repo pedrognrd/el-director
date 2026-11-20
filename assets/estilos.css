@@ -318,7 +318,8 @@ main.sin-relleno{padding-block:0}
 .hero-v3 .hero-texto{width:100%;padding-bottom:0}
 .hero-v3 .hero-texto>*{max-width:560px}
 .hero-firmas{display:flex;justify-content:space-between;font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:.72rem;margin-bottom:6px}
-.hero-v3 h1{margin:0;padding-bottom:16px;border-bottom:2px solid var(--papel)}
+.hero-v3 h1{margin:0;padding-bottom:0}
+.hero-v3 h1 .sub-v3{display:block;border-top:2px solid var(--papel);margin-top:14px;padding-top:12px;text-align:center;font-size:clamp(1.2rem,2.3vw,1.7rem);letter-spacing:.03em}
 .hero-v3 h1 img{display:block;width:100%;height:auto}
 .hero-v3 .entradilla{font-family:var(--f-display);font-weight:500;font-size:1.08rem;line-height:1.5;letter-spacing:.01em;margin:22px 0 0;color:var(--papel)}
 .hero-v3 .entradilla strong{text-transform:uppercase;font-weight:600}
@@ -341,7 +342,9 @@ main.sin-relleno{padding-block:0}
 .peli-texto .datos dt{font-family:var(--f-display);font-weight:600;color:var(--oro);font-size:.78rem}
 .peli-texto .flechas{margin-top:auto;padding-top:24px}
 .pie{background:#000;border-top:0}
-.pie-logo{display:block;margin:6px auto 22px;width:258px;max-width:70%;height:auto}
+.pie-marca{text-align:center;margin:6px 0 22px}
+.pie-logo{display:block;margin:0 auto 4px;width:258px;max-width:70%;height:auto}
+.pie-marca span{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--papel);font-size:1rem}
 @media (max-width:760px){
   .hero-v3{min-height:0;padding-block:48px 56px}
   .hero-v3::before{background:linear-gradient(0deg,rgba(6,18,20,.95) 30%,rgba(6,18,20,.55) 100%)}

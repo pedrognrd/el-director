@@ -319,7 +319,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 </main>
 <footer class="pie">
   <div class="contenedor">
-    <img class="pie-logo" src="{r}assets/img/portada/logo-web.png" alt="El Director. Del libro a la película" width="258" height="54" loading="lazy">
+    <p class="pie-marca"><img class="pie-logo" src="{r}assets/img/portada/logo-web.png" alt="El Director" width="258" height="54" loading="lazy"><span>Del libro a la película</span></p>
     <div class="pie-aviso">
       <p><strong>Sobre esta web.</strong> “El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez.</p>
       <p>La relación entre personas reales y personajes se basa en fuentes públicas enlazadas en cada página, con su grado de certeza. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
@@ -427,7 +427,7 @@ PAGINAS[""] = dict(
   <img class="hero-fondo" src="{{r}}assets/img/portada/hero-butacas.jpg" alt="" width="1920" height="1079" fetchpriority="high" decoding="async">
   <div class="contenedor hero-texto">
     <div class="hero-firmas"><span>David Jiménez (2019)</span><span>Dani de la Orden (2026)</span></div>
-    <h1><img src="{{r}}assets/img/portada/logo-web.png" alt="El Director. Del libro a la película" width="860" height="181"></h1>
+    <h1><img src="{{r}}assets/img/portada/logo-web.png" alt="El Director" width="860" height="181"><span class="sub-v3">Del libro a la película</span></h1>
     <p class="entradilla">En 2015, David Jiménez dejó de ser corresponsal de guerra para dirigir <i>El Mundo</i>. <strong>Duró un año.</strong> Lo contó todo en un libro. Ahora llega al cine. Aquí te contamos <strong>quién es quién</strong>.</p>
     <div class="flechas">
       <a href="{{r}}personajes/">Ver quién es quién</a>
