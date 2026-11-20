@@ -433,3 +433,11 @@ main.sin-relleno{padding-block:0}
 .vrlp-texto.der{right:var(--margen)}
 .vrlp-texto{max-width:min(44%,520px)}
 @media (max-width:760px){.vrlp-texto.izq,.vrlp-texto.der{left:var(--margen);right:auto}.vrlp-texto{max-width:90%}}
+/* Slide 5: siluetas que entran desde fuera de la imagen */
+.vrlp-lienzo{position:absolute;top:0;bottom:0;left:50%;height:100%;aspect-ratio:2000/741;min-width:100%;transform:translateX(-50%);overflow:hidden}
+.vrlp-lienzo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vrlp.js .vrlp-capa.entra-izq{transform:translateX(-100%)}
+.vrlp.js .vrlp-capa.entra-der{transform:translateX(100%)}
+.vrlp.js .activa .vrlp-capa{animation:vrlp-desliza 1.3s .2s cubic-bezier(.22,.8,.28,1) both}
+@keyframes vrlp-desliza{to{transform:translateX(0)}}
+@media (prefers-reduced-motion:reduce){.vrlp.js .vrlp-capa{transform:none!important;animation:none!important}}

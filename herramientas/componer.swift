@@ -1,6 +1,6 @@
 // Compone un fondo de slide (2000x741) a partir de una foto y siluetas opcionales.
 // Uso:
-//   swift componer.swift base.jpg salida.jpg recorteY recorteAlto [--oscuro] [--x=inicio:fin] [figura.png:x:y:ancho ...]
+//   swift componer.swift base.jpg|- salida.jpg|.png recorteY recorteAlto [--oscuro] [--x=inicio:fin] [figura.png:x:y:ancho ...]
 // recorteY / recorteAlto: franja horizontal de la foto (en píxeles de la foto, origen arriba).
 // x, y, ancho: posición de cada silueta en el lienzo de 2000x741 (origen arriba a la izquierda).
 // Cada silueta recibe un contorno negro fino, como en el diseño.
@@ -16,7 +16,10 @@ func cargar(_ ruta: String) -> CIImage {
     guard let img = CIImage(contentsOf: URL(fileURLWithPath: ruta)) else { print("no se pudo leer \(ruta)"); exit(1) }
     return img
 }
-let base = cargar(args[0]); let salida = args[1]
+// Si la base es "-", el lienzo es transparente y la salida PNG (capas sueltas para animar).
+let transparente = args[0] == "-"
+let base = transparente ? CIImage(color: CIColor(red: 0, green: 0, blue: 0, alpha: 0)).cropped(to: CGRect(x: 0, y: 0, width: W, height: H)) : cargar(args[0])
+let salida = args[1]
 let ry = CGFloat(Double(args[2])!), rh = CGFloat(Double(args[3])!)
 args = Array(args.dropFirst(4))
 let oscuro = args.contains("--oscuro"); args.removeAll { $0 == "--oscuro" }
@@ -63,7 +66,7 @@ for capa in args {
 
 let ctx = CIContext()
 guard let cg = ctx.createCGImage(lienzo, from: CGRect(x: 0, y: 0, width: W, height: H)),
-      let dest = CGImageDestinationCreateWithURL(URL(fileURLWithPath: salida) as CFURL, UTType.jpeg.identifier as CFString, 1, nil)
+      let dest = CGImageDestinationCreateWithURL(URL(fileURLWithPath: salida) as CFURL, (transparente ? UTType.png : UTType.jpeg).identifier as CFString, 1, nil)
 else { print("no se pudo escribir"); exit(1) }
 CGImageDestinationAddImage(dest, cg, [kCGImageDestinationLossyCompressionQuality: 0.62] as CFDictionary)
 CGImageDestinationFinalize(dest)

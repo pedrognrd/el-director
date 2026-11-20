@@ -450,14 +450,20 @@ SLIDES = [
      [("der", "David Jiménez", "En el libro: el narrador")], "28%"),
     ("slide-4.jpg", "David Verdaguer como David Jiménez en El Director", "personajes/david-jimenez/", "",
      [("izq", "David Verdaguer", "David Jiménez")], "58%"),
-    ("slide-5.jpg", "Siluetas sobre la redacción de la película: personajes del libro aún sin identificar", "personajes/#pendientes", "",
-     [("izq", "La Digna, El Señorito, Rasputín…", "Apodos del libro"), ("der", "Ayúdanos a descubrirlos", "Participa en nuestra encuesta")], "50%"),
+    ("slide-5-fondo.jpg", "Redacción de la película con dos siluetas: personajes del libro aún sin identificar", "personajes/#pendientes", "",
+     [("izq", "La Digna, El Señorito, Rasputín…", "Apodos del libro"), ("der", "Ayúdanos a descubrirlos", "Participa en nuestra encuesta")], "50%",
+     [("slide-5-mujer.png", "entra-izq"), ("slide-5-hombre.png", "entra-der")]),
 ]
 
-def slide(img, alt, enlace, tono, textos, foco):
+def slide(img, alt, enlace, tono, textos, foco, capas=()):
     t = "".join(f'<a class="vrlp-texto {lado}" href="{{r}}{enlace}"><strong>{b}</strong><span>{am}</span></a>' for lado, b, am in textos)
-    return (f'<figure class="vrlp-slide" data-tono="{tono}" style="--foco:{foco}">'
-            f'<img src="{{r}}assets/img/slider/{img}" alt="{alt}" width="2000" height="741" decoding="async">{t}</figure>')
+    foto = f'<img src="{{r}}assets/img/slider/{img}" alt="{alt}" width="2000" height="741" decoding="async">'
+    if capas:
+        # Siluetas en capas sueltas (lienzo 2000x741 transparente) para poder animarlas.
+        c = "".join(f'<img class="vrlp-capa {clase}" src="{{r}}assets/img/slider/{png}" alt="" width="2000" height="741" decoding="async">' for png, clase in capas)
+        foto = f'<div class="vrlp-lienzo">{foto}{c}</div>'
+    return f'<figure class="vrlp-slide" data-tono="{tono}" style="--foco:{foco}">{foto}{t}</figure>'
+
 
 PAGINAS[""] = dict(
     titulo="El Director: quién es quién del libro a la película",
