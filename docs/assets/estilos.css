@@ -11,14 +11,14 @@
   --butaca:#c8434a;
   --ok:#6fbf8e;
   --f-cabecera:"UnifrakturCook","Old English Text MT",serif;
-  --f-display:"Oswald","Arial Narrow",Impact,sans-serif;
-  --f-texto:"Source Serif 4",Georgia,"Times New Roman",serif;
-  --f-teletipo:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --f-display:Verdana,Geneva,"DejaVu Sans",sans-serif;
+  --f-texto:Verdana,Geneva,"DejaVu Sans",sans-serif;
+  --f-teletipo:Verdana,Geneva,"DejaVu Sans",sans-serif;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--petroleo);color:var(--papel);font-family:var(--f-texto);font-size:18px;line-height:1.65}
+body{margin:0;background:var(--petroleo);color:var(--papel);font-family:var(--f-texto);font-size:16px;line-height:1.65}
 img{max-width:100%;height:auto}
 a{color:var(--oro);text-underline-offset:3px}
 a:hover{color:var(--papel)}
@@ -475,3 +475,33 @@ main.sin-relleno{padding-block:0}
   .es-portada .hero-v3{padding-top:44px}
 }
 .hero-firmas small{font-size:inherit}
+
+/* ---------- Verdana en todos los textos: Verdana es más ancha que Oswald, se reducen tamaños e interletrado ---------- */
+h1,h2,h3{letter-spacing:0;font-weight:700}
+h1{font-size:clamp(1.9rem,4.6vw,3.2rem)}
+h2{font-size:clamp(1.3rem,2.6vw,1.8rem)}
+h3{font-size:1.02rem;letter-spacing:.02em}
+.menu{font-size:.86rem;gap:6px 26px;letter-spacing:0}
+.marca span{font-size:.6rem}
+.cinta{font-size:.68rem;letter-spacing:.06em}
+.antetitulo,.migas,.actualizado{letter-spacing:.06em}
+.btn{letter-spacing:.04em;font-size:.82rem}
+.hero-firmas{font-size:.66rem;letter-spacing:.02em}
+.hero-v3 h1 .sub-v3{font-size:clamp(1.15rem,2.25vw,1.7rem);letter-spacing:0}
+.hero-v3 .entradilla{font-size:clamp(.92rem,1.2vw,1.04rem);line-height:1.55}
+.flechas a{letter-spacing:0;font-size:.8rem}
+.hero-v3 .flechas a{font-size:.78rem}
+.banda-foto h2{font-size:clamp(1.4rem,2.6vw,2rem)}
+.peli-texto .peli-entrada{font-size:.98rem;line-height:1.55}
+.peli-texto .datos{font-size:.82rem;letter-spacing:0}
+.peli-texto .datos dt{font-size:.72rem}
+.vrlp-titulo{font-size:clamp(1.15rem,2.6vw,2.5rem);letter-spacing:0}
+.vrlp-texto strong{font-size:clamp(.95rem,1.7vw,1.6rem);letter-spacing:0}
+.vrlp-texto span{font-size:clamp(.75rem,1vw,1rem);letter-spacing:0}
+.video .rotulo{letter-spacing:.02em;font-size:.9rem}
+.volteo-control button,.pie-menu{letter-spacing:.02em}
+.pie-marca span{font-size:.85rem;letter-spacing:.02em}
+.nombres strong,.par .nombre,.actor-tarjeta strong,.siguiente strong,dl.faq dt{letter-spacing:0}
+.nombres strong{font-size:clamp(.95rem,1.6vw,1.2rem)}
+.linea-tiempo time{font-size:1.5rem}
+@media (max-width:760px){.vrlp-titulo{font-size:1.1rem}.vrlp-texto strong{font-size:1rem}.vrlp-texto span{font-size:.8rem}.menu{font-size:.8rem}}
