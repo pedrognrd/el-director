@@ -40,12 +40,6 @@ FOTOS = {
     "david-jimenez": ("David Jiménez en 2019", "Cristina Pozo García (eldiario.es)", "CC BY-SA 3.0 ES",
                       "https://creativecommons.org/licenses/by-sa/3.0/es/",
                       "https://commons.wikimedia.org/wiki/File:El_exdirector_de_El_Mundo_David_Jim%C3%A9nez.jpg"),
-    "alberto-san-juan": ("Alberto San Juan en Valladolid, 2018", "MiguelAlanCS", "CC BY-SA 4.0",
-                         "https://creativecommons.org/licenses/by-sa/4.0/",
-                         "https://commons.wikimedia.org/wiki/File:Alberto_San_Juan_-_Valladolid_2018.jpg"),
-    "david-verdaguer": ("David Verdaguer en los Premios Goya 2024", "Pedro J Pacheco", "CC BY-SA 4.0",
-                        "https://creativecommons.org/licenses/by-sa/4.0/",
-                        "https://commons.wikimedia.org/wiki/File:Goyas_2024_-_David_Verdaguer.jpg"),
     "dani-de-la-orden": ("Dani de la Orden en 2013", "Barcelona.cat", "CC BY 3.0",
                          "https://creativecommons.org/licenses/by/3.0/",
                          "https://commons.wikimedia.org/wiki/File:(Dani_de_la_Orden)_La_hist%C3%B2ria_rom%C3%A0ntica_de_Barcelona.jpg"),
@@ -72,8 +66,8 @@ def credito_corto(clave):
     _, autor, lic, lic_url, origen = FOTOS[clave]
     return f'{autor}, {lic}'  # sin enlaces: va dentro de una tarjeta enlazada; los enlaces están en Créditos
 
-TAM_FIGURAS = {"silueta-hombre.png": (337, 640), "silueta-mujer.png": (403, 640), "figura-alberto-san-juan.png": (478, 640),
-               "figura-david-jimenez.png": (640, 611), "figura-david-verdaguer.png": (512, 640)}
+TAM_FIGURAS = {"silueta-hombre.png": (337, 640), "silueta-mujer.png": (403, 640), "figura-personaje-cardenal.png": (503, 640),
+               "figura-david-jimenez.png": (640, 611), "figura-personaje-david.png": (556, 640)}
 
 def luchador(img, alt, real=False, duda=False, lado="izq"):
     clases = "luchador " + lado + (" real" if real else "") + (" duda" if duda else "")
@@ -93,8 +87,6 @@ def combate(enlace, izq, der, nombres, credito, signo="="):
 
 DONDE_FOTO = {
     "david-jimenez": "Portada, ficha de David Jiménez",
-    "alberto-san-juan": "Portada, ficha del Cardenal, película",
-    "david-verdaguer": "Portada, ficha de David Jiménez, película",
     "dani-de-la-orden": "Película",
 }
 DONDE_VIDEO = {
@@ -108,6 +100,10 @@ def foto(clave, rotulo, ficcion=False, carga="lazy"):
     alt, autor, lic, lic_url, origen = FOTOS[clave]
     clase = "foto ficcion" if ficcion else "foto"
     return (f'<figure class="{clase}"><div class="marco"><img src="{{r}}assets/img/{clave}.jpg" alt="{alt}" width="480" height="600" loading="{carga}" decoding="async"></div>'
+            f'<figcaption><strong>{rotulo}</strong></figcaption></figure>')
+
+def foto_kit(ruta, alt, rotulo):
+    return (f'<figure class="foto ficcion"><div class="marco"><img src="{{r}}assets/img/{ruta}" alt="{alt}" width="480" height="600" decoding="async"></div>'
             f'<figcaption><strong>{rotulo}</strong></figcaption></figure>')
 
 def silueta(rotulo):
@@ -147,6 +143,7 @@ F = {
     "coverkitchen": ("Cover Kitchen: diseño de la portada", "https://coverkitchen.squarespace.com/memoir/el-director"),
     "elsalto": ("El Salto: entrevista a David Jiménez", "https://www.elsaltodiario.com/medios/entrevista-david-jimenez-director-mundo-libro-acuerdos-prensa-empresas-ibex-cloacas-estado-informacion-falsa-podemos"),
     "youtube": ("YouTube: canal oficial de David Jiménez", YOUTUBE),
+    "dossier": ("Beta Fiction Spain: kit y dossier de prensa oficial", "https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb"),
 }
 
 def fuentes(*claves):
@@ -183,7 +180,9 @@ PELI_LD = {
     "@type": "Movie", "@id": SITE + "pelicula/#pelicula", "name": "El director",
     "director": {"@type": "Person", "name": "Dani de la Orden"},
     "dateCreated": "2026", "datePublished": "2026-11-20", "inLanguage": "es", "countryOfOrigin": "ES",
-    "genre": ["Thriller", "Drama"],
+    "genre": ["Thriller"],
+    "duration": "PT1H55M",
+    "image": SITE + "assets/img/cartel-el-director.jpg",
     "isBasedOn": {"@id": SITE + "libro/#libro"},
     "actor": [{"@type": "Person", "name": n} for n in [
         "David Verdaguer", "Alberto San Juan", "Fernando Colomo", "Xavi Sáez", "Miriam Iscla", "Joan Carreras",
@@ -359,6 +358,53 @@ DONDE_VER = f"""<div class="donde">
 
 PAGINAS = {}
 
+# Reparto según el dossier de prensa oficial: (personaje, actor, foto, colaboración especial)
+REPARTO = [
+    ("David", "David Verdaguer", "david", False),
+    ("Cardenal", "Alberto San Juan", "cardenal", False),
+    ("Fernando", "Fernando Colomo", "fernando", False),
+    ("Julio", "Joan Carreras", "julio", False),
+    ("Elena", "Anna Alarcón", "elena", False),
+    ("Oskar", "David Vert", "oskar", False),
+    ("Sara", "Miriam Iscla", "sara", False),
+    ("Pedro", "Pau Durà", "pedro", False),
+    ("Virginia", "Anna Sahun Martí", "virginia", False),
+    ("Marina", "Mia Sala-Patau", "marina", False),
+    ("Ortega", "Marc Rodríguez", "ortega", False),
+    ("Aurelio Ortiz", "Xavi Sáez", "aurelio-ortiz", False),
+    ("Tesorero", "Nacho Fresneda", "tesorero", False),
+    ("Julia", "Emma Vilarasau", "julia", True),
+    ("Vidal", "Guillermo Toledo", "vidal", True),
+    ("Vicepresidenta", "Carmen Machi", "vicepresidenta", True),
+    ("Ministro", "Fernando Cayo", "ministro", True),
+]
+INSPIRADO = {"David": ("personajes/david-jimenez/", "David Jiménez"), "Cardenal": ("personajes/cardenal/", "Antonio Fernández-Galiano")}
+
+def tarjetas_reparto():
+    t = []
+    for pers, actor, img, esp in REPARTO:
+        extra = '<span class="especial">Colaboración especial</span>' if esp else ""
+        insp = INSPIRADO.get(pers)
+        insp_txt = f'<a class="inspira" href="{{r}}{insp[0]}">Inspirado en {insp[1]}</a>' if insp else '<span class="inspira pend">Persona real: pendiente</span>'
+        t.append(f'<li class="actor-tarjeta"><img src="{{r}}assets/img/reparto/{img}.jpg" alt="{actor} como {pers}" width="360" height="360" loading="lazy" decoding="async">'
+                 f'{extra}<span class="pers">{pers}</span><strong>{actor}</strong>{insp_txt}</li>')
+    return '<ul class="reparto-grid">' + "".join(t) + "</ul>"
+
+def filas_reparto():
+    filas = []
+    for pe, a, _, e in REPARTO:
+        esp = " <small>(colaboración especial)</small>" if e else ""
+        if pe in INSPIRADO:
+            real = '<a href="{r}' + INSPIRADO[pe][0] + '">' + INSPIRADO[pe][1] + '</a>'
+            sello = '<span class="sello s-conf">Confirmado</span>'
+        else:
+            real = "Pendiente"
+            sello = '<span class="sello s-pend">Pendiente</span>'
+        filas.append(f"<tr><td>{a}{esp}</td><td>{pe}</td><td>{real}</td><td>{sello}</td></tr>")
+    return "".join(filas)
+
+FOTOGRAMAS = 6
+
 HITOS = [
     ("1998", "Jiménez abre en Hong Kong la primera delegación de <i>El Mundo</i> en Asia."),
     ("2014", "Pedro J. Ramírez deja la dirección del periódico. Le sustituye Casimiro García-Abadillo."),
@@ -395,14 +441,14 @@ PAGINAS[""] = dict(
     <div class="combates">
       {combate("personajes/cardenal/",
                luchador("silueta-hombre.png", "Silueta: no hay foto libre de Antonio Fernández-Galiano", real=True),
-               luchador("figura-alberto-san-juan.png", "Alberto San Juan", lado="der"),
+               luchador("figura-personaje-cardenal.png", "Alberto San Juan como Cardenal", lado="der"),
                (("Antonio Fernández-Galiano", "En el libro: “El Cardenal”"), ("Cardenal", "Alberto San Juan")),
-               "Foto de Alberto San Juan: " + credito_corto("alberto-san-juan"))}
+               "")}
       {combate("personajes/david-jimenez/",
                luchador("figura-david-jimenez.png", "David Jiménez", real=True),
-               luchador("figura-david-verdaguer.png", "David Verdaguer", lado="der"),
+               luchador("figura-personaje-david.png", "David Verdaguer como David Jiménez", lado="der"),
                (("David Jiménez", "En el libro: el narrador"), ("David Jiménez", "David Verdaguer")),
-               "Fotos: " + credito_corto("david-jimenez") + " · " + credito_corto("david-verdaguer"))}
+               "")}
       {combate("personajes/#pendientes",
                luchador("silueta-mujer.png", "Silueta genérica", real=True),
                luchador("silueta-hombre.png", "Silueta genérica", lado="der", duda=True),
@@ -432,15 +478,14 @@ PAGINAS[""] = dict(
       </div>
     </article>
     <article class="obra">
-      <figure class="cubierta poster-generico" aria-label="Recreación de un cartel de cine">
-        <div class="tapa"><img src="{{r}}assets/img/silueta-hombre.png" alt="" loading="lazy"><span class="claim">La verdad tiene un precio</span><span class="titulo">El director</span><span class="fecha">20 de noviembre · solo en cines</span></div>
-        <figcaption>Recreación. No es el cartel oficial.</figcaption>
+      <figure class="cubierta cartel-oficial">
+        <img src="{{r}}assets/img/cartel-el-director.jpg" alt="Cartel oficial de El Director" width="560" height="800" loading="lazy" decoding="async">
       </figure>
       <div class="obra-texto">
         <p class="antetitulo">La película · 2026</p>
         <h2>La película</h2>
         <p>Thriller de Dani de la Orden con David Verdaguer y Alberto San Juan, con guion de Alejandro Hernández y Michel Gaztambide. En cines desde el 20 de noviembre de 2026.</p>
-        <dl class="datos"><dt>Dirección</dt><dd>Dani de la Orden</dd><dt>Reparto</dt><dd>David Verdaguer, Alberto San Juan, Fernando Colomo, Carmen Machi…</dd><dt>Distribución</dt><dd>Beta Fiction Spain</dd></dl>
+        <dl class="datos"><dt>Dirección</dt><dd>Dani de la Orden</dd><dt>Reparto</dt><dd>David Verdaguer, Alberto San Juan, Fernando Colomo, Carmen Machi…</dd><dt>Duración</dt><dd>1 h 55 min</dd><dt>Distribución</dt><dd>Beta Fiction Spain</dd></dl>
         <div class="acciones"><a class="btn" href="{{r}}pelicula/">Ficha y reparto</a><a class="btn sec" href="{{r}}pelicula/#donde-ver">Dónde verla</a></div>
       </div>
     </article>
@@ -471,7 +516,7 @@ PAGINAS["personajes/"] = dict(
 <p class="antetitulo">Quién es quién</p>
 <h1>Personajes reales de <span class="el">El</span> Director</h1>
 <div class="lectura">
-<p class="entradilla">David Jiménez escribió su libro con dos reglas: los políticos, empresarios y miembros de la monarquía aparecen con nombre y apellidos; los periodistas y directivos del diario, con apodos. La película cambia algunos nombres más.</p>
+<p class="entradilla">David Jiménez escribió su libro con dos reglas: los políticos, empresarios y miembros de la monarquía aparecen con nombre y apellidos; los periodistas y directivos del diario, con apodos. La película cambia algunos nombres más: según el dossier de prensa oficial, salvo David, los personajes llevan nombres de ficción o un cargo, como el Ministro o la Vicepresidenta.</p>
 <p>Cada fila lleva un sello: <span class="sello s-conf">Confirmado</span> cuando lo publican el autor, la productora o varios medios; <span class="sello s-real">Nombre real</span> cuando la persona aparece con su nombre en el libro; <span class="sello s-pend">Pendiente</span> cuando aún no hay datos fiables.</p>
 </div>
 
@@ -497,17 +542,16 @@ PAGINAS["personajes/"] = dict(
 
 <h2 id="pendientes">Apodos del libro pendientes de confirmar</h2>
 <div class="lectura">
-<p>El libro usa apodos para la gente de la redacción y la dirección del diario: “La Digna”, “El Señorito”, “Rasputín”, “El Poeta”, “El Secretario”, “El Reportero”, “los inspirados” o “los de la segunda planta”, entre otros. Algunos medios han publicado a quién corresponden, pero todavía no tenemos fuentes suficientes para afirmarlo, ni sabemos qué personaje de la película los representa. Actualizaremos esta tabla tras el estreno.</p>
+<p>El libro usa apodos para la gente de la redacción y la dirección del diario: “La Digna”, “El Señorito”, “Rasputín”, “El Poeta”, “El Secretario”, “El Reportero”, “los inspirados” o “los de la segunda planta”, entre otros. Algunos medios han publicado a quién corresponden, pero todavía no tenemos fuentes suficientes para afirmarlo.</p>
+<p>Ya conocemos el personaje de cada actor, porque lo publica el dossier de prensa oficial. Lo que aún no sabemos es en qué persona real se inspira cada uno, salvo David y Cardenal. No lo deduciremos por parecidos de nombre o de cargo: solo lo publicaremos cuando lo confirmen el autor, la productora o varios medios.</p>
 </div>
 <div class="tabla"><table>
-<caption>Reparto sin personaje publicado</caption>
-<thead><tr><th>Actor o actriz</th><th>Personaje</th><th>Certeza</th></tr></thead>
+<caption>Reparto y personajes según el dossier de prensa oficial</caption>
+<thead><tr><th>Actor o actriz</th><th>Personaje</th><th>Persona real</th><th>Certeza</th></tr></thead>
 <tbody>
-<tr><td>Fernando Colomo</td><td>Por confirmar (la crítica lo describe como un mentor)</td><td><span class="sello s-pend">Pendiente</span></td></tr>
-<tr><td>Carmen Machi · Emma Vilarasau · Guillermo Toledo · Fernando Cayo</td><td>Por confirmar (colaboraciones especiales)</td><td><span class="sello s-pend">Pendiente</span></td></tr>
-<tr><td>Xavi Sáez · Miriam Iscla · Joan Carreras · Anna Alarcón · Nacho Fresneda · Pau Durà · Marc Rodríguez · David Vert · Mia Sala-Patau</td><td>Por confirmar</td><td><span class="sello s-pend">Pendiente</span></td></tr>
+{filas_reparto()}
 </tbody></table></div>
-{fuentes("wiki_libro", "wiki_peli", "infobae", "cineconn", "cinemagavia", "ecartelera", "av451")}
+{fuentes("dossier", "wiki_libro", "wiki_peli", "infobae", "cineconn", "cinemagavia", "ecartelera", "av451")}
 {siguiente(("Ficha", "El Cardenal", "personajes/cardenal/"), ("Ficha", "David Jiménez", "personajes/david-jimenez/"), ("Contexto", "La historia real", "historia-real/"))}
 </div>""",
     ld=[ld_migas([("Inicio", ""), ("Quién es quién", "personajes/")]),
@@ -532,7 +576,7 @@ PAGINAS["personajes/cardenal/"] = dict(
 <div class="careo">
   {silueta("Antonio Fernández-Galiano · vida real")}
   <div class="igual" aria-hidden="true">=</div>
-  {foto("alberto-san-juan", "Alberto San Juan · Cardenal", ficcion=True, carga="eager")}
+  {foto_kit("reparto/cardenal.jpg", "Alberto San Juan como Cardenal", "Alberto San Juan · Cardenal")}
 </div>
 <dl class="datos">
   <dt>En el libro</dt><dd>“El Cardenal”, apodo</dd>
@@ -580,7 +624,7 @@ PAGINAS["personajes/david-jimenez/"] = dict(
 <div class="careo">
   {foto("david-jimenez", "David Jiménez · vida real", carga="eager")}
   <div class="igual" aria-hidden="true">=</div>
-  {foto("david-verdaguer", "David Verdaguer · David Jiménez", ficcion=True, carga="eager")}
+  {foto_kit("reparto/david.jpg", "David Verdaguer como David Jiménez", "David Verdaguer · David Jiménez")}
 </div>
 <dl class="datos">
   <dt>En el libro</dt><dd>Narrador en primera persona</dd>
@@ -665,6 +709,8 @@ PAGINAS["pelicula/"] = dict(
 <div class="lectura">
 <p class="entradilla">Un corresponsal con más de veinte años cubriendo guerras es nombrado director de uno de los principales diarios del país. Su defensa del periodismo riguroso choca desde el principio con los intereses ocultos del periódico, protegidos por Cardenal, el editor.</p>
 </div>
+<div class="ficha-peli">
+<figure class="cubierta cartel-oficial"><img src="{{r}}assets/img/cartel-el-director.jpg" alt="Cartel oficial de El Director" width="560" height="800" decoding="async"></figure>
 <dl class="datos">
   <dt>Dirección</dt><dd>Dani de la Orden</dd>
   <dt>Guion</dt><dd>Alejandro Hernández y Michel Gaztambide, sobre el libro de David Jiménez</dd>
@@ -672,31 +718,22 @@ PAGINAS["pelicula/"] = dict(
   <dt>Música</dt><dd>Maria Chiara Casà</dd>
   <dt>Producción</dt><dd>Beta Fiction Spain, Sábado Time, Cardinal Content e Historias de un Director SL, con la participación de HBO Max, RTVE y 3Cat</dd>
   <dt>Distribución</dt><dd>Beta Fiction Spain</dd>
-  <dt>Género</dt><dd>Thriller, drama</dd>
-  <dt>Estreno</dt><dd>20 de noviembre de 2026, en cines. Algunos medios publicaron el 27; el cartel oficial dice 20.</dd>
+  <dt>Género</dt><dd>Thriller periodístico</dd>
+  <dt>Duración</dt><dd>1 h 55 min</dd>
+  <dt>Estreno</dt><dd>20 de noviembre de 2026, en cines</dd>
 </dl>
+</div>
 <h2>Teaser y avances</h2>
 {video("PUQzmris2CE")}
 <div class="videos" style="margin-top:22px">
   <div>{video("NT7O8rzR3PU")}</div>
   <div>{video("CgmhIDMm-B4")}</div>
 </div>
-<h2>Reparto</h2>
-<div class="careo" style="max-width:640px">
-  {foto("david-verdaguer", "David Verdaguer · David Jiménez", ficcion=True)}
-  <div class="igual" aria-hidden="true">·</div>
-  {foto("alberto-san-juan", "Alberto San Juan · Cardenal", ficcion=True)}
-</div>
-<div class="tabla"><table>
-<thead><tr><th>Actor o actriz</th><th>Personaje</th><th>Inspirado en</th></tr></thead>
-<tbody>
-<tr><td>David Verdaguer</td><td>David Jiménez</td><td><a href="{{r}}personajes/david-jimenez/">David Jiménez</a></td></tr>
-<tr><td>Alberto San Juan</td><td>Cardenal</td><td><a href="{{r}}personajes/cardenal/">Antonio Fernández-Galiano</a></td></tr>
-<tr><td>Fernando Colomo</td><td>Por confirmar</td><td>—</td></tr>
-<tr><td>Xavi Sáez · Miriam Iscla · Joan Carreras</td><td>Por confirmar</td><td>—</td></tr>
-<tr><td>Carmen Machi · Emma Vilarasau · Guillermo Toledo · Fernando Cayo</td><td>Colaboración especial · por confirmar</td><td>—</td></tr>
-<tr><td>Anna Alarcón · Nacho Fresneda · Pau Durà · Marc Rodríguez · David Vert · Mia Sala-Patau</td><td>Por confirmar</td><td>—</td></tr>
-</tbody></table></div>
+<h2>Reparto y personajes</h2>
+<p class="nota">Personajes y fotos según el dossier de prensa oficial de la película.</p>
+{tarjetas_reparto()}
+<h2>Fotogramas</h2>
+<div class="fotogramas">{"".join(f'<img src="{{r}}assets/img/fotogramas/fotograma-{n}.jpg" alt="Fotograma de El Director" width="1100" height="618" loading="lazy" decoding="async">' for n in range(1, FOTOGRAMAS + 1))}</div>
 <div class="careo" style="grid-template-columns:minmax(0,180px) minmax(0,1fr);max-width:640px">
   {foto("dani-de-la-orden", "Dani de la Orden · director")}
   <p class="nota" style="margin:0">Director de <i>Barcelona, noche de verano</i> y <i>Litus</i>.</p>
@@ -708,7 +745,7 @@ PAGINAS["pelicula/"] = dict(
 <p>En cines desde el 20 de noviembre. Enlaces informativos, sin afiliación.</p>
 </div>
 {DONDE_VER}
-{fuentes("beta", "av451", "wiki_peli", "infobae", "cineconn", "cinemagavia", "ecartelera")}
+{fuentes("dossier", "beta", "av451", "wiki_peli", "infobae", "cineconn", "cinemagavia", "ecartelera")}
 {siguiente(("Tabla", "Quién es quién", "personajes/"), ("Libro", "El director (2019)", "libro/"), ("Contexto", "La historia real", "historia-real/"))}
 </div>""",
     ld=[ld_migas([("Inicio", ""), ("La película", "pelicula/")]), PELI_LD, video_ld("PUQzmris2CE"), video_ld("NT7O8rzR3PU"), video_ld("CgmhIDMm-B4")],
@@ -756,6 +793,8 @@ FAQ = [
     ("¿El Director está basada en hechos reales?", "Sí. Adapta el libro de David Jiménez sobre su año como director de El Mundo (2015-2016). La película es una ficción inspirada en esos hechos y cambia algunos nombres."),
     ("¿Quién es el Cardenal en El Director?", "Es Antonio Fernández-Galiano, presidente de Unidad Editorial cuando Jiménez dirigió El Mundo. En la película lo interpreta Alberto San Juan."),
     ("¿Quién interpreta a David Jiménez?", "David Verdaguer."),
+    ("¿Qué personajes hay en El Director?", "Según el dossier de prensa oficial: David (David Verdaguer), Cardenal (Alberto San Juan), Fernando (Fernando Colomo), Julio (Joan Carreras), Elena (Anna Alarcón), Oskar (David Vert), Sara (Miriam Iscla), Pedro (Pau Durà), Virginia (Anna Sahun Martí), Marina (Mia Sala-Patau), Ortega (Marc Rodríguez), Aurelio Ortiz (Xavi Sáez) y el Tesorero (Nacho Fresneda). Con la colaboración especial de Emma Vilarasau (Julia), Guillermo Toledo (Vidal), Carmen Machi (la Vicepresidenta) y Fernando Cayo (el Ministro)."),
+    ("¿Cuánto dura El Director?", "1 hora y 55 minutos."),
     ("¿Cuándo se estrena El Director?", "El 20 de noviembre de 2026 en cines de España, según el cartel oficial y la distribuidora. Algunos medios publicaron el 27 de noviembre."),
     ("¿Quién dirige la película?", "Dani de la Orden, con guion de Alejandro Hernández y Michel Gaztambide."),
     ("¿Qué periódico es el de El Director?", "El libro trata de El Mundo, el diario que Jiménez dirigió. En la película se presenta como un importante diario nacional."),
@@ -798,7 +837,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <p>Recogemos lo que ya han publicado el autor y otros medios, enlazamos las fuentes en cada página e indicamos la fecha de actualización. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
 <h2 id="imagenes">Imágenes y vídeos</h2>
 <p>Solo usamos fotografías con licencia libre (Creative Commons o dominio público). Para no recargar las páginas, el autor y la licencia de cada imagen se recogen en el listado de créditos de esta página. Las mostramos recortadas y en duotono; las fotos de personas reales se presentan separadas de las de los actores. Si no hay una foto libre de una persona, usamos una silueta.</p>
-<p>No publicamos el cartel, fotogramas ni la portada del libro sin autorización de sus titulares. Las ilustraciones de papel triturado, butacas y siluetas son propias.</p>
+<p>El cartel, las fotos del reparto y los fotogramas proceden del kit de prensa público de Beta Fiction Spain y se usan con fines informativos, citando su procedencia. No publicamos la portada del libro sin autorización de la editorial. Las ilustraciones de papel triturado, butacas y siluetas son propias.</p>
 <p>Los vídeos son publicaciones públicas de YouTube incrustadas desde el modo de privacidad mejorada (youtube-nocookie.com). El reproductor y sus cookies solo se cargan si pulsas reproducir; hasta entonces solo se muestra la miniatura, servida por YouTube.</p>
 <p>Las marcas y títulos citados pertenecen a sus titulares.</p>
 <h2 id="creditos">Créditos de las imágenes</h2>
@@ -810,6 +849,9 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 {"".join(f'<tr><td>{c[1]}</td><td>Portada, cabecera</td><td><a href="{c[5]}" rel="noopener">{c[2]}</a></td><td><a href="{c[4]}" rel="noopener license">{c[3]}</a></td><td>Redimensionada, en blanco y negro</td></tr>' for c in CABECERA)}
 {"".join(f'<tr><td>{v[0]}</td><td>{DONDE_FOTO[k]}</td><td><a href="{v[4]}" rel="noopener">{v[1]}</a> (Wikimedia Commons)</td><td><a href="{v[3]}" rel="noopener license">{v[2]}</a></td><td>Recortada; en la portada, con el fondo eliminado</td></tr>' for k, v in FOTOS.items())}
 {"".join(f'<tr><td>{c[1]}</td><td>Portada, cartelera y cartel recreado</td><td><a href="{c[5]}" rel="noopener">{c[2]}</a></td><td><a href="{c[4]}" rel="noopener license">{c[3]}</a></td><td>Solo el contorno, rellenado con un color plano. No representa a ninguna persona concreta</td></tr>' for c in SILUETAS)}
+<tr><td>Cartel oficial</td><td>Portada, película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionado</td></tr>
+<tr><td>Fotos del reparto en su papel</td><td>Portada, fichas, película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, dossier de prensa</a></td><td>Material de prensa</td><td>Recortadas; en la portada, con el fondo eliminado</td></tr>
+<tr><td>Fotogramas</td><td>Película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Lander Larrañaga / Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionados</td></tr>
 {"".join(f'<tr><td>Miniatura: {VIDEOS[v][0]}</td><td>{DONDE_VIDEO[v]}</td><td><a href="https://www.youtube.com/watch?v={v}" rel="noopener">{VIDEOS[v][1]}</a> (YouTube)</td><td>Inserción permitida por YouTube</td><td>Ninguno</td></tr>' for v in VIDEOS)}
 </tbody></table></div>
 <div class="lectura">
