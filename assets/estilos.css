@@ -269,7 +269,7 @@ dl.faq dd{margin:.4rem 0 0}
 
 /* Pie v2 */
 .pie .contenedor{display:block}
-.pie-aviso{max-width:80ch;margin:0 auto;text-align:center}
+.pie-aviso{max-width:130ch;margin:0 auto;text-align:center}
 .pie hr{border:0;border-top:1px solid var(--petroleo-3);margin:24px 0 18px}
 .pie-menu{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.08em;font-size:.82rem}
 .pie-menu a{text-decoration:none}
@@ -354,3 +354,51 @@ main.sin-relleno{padding-block:0}
   .peli-v3::before{background:rgba(15,42,44,.88)}
   .hero-firmas{font-size:.62rem}
 }
+
+/* ---------- Slider "Vida real, libro y película" ---------- */
+.vrlp{position:relative;isolation:isolate;overflow:hidden;background:#000;aspect-ratio:2000/741;font-family:var(--f-display);text-transform:uppercase}
+.vrlp-slides,.vrlp-slide{position:absolute;inset:0}
+.vrlp-slide{margin:0}
+.vrlp-slide img{width:100%;height:100%;object-fit:cover;object-position:var(--foco,50%) center;display:block}
+.vrlp-titulo{position:absolute;z-index:3;top:11%;right:8.2%;margin:0;text-align:right;font-size:clamp(1.5rem,3.7vw,3.6rem);line-height:1.08;letter-spacing:.01em}
+.vrlp-titulo a{color:var(--papel);text-decoration:none;transition:color .5s;pointer-events:none;text-shadow:0 2px 14px rgba(0,0,0,.35)}
+.vrlp[data-tono="claro"] .vrlp-titulo a{color:var(--petroleo-3);text-shadow:none}
+.vrlp.ultimo .vrlp-titulo a{pointer-events:auto;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:3px;text-underline-offset:8px}
+.vrlp.ultimo .vrlp-titulo a:hover{color:var(--oro)}
+.vrlp-texto{position:absolute;z-index:2;display:block;text-decoration:none;color:var(--papel);max-width:44%}
+.vrlp-texto.izq{left:8.3%;top:24%}
+.vrlp-texto.der{right:8.2%;top:64%;text-align:right}
+.vrlp-texto strong{display:block;font-weight:600;font-size:clamp(1.05rem,2.3vw,2.25rem);line-height:1.05;letter-spacing:.01em;text-shadow:0 2px 12px rgba(0,0,0,.45)}
+.vrlp-texto span{display:block;color:var(--oro);text-transform:none;font-weight:500;font-size:clamp(.85rem,1.35vw,1.3rem);letter-spacing:.04em;margin-top:4px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.vrlp-texto:hover strong{color:var(--oro)}
+.vrlp-slide:last-child::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.55),transparent 22%)}
+.vrlp-control{position:absolute;z-index:3;left:50%;bottom:14px;transform:translateX(-50%);display:none;gap:10px;align-items:center}
+.vrlp-control button{border:0;cursor:pointer;background:transparent;color:var(--papel);padding:4px}
+.vrlp-punto::before{content:"";display:block;width:26px;height:3px;background:rgba(236,232,223,.45)}
+.vrlp-punto[aria-current="true"]::before{background:var(--oro)}
+.vrlp-pausa{font-size:.7rem;width:26px}
+/* Con JS: un slide visible, entrada escalonada imagen → texto blanco → texto amarillo */
+.vrlp.js .vrlp-control{display:flex}
+.vrlp.js .vrlp-slide{opacity:0;visibility:hidden;transition:opacity .8s,visibility 0s .8s}
+.vrlp.js .vrlp-slide.activa{opacity:1;visibility:visible;transition:opacity .8s}
+.vrlp.js .vrlp-texto strong,.vrlp.js .vrlp-texto span{opacity:0;transform:translateY(10px)}
+.vrlp.js .activa .vrlp-texto strong{animation:vrlp-entra .6s .9s both}
+.vrlp.js .activa .vrlp-texto span{animation:vrlp-entra .6s 1.6s both}
+@keyframes vrlp-entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* Sin JS: los slides se apilan */
+.vrlp:not(.js){aspect-ratio:auto}
+.vrlp:not(.js) .vrlp-slides{position:static}
+.vrlp:not(.js) .vrlp-slide{position:relative;aspect-ratio:2000/741}
+@media (max-width:760px){
+  .vrlp{aspect-ratio:4/3}
+  .vrlp-titulo{top:6%;right:5%;font-size:1.45rem}
+  .vrlp-texto{max-width:90%}
+  .vrlp-texto.izq,.vrlp-texto.der{left:5%;right:auto;top:auto;bottom:48px;text-align:left}
+  .vrlp-slide:has(.vrlp-texto + .vrlp-texto) .vrlp-texto.izq{bottom:120px}
+  .vrlp-slide::after{content:"";position:absolute;inset:auto 0 0 0;height:60%;z-index:1;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent)}
+  .vrlp-texto strong{font-size:1.25rem}
+  .vrlp-texto span{font-size:.95rem}
+  .vrlp:not(.js) .vrlp-slide{aspect-ratio:4/3}
+}
+@media (prefers-reduced-motion:reduce){.vrlp.js .vrlp-texto strong,.vrlp.js .vrlp-texto span{animation:none!important;opacity:1;transform:none}}
+.vrlp + .faldon{margin-top:0}

@@ -15,7 +15,7 @@ ACTUALIZADO_TXT = "17 de noviembre de 2026"
 import hashlib
 _BASE = os.path.dirname(os.path.abspath(__file__))
 # Versión de los recursos para evitar que el navegador use CSS/JS antiguos en caché
-VERSION = hashlib.md5(b"".join(open(os.path.join(_BASE, "assets", f), "rb").read() for f in ("estilos.css", "video.js"))).hexdigest()[:8]
+VERSION = hashlib.md5(b"".join(open(os.path.join(_BASE, "assets", f), "rb").read() for f in ("estilos.css", "video.js", "slider.js"))).hexdigest()[:8]
 SALIDA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs")
 
 MENU = [
@@ -86,7 +86,7 @@ def combate(enlace, izq, der, nombres, credito, signo="="):
 </a>"""
 
 DONDE_FOTO = {
-    "david-jimenez": "Portada, ficha de David Jiménez",
+    "david-jimenez": "Portada (slider), ficha de David Jiménez",
     "dani-de-la-orden": "Película",
 }
 DONDE_VIDEO = {
@@ -304,6 +304,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 <link rel="stylesheet" href="{r}assets/estilos.css?v={VERSION}">
 <script type="application/ld+json">{json.dumps(grafo, ensure_ascii=False)}</script>
 <script src="{r}assets/video.js?v={VERSION}" defer></script>
+<script src="{r}assets/slider.js?v={VERSION}" defer></script>
 </head>
 <body>
 <a class="salto" href="#contenido">Saltar al contenido</a>
@@ -419,6 +420,26 @@ HITOS = [
 ]
 
 # ---------------- PORTADA ----------------
+# ---------- Slider "Vida real, libro y película" ----------
+# (imagen, alt, enlace, tono, [(lado, blanco, amarillo), ...], posición del foco en móvil)
+SLIDES = [
+    ("slide-1.jpg", "Silueta en lugar de Antonio Fernández-Galiano, del que no hay foto con licencia libre", "personajes/cardenal/", "",
+     [("izq", "Antonio Fernández-Galiano", "En el libro “El Cardenal”")], "50%"),
+    ("slide-2.jpg", "Alberto San Juan como Cardenal en El Director", "personajes/cardenal/", "",
+     [("der", "Cardenal", "Alberto San Juan")], "50%"),
+    ("slide-3.jpg", "David Jiménez en 2019", "personajes/david-jimenez/", "claro",
+     [("der", "David Jiménez", "En el libro: el narrador")], "28%"),
+    ("slide-4.jpg", "David Verdaguer como David Jiménez en El Director", "personajes/david-jimenez/", "",
+     [("izq", "David Verdaguer", "David Jiménez")], "58%"),
+    ("slide-5.jpg", "Siluetas sobre la redacción de la película: personajes del libro aún sin identificar", "personajes/#pendientes", "",
+     [("izq", "La Digna, El Señorito, Rasputín…", "Apodos del libro"), ("der", "Ayúdanos a descubrirlos", "Participa en nuestra encuesta")], "50%"),
+]
+
+def slide(img, alt, enlace, tono, textos, foco):
+    t = "".join(f'<a class="vrlp-texto {lado}" href="{{r}}{enlace}"><strong>{b}</strong><span>{am}</span></a>' for lado, b, am in textos)
+    return (f'<figure class="vrlp-slide" data-tono="{tono}" style="--foco:{foco}">'
+            f'<img src="{{r}}assets/img/slider/{img}" alt="{alt}" width="2000" height="741" decoding="async">{t}</figure>')
+
 PAGINAS[""] = dict(
     titulo="El Director: quién es quién del libro a la película",
     desc="Qué persona real hay detrás de cada personaje de El Director, el libro de David Jiménez y la película de Dani de la Orden. Con fuentes y grado de certeza.",
@@ -437,29 +458,17 @@ PAGINAS[""] = dict(
   </div>
 </section>
 
-<section class="cartelera">
-  <div class="contenedor">
-    <h2>Vida real, libro y película</h2>
-    <div class="combates">
-      {combate("personajes/cardenal/",
-               luchador("silueta-hombre.png", "Silueta: no hay foto libre de Antonio Fernández-Galiano", real=True),
-               luchador("figura-personaje-cardenal.png", "Alberto San Juan como Cardenal", lado="der"),
-               (("Antonio Fernández-Galiano", "En el libro: “El Cardenal”"), ("Cardenal", "Alberto San Juan")),
-               "")}
-      {combate("personajes/david-jimenez/",
-               luchador("figura-david-jimenez.png", "David Jiménez", real=True),
-               luchador("figura-personaje-david.png", "David Verdaguer como David Jiménez", lado="der"),
-               (("David Jiménez", "En el libro: el narrador"), ("David Jiménez", "David Verdaguer")),
-               "")}
-      {combate("personajes/#pendientes",
-               luchador("silueta-mujer.png", "Silueta genérica", real=True),
-               luchador("silueta-hombre.png", "Silueta genérica", lado="der", duda=True),
-               (("La Digna, El Señorito, Rasputín…", "Apodos del libro"), ("Por confirmar", "Tras el estreno")),
-               "Siluetas genéricas", signo="?")}
-    </div>
+<section class="vrlp" aria-roledescription="carrusel" aria-labelledby="h-vrlp">
+  <h2 class="vrlp-titulo" id="h-vrlp"><a href="{{r}}personajes/" tabindex="-1">Vida real,<br> libro y película</a></h2>
+  <div class="vrlp-slides">
+    {"".join(slide(*d) for d in SLIDES)}
   </div>
-  <div class="faldon"><div class="contenedor"><p><span class="sello s-conf">Confirmado</span> Solo mostramos como confirmadas las relaciones que publican el autor, la productora o varios medios. En las fotos de personas reales usamos blanco y negro; en las de los actores, color. <a href="{{r}}metodologia-y-fuentes/">Cómo trabajamos</a>.</p></div></div>
+  <div class="vrlp-control">
+    <button type="button" class="vrlp-pausa" aria-label="Pausar">❚❚</button>
+    {"".join(f'<button type="button" class="vrlp-punto" aria-label="Ver {i + 1} de {len(SLIDES)}"></button>' for i in range(len(SLIDES)))}
+  </div>
 </section>
+<div class="faldon"><div class="contenedor"><p><span class="sello s-conf">Confirmado</span> Solo mostramos como confirmadas las relaciones que publican el autor, la productora o varios medios. Las siluetas sustituyen a personas reales de las que no hay foto con licencia libre. <a href="{{r}}metodologia-y-fuentes/">Cómo trabajamos</a>.</p></div></div>
 
 <section class="banda-foto teaser-v3" aria-labelledby="h-teaser">
   <img class="banda-fondo" src="{{r}}assets/img/portada/fondo-edificios.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async">
@@ -825,6 +834,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <caption>Todas las imágenes de terceros que usa la web</caption>
 <thead><tr><th>Imagen</th><th>Dónde aparece</th><th>Autor y fuente</th><th>Licencia</th><th>Cambios</th></tr></thead>
 <tbody>
+<tr><td>Fotogramas del slider “Vida real, libro y película” (Cardenal, David, redacción)</td><td>Portada</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, material promocional</a></td><td>Material de prensa</td><td>Recortados; con siluetas propias superpuestas en lugar de personas sin foto libre</td></tr>
 <tr><td>Fotogramas de fondo (patio de butacas, edificios, exterior) y miniatura del teaser</td><td>Portada</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, material promocional</a></td><td>Material de prensa</td><td>Redimensionados y oscurecidos</td></tr>
 {"".join(f'<tr><td>{v[0]}</td><td>{DONDE_FOTO[k]}</td><td><a href="{v[4]}" rel="noopener">{v[1]}</a> (Wikimedia Commons)</td><td><a href="{v[3]}" rel="noopener license">{v[2]}</a></td><td>Recortada; en la portada, con el fondo eliminado</td></tr>' for k, v in FOTOS.items())}
 {"".join(f'<tr><td>{c[1]}</td><td>Portada, cartelera y cartel recreado</td><td><a href="{c[5]}" rel="noopener">{c[2]}</a></td><td><a href="{c[4]}" rel="noopener license">{c[3]}</a></td><td>Solo el contorno, rellenado con un color plano. No representa a ninguna persona concreta</td></tr>' for c in SILUETAS)}
