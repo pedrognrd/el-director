@@ -283,3 +283,5 @@ dl.faq dd{margin:.4rem 0 0}
 .nombres strong{font-size:clamp(1.1rem,2vw,1.45rem)}
 .combates{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
 .luchador img{height:auto;max-height:260px}
+a.ref{color:inherit;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:1px;text-underline-offset:3px}
+a.ref:hover{color:var(--oro)}

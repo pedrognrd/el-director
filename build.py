@@ -181,6 +181,74 @@ PELI_LD = {
         "Beta Fiction Spain", "Sábado Time", "Cardinal Content", "Historias de un Director SL"]],
 }
 
+# ---------- Enlaces a la primera mención de figuras públicas y empresas ----------
+# Solo páginas verificadas de Wikipedia (o web oficial si no hay). No se enlaza a nadie
+# asociado a apodos sin confirmar. Antonio Fernández-Galiano no se enlaza: la página de
+# Wikipedia con ese nombre es de otra persona.
+WIKI = "https://es.wikipedia.org/wiki/"
+ENLACES = [
+    ("David Jiménez", WIKI + "David_Jim%C3%A9nez_Garc%C3%ADa"),
+    ("El Mundo", WIKI + "El_Mundo_(Espa%C3%B1a)"),
+    ("Libros del K.O.", WIKI + "Libros_del_K.O."),
+    ("Beta Fiction Spain", "https://betafiction.es/"),
+    ("Dani de la Orden", WIKI + "Dani_de_la_Orden"),
+    ("David Verdaguer", WIKI + "David_Verdaguer"),
+    ("Alberto San Juan", WIKI + "Alberto_San_Juan"),
+    ("Fernando Colomo", WIKI + "Fernando_Colomo"),
+    ("Carmen Machi", WIKI + "Carmen_Machi"),
+    ("Emma Vilarasau", WIKI + "Emma_Vilarasau"),
+    ("Guillermo Toledo", WIKI + "Willy_Toledo"),
+    ("Fernando Cayo", WIKI + "Fernando_Cayo"),
+    ("Nacho Fresneda", WIKI + "Nacho_Fresneda"),
+    ("Pau Durà", WIKI + "Pau_Dur%C3%A0"),
+    ("Pedro J. Ramírez", WIKI + "Pedro_J._Ram%C3%ADrez"),
+    ("Casimiro García-Abadillo", WIKI + "Casimiro_Garc%C3%ADa-Abadillo"),
+    ("Pedro García Cuartango", WIKI + "Pedro_Garc%C3%ADa_Cuartango"),
+    ("César Alierta", WIKI + "C%C3%A9sar_Alierta"),
+    ("Florentino Pérez", WIKI + "Florentino_P%C3%A9rez"),
+    ("Unidad Editorial", WIKI + "Unidad_Editorial"),
+    ("The New York Times", WIKI + "The_New_York_Times"),
+    ("HBO Max", WIKI + "HBO_Max"),
+    ("RTVE", WIKI + "RTVE"),
+    ("3Cat", WIKI + "3Cat"),
+]
+_NO_ENLAZAR = {"a", "h1", "h2", "h3", "button", "script", "figcaption", "dt", "time", "caption", "th", "nav", "title", "summary"}
+
+def enlazar(html_txt):
+    import re
+    partes = re.split(r"(<[^>]+>)", html_txt)
+    pila = []
+    hechos = set()
+    for i, trozo in enumerate(partes):
+        if trozo.startswith("<"):
+            m = re.match(r"<(/?)([a-zA-Z0-9]+)", trozo)
+            if m and m.group(2).lower() in _NO_ENLAZAR and not trozo.endswith("/>"):
+                if m.group(1):
+                    if pila: pila.pop()
+                else:
+                    pila.append(m.group(2).lower())
+            continue
+        if pila or not trozo.strip():
+            continue
+        salida = ""
+        while True:
+            mejor = None
+            for nombre, url in ENLACES:
+                if nombre in hechos:
+                    continue
+                mm = re.search(r"(?<![\\wÁÉÍÓÚáéíóúñÑ])" + re.escape(nombre) + r"(?![\\wÁÉÍÓÚáéíóúñÑ])", trozo)
+                if mm and (mejor is None or mm.start() < mejor[0].start()):
+                    mejor = (mm, nombre, url)
+            if not mejor:
+                break
+            mm, nombre, url = mejor
+            salida += trozo[:mm.start()] + f'<a class="ref" href="{url}" rel="noopener">{nombre}</a>'
+            trozo = trozo[mm.end():]
+            hechos.add(nombre)
+        trozo = salida + trozo
+        partes[i] = trozo
+    return "".join(partes)
+
 def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=False):
     profundidad = ruta.count("/")
     r = "../" * profundidad
@@ -194,7 +262,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
         {"@type": "WebPage", "@id": canonica, "url": canonica, "name": titulo, "description": descripcion,
          "isPartOf": {"@id": SITE + "#web"}, "dateModified": ACTUALIZADO, "inLanguage": "es"},
     ] + (ld or [])}
-    cuerpo = cuerpo.replace("{r}", r)
+    cuerpo = enlazar(cuerpo.replace("{r}", r))
     return f"""<!doctype html>
 <html lang="es">
 <head>
