@@ -89,19 +89,30 @@ def combate(enlace, izq, der, nombres, credito, signo="="):
     <div><strong>{n1}</strong><span>{d1}</span></div>
     <div class="der"><strong>{n2}</strong><span>{d2}</span></div>
   </div>
-  <p class="credito">{credito}</p>
 </a>"""
+
+DONDE_FOTO = {
+    "david-jimenez": "Portada, ficha de David Jiménez",
+    "alberto-san-juan": "Portada, ficha del Cardenal, película",
+    "david-verdaguer": "Portada, ficha de David Jiménez, película",
+    "dani-de-la-orden": "Película",
+}
+DONDE_VIDEO = {
+    "PUQzmris2CE": "Portada, película",
+    "NT7O8rzR3PU": "Película",
+    "ORXNiBTK5rc": "Ficha de David Jiménez",
+    "CgmhIDMm-B4": "Película",
+}
 
 def foto(clave, rotulo, ficcion=False, carga="lazy"):
     alt, autor, lic, lic_url, origen = FOTOS[clave]
     clase = "foto ficcion" if ficcion else "foto"
     return (f'<figure class="{clase}"><div class="marco"><img src="{{r}}assets/img/{clave}.jpg" alt="{alt}" width="480" height="600" loading="{carga}" decoding="async"></div>'
-            f'<figcaption><strong>{rotulo}</strong>Foto: <a href="{origen}" rel="noopener">{autor}</a>, '
-            f'<a href="{lic_url}" rel="noopener license">{lic}</a>. Recortada.</figcaption></figure>')
+            f'<figcaption><strong>{rotulo}</strong></figcaption></figure>')
 
 def silueta(rotulo):
     return (f'<figure class="foto"><div class="marco"><img src="{{r}}assets/img/silueta.svg" alt="Silueta: no hay foto con licencia libre" width="480" height="600" loading="lazy"></div>'
-            f'<figcaption><strong>{rotulo}</strong>Sin fotografía con licencia libre.</figcaption></figure>')
+            f'<figcaption><strong>{rotulo}</strong></figcaption></figure>')
 
 # ---------- Vídeos (YouTube, modo de privacidad mejorada) ----------
 VIDEOS = {
@@ -376,7 +387,6 @@ PAGINAS[""] = dict(
       <a class="btn sec" href="{{r}}libro/#donde-leer">Dónde leer el libro</a>
     </div>
   </div>
-  <p class="contenedor hero-creditos">Imágenes ilustrativas: {" · ".join(f'{c[1]} (<a href="{c[5]}" rel="noopener">{c[2]}</a>, <a href="{c[4]}" rel="noopener license">{c[3]}</a>)' for c in CABECERA)}</p>
 </section>
 
 <section class="cartelera">
@@ -787,17 +797,23 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 </ul>
 <p>Recogemos lo que ya han publicado el autor y otros medios, enlazamos las fuentes en cada página e indicamos la fecha de actualización. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
 <h2 id="imagenes">Imágenes y vídeos</h2>
-<p>Solo usamos fotografías con licencia libre (Creative Commons), citando autor y licencia junto a cada imagen. Las mostramos recortadas y en duotono; las fotos de personas reales se presentan separadas de las de los actores. Si no hay una foto libre de una persona, usamos una silueta.</p>
+<p>Solo usamos fotografías con licencia libre (Creative Commons o dominio público). Para no recargar las páginas, el autor y la licencia de cada imagen se recogen en el listado de créditos de esta página. Las mostramos recortadas y en duotono; las fotos de personas reales se presentan separadas de las de los actores. Si no hay una foto libre de una persona, usamos una silueta.</p>
 <p>No publicamos el cartel, fotogramas ni la portada del libro sin autorización de sus titulares. Las ilustraciones de papel triturado, butacas y siluetas son propias.</p>
 <p>Los vídeos son publicaciones públicas de YouTube incrustadas desde el modo de privacidad mejorada (youtube-nocookie.com). El reproductor y sus cookies solo se cargan si pulsas reproducir; hasta entonces solo se muestra la miniatura, servida por YouTube.</p>
 <p>Las marcas y títulos citados pertenecen a sus titulares.</p>
-<h2 id="creditos">Créditos de las fotografías</h2>
-<ul>{"".join(f'<li>{v[0]}: <a href="{v[4]}" rel="noopener">{v[1]}</a>, <a href="{v[3]}" rel="noopener license">{v[2]}</a>, vía Wikimedia Commons. Recortada; en la portada, también con el fondo eliminado.</li>' for v in FOTOS.values())}</ul>
-<h3>Imágenes ilustrativas</h3>
-<ul>{"".join(f'<li>{c[1]}: <a href="{c[5]}" rel="noopener">{c[2]}</a>, <a href="{c[4]}" rel="noopener license">{c[3]}</a>. Redimensionada y en duotono.</li>' for c in CABECERA)}</ul>
-<h3>Siluetas</h3>
-<ul>{"".join(f'<li>{c[1]}: contorno extraído de una foto de <a href="{c[5]}" rel="noopener">{c[2]}</a> (<a href="{c[4]}" rel="noopener license">{c[3]}</a>) y rellenado con un color plano. No representa a ninguna persona concreta.</li>' for c in SILUETAS)}</ul>
-<p>La recreación de libro y de cartel de la portada son ilustraciones propias, no la portada ni el cartel oficiales.</p>
+<h2 id="creditos">Créditos de las imágenes</h2>
+</div>
+<div class="tabla"><table>
+<caption>Todas las imágenes de terceros que usa la web</caption>
+<thead><tr><th>Imagen</th><th>Dónde aparece</th><th>Autor y fuente</th><th>Licencia</th><th>Cambios</th></tr></thead>
+<tbody>
+{"".join(f'<tr><td>{c[1]}</td><td>Portada, cabecera</td><td><a href="{c[5]}" rel="noopener">{c[2]}</a></td><td><a href="{c[4]}" rel="noopener license">{c[3]}</a></td><td>Redimensionada, en blanco y negro</td></tr>' for c in CABECERA)}
+{"".join(f'<tr><td>{v[0]}</td><td>{DONDE_FOTO[k]}</td><td><a href="{v[4]}" rel="noopener">{v[1]}</a> (Wikimedia Commons)</td><td><a href="{v[3]}" rel="noopener license">{v[2]}</a></td><td>Recortada; en la portada, con el fondo eliminado</td></tr>' for k, v in FOTOS.items())}
+{"".join(f'<tr><td>{c[1]}</td><td>Portada, cartelera y cartel recreado</td><td><a href="{c[5]}" rel="noopener">{c[2]}</a></td><td><a href="{c[4]}" rel="noopener license">{c[3]}</a></td><td>Solo el contorno, rellenado con un color plano. No representa a ninguna persona concreta</td></tr>' for c in SILUETAS)}
+{"".join(f'<tr><td>Miniatura: {VIDEOS[v][0]}</td><td>{DONDE_VIDEO[v]}</td><td><a href="https://www.youtube.com/watch?v={v}" rel="noopener">{VIDEOS[v][1]}</a> (YouTube)</td><td>Inserción permitida por YouTube</td><td>Ninguno</td></tr>' for v in VIDEOS)}
+</tbody></table></div>
+<div class="lectura">
+<p>Son ilustraciones propias, sin derechos de terceros: el papel triturado, el patio de butacas, la silueta “sin foto”, la imagen para redes sociales y las recreaciones de libro y de cartel de la portada, que no son la portada ni el cartel oficiales.</p>
 <h2 id="rectificaciones">Rectificaciones</h2>
 <p>Si eres una de las personas mencionadas o ves un error, <a href="{ISSUES}" rel="noopener">abre una incidencia en el repositorio de la web</a> (necesitas una cuenta de GitHub). Revisaremos cada petición en un máximo de 72 horas y corregiremos lo que proceda, indicando la fecha del cambio.</p>
 <h2>Fuentes consultadas</h2>
