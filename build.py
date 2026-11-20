@@ -320,12 +320,13 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 <meta property="og:title" content="{html.escape(titulo)}">
 <meta property="og:description" content="{html.escape(descripcion)}">
 <meta property="og:url" content="{canonica}">
-<meta property="og:image" content="{SITE}assets/img/og-el-director.png">
+<meta property="og:image" content="{SITE}assets/img/og-el-director.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="El Director. Del libro a la película">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{SITE}assets/img/og-el-director.png">
+<meta name="twitter:image" content="{SITE}assets/img/og-el-director.jpg">
 <link rel="icon" href="{r}assets/icono.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -892,7 +893,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <thead><tr><th>Imagen</th><th>Dónde aparece</th><th>Autor y fuente</th><th>Licencia</th><th>Cambios</th></tr></thead>
 <tbody>
 <tr><td>Fotogramas del slider “Vida real, libro y película” (Cardenal, David, redacción)</td><td>Portada</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, material promocional</a></td><td>Material de prensa</td><td>Recortados; con siluetas propias superpuestas en lugar de personas sin foto libre</td></tr>
-<tr><td>Fotogramas de fondo (patio de butacas, edificios, exterior) y miniatura del teaser</td><td>Portada</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, material promocional</a></td><td>Material de prensa</td><td>Redimensionados y oscurecidos</td></tr>
+<tr><td>Fotogramas de fondo (patio de butacas, edificios, exterior) y miniatura del teaser</td><td>Portada e imagen para redes sociales</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, material promocional</a></td><td>Material de prensa</td><td>Redimensionados y oscurecidos</td></tr>
 {"".join(f'<tr><td>{v[0]}</td><td>{DONDE_FOTO[k]}</td><td><a href="{v[4]}" rel="noopener">{v[1]}</a> (Wikimedia Commons)</td><td><a href="{v[3]}" rel="noopener license">{v[2]}</a></td><td>Recortada; en la portada, con el fondo eliminado</td></tr>' for k, v in FOTOS.items())}
 {"".join(f'<tr><td>{c[1]}</td><td>Portada, cartelera y cartel recreado</td><td><a href="{c[5]}" rel="noopener">{c[2]}</a></td><td><a href="{c[4]}" rel="noopener license">{c[3]}</a></td><td>Solo el contorno, rellenado con un color plano. No representa a ninguna persona concreta</td></tr>' for c in SILUETAS)}
 <tr><td>Cubierta del libro</td><td>Portada</td><td><a href="https://www.librosdelko.com/" rel="noopener">Libros del K.O.</a></td><td>Material promocional de la editorial</td><td>Redimensionada</td></tr>
@@ -904,7 +905,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 {"".join(f'<tr><td>Miniatura: {VIDEOS[v][0]}</td><td>{DONDE_VIDEO[v]}</td><td><a href="https://www.youtube.com/watch?v={v}" rel="noopener">{VIDEOS[v][1]}</a> (YouTube)</td><td>Inserción permitida por YouTube</td><td>Ninguno</td></tr>' for v in VIDEOS)}
 </tbody></table></div>
 <div class="lectura">
-<p>Son ilustraciones propias, sin derechos de terceros: el papel triturado, el patio de butacas ilustrado, la silueta “sin foto” y la imagen para redes sociales.</p>
+<p>Son ilustraciones propias, sin derechos de terceros: el papel triturado, el patio de butacas ilustrado y la silueta “sin foto”.</p>
 <h2 id="rectificaciones">Rectificaciones</h2>
 <p>Si eres una de las personas mencionadas o ves un error, <a href="{ISSUES}" rel="noopener">abre una incidencia en el repositorio de la web</a> (necesitas una cuenta de GitHub). Revisaremos cada petición en un máximo de 72 horas y corregiremos lo que proceda, indicando la fecha del cambio.</p>
 <h2>Fuentes consultadas</h2>
