@@ -27,7 +27,7 @@ a:hover{color:var(--papel)}
 .salto:focus{left:16px}
 
 .contenedor{max-width:1100px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
-.lectura{max-width:68ch;margin: 18px 0px 36px 0px;}
+.lectura{/* max-width:68ch; */margin: 18px 0px 36px 0px;}
 
 /* Cabecera del sitio */
 .sitio{border-bottom:1px solid var(--petroleo-3);background:var(--noche)}
@@ -134,15 +134,15 @@ details.spoiler summary{cursor:pointer;font-family:var(--f-display);text-transfo
 .siguiente .antetitulo{display:block;margin-bottom:4px}
 .siguiente strong{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.04em;font-weight:500;font-size:1.1rem}
 
-.fuentes{font-size:.88rem;color:var(--gris);margin-top:36px;padding-top:16px;border-top:1px solid var(--petroleo-3);max-width:68ch}
+.fuentes{font-size:.88rem;color:var(--gris);margin-top:36px;padding-top:16px;border-top:1px solid var(--petroleo-3);/* max-width:68ch; */}
 .fuentes ul{padding-left:1.1rem}
 .fuentes a{color:var(--gris)}
 .actualizado{font-family:var(--f-teletipo);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gris)}
 
 ul,ol{padding-left:1.2rem}
 li{margin:.3rem 0}
-dl.faq dt{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.03em;font-size:1.1rem;margin-top:1.6rem}
-dl.faq dd{margin:.4rem 0 0}
+dl.faq dt{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.03em;font-size: 1.4rem;margin-top:1.6rem}
+dl.faq dd{margin: .4rem 0 2rem;}
 
 /* Pie */
 .pie{border-top:1px solid var(--petroleo-3);background:var(--noche);color:var(--gris);font-size:.86rem;padding-block:34px 44px}
@@ -579,3 +579,7 @@ p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{
 .vrlp-flecha:hover,.vrlp-flecha:focus-visible{background:var(--oro)}
 .vrlp-flecha:hover::before,.vrlp-flecha:focus-visible::before{border-color:var(--petroleo)}
 @media (max-width:760px){.vrlp-flecha{width:40px;height:40px;top:42%}.vrlp-flecha::before{width:11px;height:11px}}
+/* Fuentes en horizontal (preguntas frecuentes) */
+.fuentes.horizontal ul{display:flex;flex-wrap:wrap;gap:6px 0;list-style:none;padding-left:0;margin:.4rem 0}
+.fuentes.horizontal li{margin:0}
+.fuentes.horizontal li+li::before{content:"·";margin:0 .7em;color:var(--petroleo-3)}

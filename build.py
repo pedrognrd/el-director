@@ -154,9 +154,10 @@ F = {
     "dossier": ("Beta Fiction Spain: kit y dossier de prensa oficial", "https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb"),
 }
 
-def fuentes(*claves):
+def fuentes(*claves, horizontal=False):
     items = "".join(f'<li><a href="{F[k][1]}" rel="noopener">{F[k][0]}</a></li>' for k in claves)
-    return f'<aside class="fuentes" aria-label="Fuentes"><p class="actualizado">Actualizado el {ACTUALIZADO_TXT}</p><p>Fuentes:</p><ul>{items}</ul><p>¿Ves un error? <a href="{{r}}metodologia-y-fuentes/#rectificaciones">Pide una rectificación</a>.</p></aside>'
+    clase = "fuentes horizontal" if horizontal else "fuentes"
+    return f'<aside class="{clase}" aria-label="Fuentes"><p class="actualizado">Actualizado el {ACTUALIZADO_TXT}</p><p>Fuentes:</p><ul>{items}</ul><p>¿Ves un error? <a href="{{r}}metodologia-y-fuentes/#rectificaciones">Pide una rectificación</a>.</p></aside>'
 
 def migas(*items):
     li = []
@@ -855,7 +856,7 @@ PAGINAS["preguntas-frecuentes/"] = dict(
 <p class="antetitulo">Preguntas frecuentes</p>
 <h1>Preguntas sobre <span class="el">El</span> Director</h1>
 <dl class="faq lectura">{"".join(f"<dt>{q}</dt><dd>{a}</dd>" for q, a in FAQ)}</dl>
-{fuentes("wiki_libro", "wiki_peli", "beta", "av451", "infobae")}
+{fuentes("wiki_libro", "wiki_peli", "beta", "av451", "infobae", horizontal=True)}
 </div>""",
     ld=[ld_migas([("Inicio", ""), ("Preguntas frecuentes", "preguntas-frecuentes/")]),
         {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQ]}],
