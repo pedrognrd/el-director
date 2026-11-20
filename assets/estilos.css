@@ -402,3 +402,25 @@ main.sin-relleno{padding-block:0}
 }
 @media (prefers-reduced-motion:reduce){.vrlp.js .vrlp-texto strong,.vrlp.js .vrlp-texto span{animation:none!important;opacity:1;transform:none}}
 .vrlp + .faldon{margin-top:0}
+
+/* ---------- Libro / película con giro ---------- */
+.volteo{perspective:1600px;align-self:start}
+.volteo-carta{position:relative;aspect-ratio:13/20;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.65,0,.35,1)}
+.volteo[data-cara="peli"] .volteo-carta{transform:rotateY(180deg)}
+.cara{position:absolute;inset:0;margin:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:10px 12px 26px rgba(0,0,0,.45)}
+.cara img{width:100%;height:100%;object-fit:cover;display:block}
+.cara-peli{transform:rotateY(180deg)}
+.obras-textos{display:grid;align-content:start}
+.obra-panel{grid-area:1/1}
+.obras-v3 .peli-texto h2{margin-top:0}
+.volteo-control{display:none;gap:8px;margin-top:14px;grid-area:2/1}
+.volteo-control button{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.06em;font-size:.75rem;background:transparent;color:var(--gris);border:1px solid var(--petroleo-3);padding:6px 12px;cursor:pointer}
+.volteo-control button[aria-pressed="true"]{color:var(--petroleo);background:var(--oro);border-color:var(--oro)}
+.obras-v3.js .volteo-control{display:flex}
+.obras-v3.js .obra-panel{opacity:0;visibility:hidden;transition:opacity .5s,visibility 0s .5s}
+.obras-v3.js .obra-panel.activo{opacity:1;visibility:visible;transition:opacity .6s .45s}
+/* Sin JS: los dos bloques de texto, uno debajo del otro */
+.obras-v3:not(.js) .obra-panel{grid-area:auto}
+.obras-v3:not(.js) .obra-panel+.obra-panel{margin-top:24px}
+@media (max-width:760px){.obras-v3 .volteo{max-width:300px}}
+@media (prefers-reduced-motion:reduce){.volteo-carta{transition:none}}

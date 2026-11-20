@@ -478,15 +478,31 @@ PAGINAS[""] = dict(
   </div>
 </section>
 
-<section class="banda-foto peli-v3" aria-labelledby="h-peli">
+<section class="banda-foto peli-v3 obras-v3" aria-label="El libro y la película">
   <img class="banda-fondo" src="{{r}}assets/img/portada/fondo-exterior.jpg" alt="" width="1920" height="1082" loading="lazy" decoding="async">
   <div class="contenedor">
-    <figure class="cartel-oficial"><img src="{{r}}assets/img/cartel-el-director.jpg" alt="Cartel oficial de El Director" width="560" height="800" loading="lazy" decoding="async"></figure>
-    <div class="peli-texto">
-      <h2 id="h-peli">La película</h2>
-      <p class="peli-entrada">Thriller de Dani de la Orden con David Verdaguer y Alberto San Juan, con guion de Alejandro Hernández y Michel Gaztambide. En cines desde el 20 de noviembre de 2026.</p>
-      <dl class="datos"><dt>Dirección</dt><dd>Dani de la Orden</dd><dt>Reparto</dt><dd>David Verdaguer, Alberto San Juan, Fernando Colomo, Carmen Machi…</dd><dt>Duración</dt><dd>1 h 55 min</dd><dt>Distribución</dt><dd>Beta Fiction Spain</dd></dl>
-      <div class="flechas"><a href="{{r}}pelicula/">Ficha y reparto</a><a href="{{r}}pelicula/#donde-ver">Dónde verla</a></div>
+    <div class="volteo" data-cara="libro">
+      <div class="volteo-carta">
+        <figure class="cara cara-libro"><img src="{{r}}assets/img/portada/libro-el-director.jpg" alt="Cubierta del libro El director, de David Jiménez (Libros del K.O.)" width="780" height="1200" loading="lazy" decoding="async"></figure>
+        <figure class="cara cara-peli"><img src="{{r}}assets/img/cartel-el-director.jpg" alt="Cartel oficial de la película El Director" width="560" height="800" loading="lazy" decoding="async"></figure>
+      </div>
+    </div>
+    <div class="obras-textos">
+      <div class="peli-texto obra-panel" data-cara="libro">
+        <h2>El libro</h2>
+        <p class="peli-entrada"><i>El director</i> (Libros del K.O., 2019) relata el año de Jiménez al frente de <i>El Mundo</i> y el sistema de pactos entre prensa, empresas y política que él llama “Los Acuerdos”.</p>
+        <dl class="datos"><dt>Autor</dt><dd>David Jiménez</dd><dt>Editorial</dt><dd>Libros del K.O.</dd><dt>Páginas</dt><dd>328</dd></dl>
+        <div class="flechas"><a href="{{r}}libro/">Sobre el libro</a><a href="{{r}}libro/#donde-leer">Dónde adquirirlo</a></div>
+      </div>
+      <div class="peli-texto obra-panel" data-cara="peli">
+        <h2>La película</h2>
+        <p class="peli-entrada">Thriller de Dani de la Orden con David Verdaguer y Alberto San Juan, con guion de Alejandro Hernández y Michel Gaztambide. En cines desde el 20 de noviembre de 2026.</p>
+        <dl class="datos"><dt>Dirección</dt><dd>Dani de la Orden</dd><dt>Reparto</dt><dd>David Verdaguer, Alberto San Juan, Fernando Colomo, Carmen Machi…</dd><dt>Duración</dt><dd>1 h 55 min</dd><dt>Distribución</dt><dd>Beta Fiction Spain</dd></dl>
+        <div class="flechas"><a href="{{r}}pelicula/">Ficha y reparto</a><a href="{{r}}pelicula/#donde-ver">Dónde verla</a></div>
+      </div>
+      <div class="volteo-control" role="group" aria-label="Elegir libro o película">
+        <button type="button" data-ir="libro">El libro</button><button type="button" data-ir="peli">La película</button>
+      </div>
     </div>
   </div>
 </section>
@@ -825,7 +841,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <p>Recogemos lo que ya han publicado el autor y otros medios, enlazamos las fuentes en cada página e indicamos la fecha de actualización. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
 <h2 id="imagenes">Imágenes y vídeos</h2>
 <p>Solo usamos fotografías con licencia libre (Creative Commons o dominio público). Para no recargar las páginas, el autor y la licencia de cada imagen se recogen en el listado de créditos de esta página. Las mostramos recortadas y en duotono; las fotos de personas reales se presentan separadas de las de los actores. Si no hay una foto libre de una persona, usamos una silueta.</p>
-<p>El cartel, las fotos del reparto y los fotogramas proceden del kit de prensa público de Beta Fiction Spain y se usan con fines informativos, citando su procedencia. No publicamos la portada del libro sin autorización de la editorial. Las ilustraciones de papel triturado, butacas y siluetas son propias.</p>
+<p>El cartel, las fotos del reparto y los fotogramas proceden del kit de prensa público de Beta Fiction Spain y se usan con fines informativos, citando su procedencia. La cubierta del libro es de Libros del K.O. y se muestra solo para identificar la obra. Las ilustraciones de papel triturado, butacas y siluetas son propias.</p>
 <p>Los vídeos son publicaciones públicas de YouTube incrustadas desde el modo de privacidad mejorada (youtube-nocookie.com). El reproductor y sus cookies solo se cargan si pulsas reproducir; hasta entonces solo se muestra la miniatura, servida por YouTube.</p>
 <p>Las marcas y títulos citados pertenecen a sus titulares.</p>
 <h2 id="creditos">Créditos de las imágenes</h2>
@@ -838,6 +854,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <tr><td>Fotogramas de fondo (patio de butacas, edificios, exterior) y miniatura del teaser</td><td>Portada</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, material promocional</a></td><td>Material de prensa</td><td>Redimensionados y oscurecidos</td></tr>
 {"".join(f'<tr><td>{v[0]}</td><td>{DONDE_FOTO[k]}</td><td><a href="{v[4]}" rel="noopener">{v[1]}</a> (Wikimedia Commons)</td><td><a href="{v[3]}" rel="noopener license">{v[2]}</a></td><td>Recortada; en la portada, con el fondo eliminado</td></tr>' for k, v in FOTOS.items())}
 {"".join(f'<tr><td>{c[1]}</td><td>Portada, cartelera y cartel recreado</td><td><a href="{c[5]}" rel="noopener">{c[2]}</a></td><td><a href="{c[4]}" rel="noopener license">{c[3]}</a></td><td>Solo el contorno, rellenado con un color plano. No representa a ninguna persona concreta</td></tr>' for c in SILUETAS)}
+<tr><td>Cubierta del libro</td><td>Portada</td><td><a href="https://www.librosdelko.com/" rel="noopener">Libros del K.O.</a></td><td>Material promocional de la editorial</td><td>Redimensionada</td></tr>
 <tr><td>Cartel oficial</td><td>Portada, película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionado</td></tr>
 <tr><td>Fotos del reparto en su papel</td><td>Portada, fichas, película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, dossier de prensa</a></td><td>Material de prensa</td><td>Recortadas; en la portada, con el fondo eliminado</td></tr>
 <tr><td>Fotogramas</td><td>Película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Lander Larrañaga / Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionados</td></tr>
@@ -868,7 +885,8 @@ def main():
     os.makedirs(os.path.join(docs, "assets"))
     base = os.path.dirname(os.path.abspath(__file__))
     shutil.copy(os.path.join(base, "assets", "estilos.css"), os.path.join(docs, "assets", "estilos.css"))
-    shutil.copy(os.path.join(base, "assets", "video.js"), os.path.join(docs, "assets", "video.js"))
+    for js in ("video.js", "slider.js"):
+        shutil.copy(os.path.join(base, "assets", js), os.path.join(docs, "assets", js))
     shutil.copytree(os.path.join(base, "assets", "img"), os.path.join(docs, "assets", "img"))
     open(os.path.join(docs, "assets", "icono.svg"), "w").write(ICONO)
     open(os.path.join(docs, ".nojekyll"), "w").write("")

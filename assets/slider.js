@@ -46,3 +46,39 @@
   fijarPausa(pausado);
   mostrar(0);
 })();
+
+// Libro / película: la imagen gira cada 7 s y cambian los textos.
+(function () {
+  var volteo = document.querySelector(".volteo");
+  if (!volteo) return;
+  var seccion = volteo.closest(".obras-v3");
+  var botones = seccion.querySelectorAll("[data-ir]");
+  var paneles = seccion.querySelectorAll(".obra-panel");
+  var reducir = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var temporizador = null, encima = false;
+  seccion.classList.add("js");
+  function mostrar(cara) {
+    volteo.setAttribute("data-cara", cara);
+    paneles.forEach(function (p) {
+      var activo = p.getAttribute("data-cara") === cara;
+      p.classList.toggle("activo", activo);
+      p.setAttribute("aria-hidden", activo ? "false" : "true");
+      p.querySelectorAll("a").forEach(function (a) { a.tabIndex = activo ? 0 : -1; });
+    });
+    botones.forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-ir") === cara ? "true" : "false"); });
+    programar();
+  }
+  function programar() {
+    clearTimeout(temporizador);
+    if (reducir || encima) return;
+    temporizador = setTimeout(function () {
+      mostrar(volteo.getAttribute("data-cara") === "libro" ? "peli" : "libro");
+    }, 7000);
+  }
+  botones.forEach(function (b) { b.addEventListener("click", function () { mostrar(b.getAttribute("data-ir")); }); });
+  seccion.addEventListener("mouseenter", function () { encima = true; programar(); });
+  seccion.addEventListener("mouseleave", function () { encima = false; programar(); });
+  seccion.addEventListener("focusin", function () { encima = true; programar(); });
+  seccion.addEventListener("focusout", function () { encima = false; programar(); });
+  mostrar("libro");
+})();
