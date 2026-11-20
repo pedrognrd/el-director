@@ -86,7 +86,7 @@ def combate(enlace, izq, der, nombres, credito, signo="="):
 </a>"""
 
 DONDE_FOTO = {
-    "david-jimenez": "Portada (slider), ficha de David Jiménez",
+    "david-jimenez": "Portada (slider), ficha de David Jiménez (también como cabecera, volteada en horizontal)",
     "dani-de-la-orden": "Película",
 }
 DONDE_VIDEO = {
@@ -280,7 +280,7 @@ def externos_nueva_pestana(html_txt):
         return etiqueta[:-1] + ' target="_blank">'
     return re.sub(r'<a\s[^>]*href="[^"]+"[^>]*>', ajustar, html_txt)
 
-def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=False):
+def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=False, hero=False):
     profundidad = ruta.count("/")
     r = "../" * profundidad
     canonica = SITE + ruta
@@ -325,7 +325,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 <script src="{r}assets/video.js?v={VERSION}" defer></script>
 <script src="{r}assets/slider.js?v={VERSION}" defer></script>
 </head>
-<body{' class="es-portada"' if portada else ''}>
+<body{' class="es-portada"' if portada else (' class="con-hero"' if hero else '')}>
 <a class="salto" href="#contenido">Saltar al contenido</a>
 <div class="arriba">
 <div class="cinta">En cines desde el 20 de noviembre de 2026 · <a href="{r}metodologia-y-fuentes/">Web informativa e independiente</a></div>
@@ -336,7 +336,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
   </div>
 </header>
 </div>
-<main id="contenido"{' class="sin-relleno"' if portada else ''}>
+<main id="contenido"{' class="sin-relleno"' if portada else (' class="con-hero"' if hero else '')}>
 {cuerpo}
 </main>
 <footer class="pie">
@@ -884,6 +884,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <tr><td>Cubierta del libro</td><td>Portada</td><td><a href="https://www.librosdelko.com/" rel="noopener">Libros del K.O.</a></td><td>Material promocional de la editorial</td><td>Redimensionada</td></tr>
 <tr><td>Cartel oficial</td><td>Portada, película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionado</td></tr>
 <tr><td>Fotos del reparto en su papel</td><td>Portada, fichas, película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, dossier de prensa</a></td><td>Material de prensa</td><td>Recortadas; en la portada, con el fondo eliminado</td></tr>
+<tr><td>Fotos de cabecera de las páginas interiores</td><td>Quién es quién, Cardenal, libro, película, historia real, preguntas, metodología</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Lander Larrañaga / Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionadas y oscurecidas con un degradado</td></tr>
 <tr><td>Fotogramas</td><td>Película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Lander Larrañaga / Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionados</td></tr>
 {"".join(f'<tr><td>Miniatura: {VIDEOS[v][0]}</td><td>{DONDE_VIDEO[v]}</td><td><a href="https://www.youtube.com/watch?v={v}" rel="noopener">{VIDEOS[v][1]}</a> (YouTube)</td><td>Inserción permitida por YouTube</td><td>Ninguno</td></tr>' for v in VIDEOS)}
 </tbody></table></div>
@@ -905,6 +906,36 @@ NO_ENCONTRADA = """<div class="contenedor"><p class="antetitulo">Error 404</p><h
 
 ICONO = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#0f2a2c"/><text x="32" y="46" font-family="Georgia,serif" font-size="40" font-weight="700" text-anchor="middle" fill="#e3b23c">D</text></svg>"""
 
+# ---------- Hero de las páginas interiores (mismo diseño que la portada) ----------
+# ruta: (imagen en assets/img/cabeceras, ancho, alto, encuadre, voltear)
+CABECERAS = {
+    "personajes/": ("personajes.jpg", 1920, 1080, "60% 30%", False),
+    "personajes/cardenal/": ("cardenal.jpg", 1920, 1108, "55% 25%", False),
+    "personajes/david-jimenez/": ("david-jimenez.jpg", 1920, 1271, "70% 20%", True),
+    "libro/": ("libro.jpg", 1920, 1080, "65% 30%", False),
+    "pelicula/": ("pelicula.jpg", 1920, 1080, "70% 25%", False),
+    "historia-real/": ("historia-real.jpg", 1920, 1080, "75% 30%", False),
+    "preguntas-frecuentes/": ("preguntas.jpg", 1920, 1080, "80% 40%", False),
+    "metodologia-y-fuentes/": ("metodologia.jpg", 1920, 1080, "65% 35%", False),
+}
+
+def con_hero(ruta, cuerpo):
+    """Saca migas, antetítulo, h1 y entradilla del principio de la página y los pone sobre una foto a sangre."""
+    import re
+    img, w, h, encuadre, voltear = CABECERAS[ruta]
+    m = re.match(r'\s*(?:<div class="banda".*?</div></div>\s*)?<div class="contenedor"[^>]*>\s*(.*?<h1>.*?</h1>)\s*', cuerpo, re.S)
+    cabeza, resto = m.group(1), cuerpo[m.end():]
+    m2 = re.match(r'(<div class="lectura">)\s*(<p class="entradilla">.*?</p>)\s*', resto, re.S)
+    entradilla = ""
+    if m2:
+        entradilla, resto = m2.group(2), m2.group(1) + "\n" + resto[m2.end():]
+    estilo = f'object-position:{encuadre}' + (';transform:scaleX(-1)' if voltear else '')
+    alt = "David Jiménez en 2019" if ruta == "personajes/david-jimenez/" else ""
+    return (f'<section class="hero hero-v3 hero-pagina">'
+            f'<img class="hero-fondo" src="{{r}}assets/img/cabeceras/{img}" alt="{alt}" width="{w}" height="{h}" style="{estilo}" fetchpriority="high" decoding="async">'
+            f'<div class="contenedor hero-texto">{cabeza}{entradilla}</div></section>\n'
+            f'<div class="contenedor">\n{resto}')
+
 def main():
     docs = SALIDA
     if os.path.isdir(docs):
@@ -921,7 +952,8 @@ def main():
         destino = os.path.join(docs, ruta, "index.html")
         os.makedirs(os.path.dirname(destino), exist_ok=True)
         with open(destino, "w", encoding="utf-8") as fh:
-            fh.write(plantilla(ruta, p["titulo"], p["desc"], p["cuerpo"], p.get("ld"), p.get("activo"), p.get("portada", False)))
+            cuerpo = con_hero(ruta, p["cuerpo"]) if ruta in CABECERAS else p["cuerpo"]
+            fh.write(plantilla(ruta, p["titulo"], p["desc"], cuerpo, p.get("ld"), p.get("activo"), p.get("portada", False), ruta in CABECERAS))
     # 404 con rutas absolutas (GitHub Pages la sirve en cualquier profundidad)
     pagina404 = plantilla("", "Página no encontrada · El Director", "Página no encontrada.", NO_ENCONTRADA.format(repo=REPO))
     pagina404 = pagina404.replace('href="assets/', f'href="/{REPO}/assets/').replace('src="assets/', f'src="/{REPO}/assets/').replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex">')
