@@ -38,6 +38,8 @@
   }
   puntos.forEach(function (p, i) { p.addEventListener("click", function () { mostrar(i); }); });
   pausa.addEventListener("click", function () { fijarPausa(!pausado); });
+  raiz.querySelector(".vrlp-flecha.ant").addEventListener("click", function () { mostrar(actual - 1); });
+  raiz.querySelector(".vrlp-flecha.sig").addEventListener("click", function () { mostrar(actual + 1); });
   raiz.addEventListener("mouseenter", function () { encima = true; programar(); });
   raiz.addEventListener("mouseleave", function () { encima = false; programar(); });
   raiz.addEventListener("focusin", function () { encima = true; programar(); });

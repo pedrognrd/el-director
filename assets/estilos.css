@@ -568,3 +568,14 @@ h1,h2,h3{letter-spacing:.01em}
 body{font-weight:400;letter-spacing:.01em;line-height: 1.4;}
 .lectura p,.lectura li,dl.faq dd,td{letter-spacing:.01em}
 p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{font-weight:600}
+/* Slider: flechas anterior / siguiente */
+.vrlp-flecha{display:none;position:absolute;z-index:4;top:50%;transform:translateY(-50%);width:52px;height:52px;border:0;border-radius:50%;background:rgba(10,31,33,.55);cursor:pointer;transition:background .2s}
+.vrlp.js .vrlp-flecha{display:block}
+.vrlp-flecha.ant{left:clamp(8px,1.6vw,24px)}
+.vrlp-flecha.sig{right:clamp(8px,1.6vw,24px)}
+.vrlp-flecha::before{content:"";position:absolute;top:50%;left:50%;width:14px;height:14px;border-top:3px solid var(--papel);border-right:3px solid var(--papel)}
+.vrlp-flecha.ant::before{transform:translate(-35%,-50%) rotate(-135deg)}
+.vrlp-flecha.sig::before{transform:translate(-65%,-50%) rotate(45deg)}
+.vrlp-flecha:hover,.vrlp-flecha:focus-visible{background:var(--oro)}
+.vrlp-flecha:hover::before,.vrlp-flecha:focus-visible::before{border-color:var(--petroleo)}
+@media (max-width:760px){.vrlp-flecha{width:40px;height:40px;top:42%}.vrlp-flecha::before{width:11px;height:11px}}

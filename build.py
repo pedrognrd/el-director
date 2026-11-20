@@ -501,6 +501,8 @@ PAGINAS[""] = dict(
   <div class="vrlp-slides">
     {"".join(slide(*d) for d in SLIDES)}
   </div>
+  <button type="button" class="vrlp-flecha ant" aria-label="Anterior"></button>
+  <button type="button" class="vrlp-flecha sig" aria-label="Siguiente"></button>
   <div class="vrlp-control">
     <button type="button" class="vrlp-pausa" aria-label="Pausar">❚❚</button>
     {"".join(f'<button type="button" class="vrlp-punto" aria-label="Ver {i + 1} de {len(SLIDES)}"></button>' for i in range(len(SLIDES)))}
