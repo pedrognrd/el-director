@@ -426,7 +426,7 @@ PAGINAS[""] = dict(
     <p class="antetitulo">Libro de David Jiménez (2019) · Película de Dani de la Orden (2026)</p>
     <h1><span class="el">El</span> Director</h1>
     <p class="sub">Del libro a la película</p>
-    <p class="entradilla lectura">En 2015, David Jiménez dejó de ser corresponsal de guerra para dirigir <i>El Mundo</i>. Duró un año. Lo contó en un libro con nombres reales y apodos; ahora llega al cine con los nombres cambiados. Aquí te contamos quién es quién.</p>
+    <p class="entradilla lectura">En 2015, David Jiménez dejó de ser corresponsal de guerra para dirigir <i>El Mundo</i>. <strong>Duró un año.</strong> Lo contó todo en un libro. Ahora llega al cine. Aquí te contamos quién es quién.</p>
     <div class="acciones">
       <a class="btn" href="{{r}}personajes/">Ver quién es quién</a>
       <a class="btn sec" href="{{r}}pelicula/#donde-ver">Dónde ver la película</a>
