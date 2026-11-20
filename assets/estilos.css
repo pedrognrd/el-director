@@ -274,3 +274,10 @@ dl.faq dd{margin:.4rem 0 0}
 .pie-menu{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.08em;font-size:.82rem}
 .pie-menu a{text-decoration:none}
 .pie-menu a:hover{color:var(--oro)}
+/* Ajustes cartelera */
+.combates{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.combate{background:radial-gradient(ellipse at 50% 0%,rgba(227,178,60,.26),transparent 62%),var(--noche)}
+.ring{height:260px;overflow:hidden}
+.luchador{height:260px}
+.luchador img{max-height:260px;max-width:125%}
+.nombres strong{font-size:clamp(1.1rem,2vw,1.45rem)}
