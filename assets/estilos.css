@@ -469,3 +469,8 @@ main.sin-relleno{padding-block:0}
 }
 .hero-v3 .flechas a{white-space:nowrap;gap:10px}
 .hero-v3 .flechas a::after{width:26px}
+@media (max-width:760px){
+  .es-portada .arriba{position:static}
+  .es-portada .sitio{background:var(--noche);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .es-portada .hero-v3{padding-top:44px}
+}
