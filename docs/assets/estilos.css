@@ -18,7 +18,7 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--petroleo);color:var(--papel);font-family:var(--f-texto);font-size:18px;line-height:1.55}
+body{margin:0;background:var(--petroleo);color:var(--papel);font-family:var(--f-texto);font-size: 20px;line-height:1.55}
 img{max-width:100%;height:auto}
 a{color:var(--oro);text-underline-offset:3px}
 a:hover{color:var(--papel)}
@@ -27,7 +27,7 @@ a:hover{color:var(--papel)}
 .salto:focus{left:16px}
 
 .contenedor{max-width:1100px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
-.lectura{max-width:68ch}
+.lectura{max-width:68ch;margin: 18px 0px 36px 0px;}
 
 /* Cabecera del sitio */
 .sitio{border-bottom:1px solid var(--petroleo-3);background:var(--noche)}
@@ -89,8 +89,8 @@ a.par:hover .nombre{color:var(--oro)}
 .s-real{color:var(--oro)}
 
 /* Tablas */
-.tabla{overflow-x:auto;margin-top:18px;border:1px solid var(--petroleo-3)}
-table{border-collapse:collapse;width:100%;min-width:600px;font-size:.95rem}
+.tabla{overflow-x:auto;margin: 18px 0px;border:1px solid var(--petroleo-3)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size: 1.2rem;}
 caption{text-align:left;padding:10px 12px;font-family:var(--f-teletipo);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gris)}
 th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--petroleo-3);vertical-align:top}
 th{font-family:var(--f-teletipo);font-weight:500;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);background:var(--petroleo-2)}
@@ -565,6 +565,6 @@ h1,h2,h3{letter-spacing:.01em}
 @media (max-width:760px){.hero-mosaico{grid-template-columns:1fr}.hero-mosaico img:nth-child(n+2){display:none}}
 
 /* Textos de lectura en Oswald (misma familia estrecha que Impact, más ligera); titulares y etiquetas siguen en Impact */
-body{font-weight:400;letter-spacing:.01em;line-height:1.6}
+body{font-weight:400;letter-spacing:.01em;line-height: 1.4;}
 .lectura p,.lectura li,dl.faq dd,td{letter-spacing:.01em}
 p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{font-weight:600}
