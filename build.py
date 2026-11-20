@@ -19,7 +19,7 @@ VERSION = hashlib.md5(b"".join(open(os.path.join(_BASE, "assets", f), "rb").read
 # Supabase (encuesta). La clave es la pública (publishable / anon): va en la web por diseño.
 # Si la clave está vacía, la encuesta funciona en modo prueba (votos solo en el navegador).
 SUPABASE_URL = "https://chfqajnvbydhopqglsfj.supabase.co"
-SUPABASE_KEY = ""
+SUPABASE_KEY = "sb_publishable__lsAxOw4mUCSPmH-8cjugg_9JSWLt6K"
 CREDITOS_LIBRO = json.load(open(os.path.join(_BASE, "datos", "creditos-libro.json"), encoding="utf-8"))
 SALIDA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs")
 
