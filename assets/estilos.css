@@ -555,3 +555,6 @@ h1,h2,h3{letter-spacing:.01em}
 .migas-franja .migas a{color:var(--papel);text-decoration:none}
 .migas-franja .migas a:hover{color:var(--oro)}
 .migas-franja [aria-current="page"]{color:var(--oro)}
+/* Botón "Emparejar otro personaje": mismo aspecto que el botón activo de libro / película */
+.enc-otro{background:var(--oro);color:var(--petroleo);border:1px solid var(--oro);padding:6px 12px;font-family:var(--f-display);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;line-height:1.4}
+.enc-otro:hover,.enc-otro:focus-visible{background:var(--papel);border-color:var(--papel);color:var(--petroleo)}
