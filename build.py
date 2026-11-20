@@ -15,7 +15,8 @@ ACTUALIZADO_TXT = "17 de noviembre de 2026"
 import hashlib
 _BASE = os.path.dirname(os.path.abspath(__file__))
 # Versión de los recursos para evitar que el navegador use CSS/JS antiguos en caché
-VERSION = hashlib.md5(b"".join(open(os.path.join(_BASE, "assets", f), "rb").read() for f in ("estilos.css", "video.js", "slider.js"))).hexdigest()[:8]
+VERSION = hashlib.md5(b"".join(open(os.path.join(_BASE, "assets", f), "rb").read() for f in ("estilos.css", "video.js", "slider.js", "encuesta.js"))).hexdigest()[:8]
+CREDITOS_LIBRO = json.load(open(os.path.join(_BASE, "datos", "creditos-libro.json"), encoding="utf-8"))
 SALIDA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs")
 
 MENU = [
@@ -319,11 +320,12 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 <link rel="icon" href="{r}assets/icono.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Anton&display=swap">
 <link rel="stylesheet" href="{r}assets/estilos.css?v={VERSION}">
 <script type="application/ld+json">{json.dumps(grafo, ensure_ascii=False)}</script>
 <script src="{r}assets/video.js?v={VERSION}" defer></script>
 <script src="{r}assets/slider.js?v={VERSION}" defer></script>
+<script src="{r}assets/encuesta.js?v={VERSION}" defer></script>
 </head>
 <body{' class="es-portada"' if portada else (' class="con-hero"' if hero else '')}>
 <a class="salto" href="#contenido">Saltar al contenido</a>
@@ -356,6 +358,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
         <li><a href="{r}historia-real/">Historia real</a></li>
         <li><a href="{r}personajes/david-jimenez/">David Jiménez</a></li>
         <li><a href="{r}preguntas-frecuentes/">Preguntas frecuentes</a></li>
+        <li><a href="{r}encuesta/">Encuesta</a></li>
         <li><a href="{r}metodologia-y-fuentes/">Metodología y aviso legal</a></li>
         <li><a href="{r}metodologia-y-fuentes/#rectificaciones">Rectificaciones</a></li>
       </ul>
@@ -452,7 +455,7 @@ SLIDES = [
      [("der", "David Jiménez", "En el libro: el narrador")], "28%"),
     ("slide-4.jpg", "David Verdaguer como David Jiménez en El Director", "personajes/david-jimenez/", "",
      [("izq", "David Verdaguer", "David Jiménez")], "58%"),
-    ("slide-5-fondo.jpg", "Redacción de la película con dos siluetas: personajes del libro aún sin identificar", "personajes/#pendientes", "",
+    ("slide-5-fondo.jpg", "Redacción de la película con dos siluetas: personajes del libro aún sin identificar", "encuesta/", "",
      [("izq", "La Digna, El Señorito, Rasputín…", "Apodos del libro"), ("der", "Ayúdanos a descubrirlos", "Participa en nuestra encuesta")], "50%",
      [("slide-5-mujer.png", "entra-izq"), ("slide-5-hombre.png", "entra-der")]),
 ]
@@ -486,7 +489,7 @@ PAGINAS[""] = dict(
 </section>
 
 <section class="vrlp" aria-roledescription="carrusel" aria-labelledby="h-vrlp">
-  <h2 class="vrlp-titulo" id="h-vrlp"><a href="{{r}}personajes/" tabindex="-1">Vida real,<br> libro y película</a></h2>
+  <h2 class="vrlp-titulo" id="h-vrlp"><a href="{{r}}encuesta/" tabindex="-1">Vida real,<br> libro y película</a></h2>
   <div class="vrlp-slides">
     {"".join(slide(*d) for d in SLIDES)}
   </div>
@@ -882,9 +885,10 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 {"".join(f'<tr><td>{v[0]}</td><td>{DONDE_FOTO[k]}</td><td><a href="{v[4]}" rel="noopener">{v[1]}</a> (Wikimedia Commons)</td><td><a href="{v[3]}" rel="noopener license">{v[2]}</a></td><td>Recortada; en la portada, con el fondo eliminado</td></tr>' for k, v in FOTOS.items())}
 {"".join(f'<tr><td>{c[1]}</td><td>Portada, cartelera y cartel recreado</td><td><a href="{c[5]}" rel="noopener">{c[2]}</a></td><td><a href="{c[4]}" rel="noopener license">{c[3]}</a></td><td>Solo el contorno, rellenado con un color plano. No representa a ninguna persona concreta</td></tr>' for c in SILUETAS)}
 <tr><td>Cubierta del libro</td><td>Portada</td><td><a href="https://www.librosdelko.com/" rel="noopener">Libros del K.O.</a></td><td>Material promocional de la editorial</td><td>Redimensionada</td></tr>
+{"".join(f'<tr><td>{v["nombre"]}</td><td>Encuesta</td><td><a href="{v["pagina"]}" rel="noopener">{v["autor"]}</a> (Wikimedia Commons)</td><td>' + (f'<a href="{v["licencia_url"]}" rel="noopener license">{v["licencia"]}</a>' if v["licencia_url"] else v["licencia"]) + '</td><td>Recortada, en blanco y negro</td></tr>' for v in CREDITOS_LIBRO.values())}
 <tr><td>Cartel oficial</td><td>Portada, película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionado</td></tr>
 <tr><td>Fotos del reparto en su papel</td><td>Portada, fichas, película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Beta Fiction Spain, dossier de prensa</a></td><td>Material de prensa</td><td>Recortadas; en la portada, con el fondo eliminado</td></tr>
-<tr><td>Fotos de cabecera de las páginas interiores</td><td>Quién es quién, Cardenal, libro, película, historia real, preguntas, metodología</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Lander Larrañaga / Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionadas y oscurecidas con un degradado</td></tr>
+<tr><td>Fotos de cabecera de las páginas interiores</td><td>Quién es quién, Cardenal, libro, película, historia real, preguntas, metodología, encuesta</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Lander Larrañaga / Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionadas y oscurecidas con un degradado</td></tr>
 <tr><td>Fotogramas</td><td>Película</td><td><a href="https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb" rel="noopener">Lander Larrañaga / Beta Fiction Spain, kit de prensa</a></td><td>Material de prensa</td><td>Redimensionados</td></tr>
 {"".join(f'<tr><td>Miniatura: {VIDEOS[v][0]}</td><td>{DONDE_VIDEO[v]}</td><td><a href="https://www.youtube.com/watch?v={v}" rel="noopener">{VIDEOS[v][1]}</a> (YouTube)</td><td>Inserción permitida por YouTube</td><td>Ninguno</td></tr>' for v in VIDEOS)}
 </tbody></table></div>
@@ -906,6 +910,76 @@ NO_ENCONTRADA = """<div class="contenedor"><p class="antetitulo">Error 404</p><h
 
 ICONO = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#0f2a2c"/><text x="32" y="46" font-family="Georgia,serif" font-size="40" font-weight="700" text-anchor="middle" fill="#e3b23c">D</text></svg>"""
 
+# ---------- Encuesta "¿Quién es quién?" (modo prueba) ----------
+SEXO_PELI = {"Elena": "m", "Sara": "m", "Virginia": "m", "Marina": "m", "Julia": "m", "Vicepresidenta": "m"}
+# (id, nombre, tipo, sexo h/m/?, descripción, foto) · sexo "?" = el libro no lo deja claro: sale en las dos listas
+LIBRO_ENCUESTA = [
+    ("rajoy", "Mariano Rajoy", "real", "h", "Presidente del Gobierno (2011-2018)"),
+    ("saenz-de-santamaria", "Soraya Sáenz de Santamaría", "real", "m", "Vicepresidenta del Gobierno (2011-2018)"),
+    ("barcenas", "Luis Bárcenas", "real", "h", "Extesorero del Partido Popular"),
+    ("villarejo", "José Manuel Villarejo", "real", "h", "Comisario de policía"),
+    ("alierta", "César Alierta", "real", "h", "Presidente de Telefónica hasta 2016"),
+    ("florentino-perez", "Florentino Pérez", "real", "h", "Presidente de ACS y del Real Madrid"),
+    ("pedro-j-ramirez", "Pedro J. Ramírez", "real", "h", "Fundador y director de El Mundo hasta 2014"),
+    ("garcia-abadillo", "Casimiro García-Abadillo", "real", "h", "Director de El Mundo (2014-2015)"),
+    ("botin", "Emilio Botín", "real", "h", "Presidente del Banco Santander hasta 2014"),
+    ("faine", "Isidro Fainé", "real", "h", "Presidente de La Caixa"),
+    ("sanchez-galan", "Ignacio Sánchez Galán", "real", "h", "Presidente de Iberdrola"),
+    ("francisco-gonzalez", "Francisco González", "real", "h", "Presidente del BBVA hasta 2018"),
+    ("urdangarin", "Iñaki Urdangarin", "real", "h", "Cuñado del rey Felipe VI"),
+    ("inda", "Eduardo Inda", "real", "h", "Periodista"),
+    ("marhuenda", "Francisco Marhuenda", "real", "h", "Director de La Razón"),
+    ("trinidad-jimenez", "Trinidad Jiménez", "real", "m", "Exministra, con cargo en Telefónica"),
+    ("la-digna", "La Digna", "apodo", "m", "Apodo de alguien de la redacción"),
+    ("la-favorita", "La Favorita", "apodo", "m", "Apodo de alguien de la redacción"),
+    ("rasputin", "Rasputín", "apodo", "h", "Apodo de alguien de la redacción"),
+    ("el-poeta", "El Poeta", "apodo", "h", "Apodo de alguien de la redacción"),
+    ("el-senorito", "El Señorito", "apodo", "h", "Apodo de alguien de la redacción"),
+    ("el-reportero", "El Reportero", "apodo", "h", "Apodo de alguien de la redacción"),
+    ("el-secretario", "El Secretario", "apodo", "h", "Apodo de alguien de la redacción"),
+    ("el-dos", "El Dos", "apodo", "h", "Apodo de alguien de la redacción"),
+    ("el-viti", "El Viti", "apodo", "h", "Apodo de alguien de la redacción"),
+    ("money", "Money", "apodo", "?", "Apodo de alguien de la redacción"),
+    ("asuntos-internos", "Asuntos Internos", "apodo", "?", "Apodo de alguien de la redacción"),
+    ("chupatintas", "Chupatintas", "apodo", "?", "Apodo de alguien de la redacción"),
+    ("ninguno", "Ninguno", "ninguno", "*", "Creo que es un personaje creado para la película"),
+]
+
+def datos_encuesta():
+    peli = [{"id": img, "nombre": pe, "actor": a, "sexo": SEXO_PELI.get(pe, "h"), "foto": f"assets/img/reparto/{img}.jpg"}
+            for pe, a, img, _ in REPARTO if pe not in INSPIRADO]
+    libro = [{"id": i, "nombre": n, "tipo": t, "sexo": sx, "desc": d,
+              "foto": f"assets/img/libro/{i}.jpg" if os.path.exists(os.path.join(_BASE, "assets", "img", "libro", f"{i}.jpg")) else None}
+             for i, n, t, sx, d in LIBRO_ENCUESTA]
+    return json.dumps({"peli": peli, "libro": libro}, ensure_ascii=False).replace("</", "<\\/")
+
+PAGINAS["encuesta/"] = dict(
+    titulo="Encuesta: ¿quién es quién en El Director? · Juega a emparejar",
+    desc="Elige un personaje de la película El Director y di qué personaje del libro de David Jiménez crees que es. Un juego de opinión, con resultados.",
+    cuerpo=f"""<div class="contenedor">
+{migas(("Inicio", ""), ("Encuesta", None))}
+<p class="antetitulo">Encuesta · Juego de opinión</p>
+<h1>¿Quién es quién?</h1>
+<div class="lectura">
+<p class="entradilla">La película cambia casi todos los nombres del libro. Elige un personaje de la película y dinos qué personaje del libro crees que es. <strong>Ayúdanos a descubrirlos.</strong></p>
+</div>
+<div class="aviso enc-aviso"><p><strong>Modo de prueba.</strong> Tus respuestas se guardan solo en este navegador y no se envían a ningún sitio. Los porcentajes solo cuentan los votos hechos aquí.</p>
+<p class="enc-herramientas"><button type="button" class="btn sec" id="enc-simular">Simular 50 votos</button> <button type="button" class="btn sec" id="enc-borrar">Borrar votos de prueba</button></p></div>
+<section id="encuesta" class="encuesta" data-base="{{r}}" aria-label="Juego de emparejar personajes">
+  <div class="enc-paso"><noscript><p>La encuesta necesita JavaScript.</p></noscript></div>
+  <p class="enc-vivo" aria-live="polite"></p>
+</section>
+<script type="application/json" id="encuesta-datos">{datos_encuesta()}</script>
+<h2>Resultados</h2>
+<div id="encuesta-resultados" class="enc-resultados"></div>
+<div class="aviso"><p><strong>Es un juego de opinión.</strong> Los resultados no confirman nada: solo muestran qué piensan quienes participan. Lo confirmado está en <a href="{{r}}personajes/">Quién es quién</a>.</p>
+<p>Los apodos son personajes del libro: David Jiménez los usó para proteger a quienes aún trabajaban en el diario. Aquí solo se emparejan con personajes de la película; no intentamos averiguar quién es la persona real detrás de cada apodo.</p>
+<p>David Jiménez y El Cardenal no están en el juego porque su relación ya está confirmada. Las fotos son de Wikimedia Commons; los créditos están en <a href="{{r}}metodologia-y-fuentes/#creditos">metodología</a>.</p></div>
+{fuentes("wiki_libro", "beta")}
+</div>""",
+    ld=[ld_migas([("Inicio", ""), ("Encuesta", "encuesta/")])],
+)
+
 # ---------- Hero de las páginas interiores (mismo diseño que la portada) ----------
 # ruta: (imagen en assets/img/cabeceras, ancho, alto, encuadre, voltear)
 CABECERAS = {
@@ -917,6 +991,7 @@ CABECERAS = {
     "historia-real/": ("historia-real.jpg", 1920, 1080, "75% 30%", False),
     "preguntas-frecuentes/": ("preguntas.jpg", 1920, 1080, "80% 40%", False),
     "metodologia-y-fuentes/": ("metodologia.jpg", 1920, 1080, "65% 35%", False),
+    "encuesta/": ("encuesta.jpg", 1920, 1080, "70% 30%", False),
 }
 
 def con_hero(ruta, cuerpo):
@@ -943,7 +1018,7 @@ def main():
     os.makedirs(os.path.join(docs, "assets"))
     base = os.path.dirname(os.path.abspath(__file__))
     shutil.copy(os.path.join(base, "assets", "estilos.css"), os.path.join(docs, "assets", "estilos.css"))
-    for js in ("video.js", "slider.js"):
+    for js in ("video.js", "slider.js", "encuesta.js"):
         shutil.copy(os.path.join(base, "assets", js), os.path.join(docs, "assets", js))
     shutil.copytree(os.path.join(base, "assets", "img"), os.path.join(docs, "assets", "img"))
     open(os.path.join(docs, "assets", "icono.svg"), "w").write(ICONO)
@@ -957,7 +1032,7 @@ def main():
     # 404 con rutas absolutas (GitHub Pages la sirve en cualquier profundidad)
     pagina404 = plantilla("", "Página no encontrada · El Director", "Página no encontrada.", NO_ENCONTRADA.format(repo=REPO))
     pagina404 = pagina404.replace('href="assets/', f'href="/{REPO}/assets/').replace('src="assets/', f'src="/{REPO}/assets/').replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex">')
-    for u, _ in MENU + [("metodologia-y-fuentes/", ""), ("personajes/", ""), ("libro/", ""), ("pelicula/", ""), ("historia-real/", ""), ("personajes/david-jimenez/", ""), ("preguntas-frecuentes/", ""), ("metodologia-y-fuentes/#rectificaciones", "")]:
+    for u, _ in MENU + [("metodologia-y-fuentes/", ""), ("personajes/", ""), ("libro/", ""), ("pelicula/", ""), ("historia-real/", ""), ("personajes/david-jimenez/", ""), ("preguntas-frecuentes/", ""), ("encuesta/", ""), ("metodologia-y-fuentes/#rectificaciones", "")]:
         pagina404 = pagina404.replace(f'href="{u}"', f'href="/{REPO}/{u}"')
     pagina404 = pagina404.replace('<a class="marca" href="">', f'<a class="marca" href="/{REPO}/">')
     open(os.path.join(docs, "404.html"), "w", encoding="utf-8").write(pagina404)

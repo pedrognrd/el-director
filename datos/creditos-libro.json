@@ -1,0 +1,93 @@
+{
+ "rajoy": {
+  "nombre": "Mariano Rajoy",
+  "autor": "Ministerio de la Presidencia. Gobierno de España (Pool Moncloa/ Diego Crespo)",
+  "licencia": "Attribution",
+  "licencia_url": "",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Rajoy_anuncia_elecciones_en_Catalu%C3%B1a_05_(cropped).jpg"
+ },
+ "saenz-de-santamaria": {
+  "nombre": "Soraya Sáenz de Santamaría",
+  "autor": "PP Comunidad de Madrid",
+  "licencia": "CC BY 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Soraya_S%C3%A1enz_de_Santamar%C3%ADa._Julio_de_2018b._(42329206575)_(cropped).jpg"
+ },
+ "alierta": {
+  "nombre": "César Alierta",
+  "autor": "UNED Universidad Nacional de Educación a Distancia",
+  "licencia": "CC BY 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:C%C3%A9sar_Alierta_Izuel,_presidente_del_Consejo_social_de_la_UNED%22.jpg"
+ },
+ "florentino-perez": {
+  "nombre": "Florentino Pérez",
+  "autor": "Instituto Cervantes de Tokio",
+  "licencia": "CC BY-SA 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Florentino_P%C3%A9rez_2016_(cropped).jpg"
+ },
+ "pedro-j-ramirez": {
+  "nombre": "Pedro J. Ramírez",
+  "autor": "Irekia",
+  "licencia": "CC BY 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pedro_J._Ram%C3%ADrez_(2011).jpg"
+ },
+ "garcia-abadillo": {
+  "nombre": "Casimiro García-Abadillo",
+  "autor": "Magaraba",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Casimiro_Garc%C3%ADa-Abadillo_Prieto.jpg"
+ },
+ "botin": {
+  "nombre": "Emilio Botín",
+  "autor": "Junta Informa",
+  "licencia": "CC BY-SA 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Emilio_Bot%C3%ADn_14.01.15.jpg"
+ },
+ "faine": {
+  "nombre": "Isidro Fainé",
+  "autor": "Press Cambrabcn",
+  "licencia": "CC BY-SA 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Isidre_Fain%C3%A9_2014b_(cropped).jpg"
+ },
+ "francisco-gonzalez": {
+  "nombre": "Francisco González Rodríguez",
+  "autor": "Junta Informa",
+  "licencia": "CC BY-SA 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Francisco_Gonz%C3%A1lez_Rodr%C3%ADguez_-_14.04.28-Firma-2-Convenio_BBVA.jpg"
+ },
+ "urdangarin": {
+  "nombre": "Iñaki Urdangarin",
+  "autor": "Antonio Zugaldia (Zugaldia)",
+  "licencia": "CC BY 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:I%C3%B1aki_Urdangar%C3%ADn.jpg"
+ },
+ "inda": {
+  "nombre": "Eduardo Inda",
+  "autor": "Patrickpedia",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Eduardo_Inda-ene_2016.jpg"
+ },
+ "marhuenda": {
+  "nombre": "Francisco Marhuenda",
+  "autor": "PP Madrid",
+  "licencia": "CC BY 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Francisco_Marhuenda.jpg"
+ },
+ "trinidad-jimenez": {
+  "nombre": "Trinidad Jiménez",
+  "autor": "Trinidad Jiménez",
+  "licencia": "CC BY-SA 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Trini_conversando_con_la_militancia_de_Mejorada.jpg"
+ }
+}
