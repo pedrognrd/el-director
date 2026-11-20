@@ -47,7 +47,8 @@
   mostrar(0);
 })();
 
-// Libro / película: la imagen gira cada 7 s y cambian los textos.
+// Libro / película: la imagen gira sola cada 10 s y cambian los textos.
+// Si la persona pulsa un botón, el siguiente giro automático espera 20 s.
 (function () {
   var volteo = document.querySelector(".volteo");
   if (!volteo) return;
@@ -55,9 +56,9 @@
   var botones = seccion.querySelectorAll("[data-ir]");
   var paneles = seccion.querySelectorAll(".obra-panel");
   var reducir = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var temporizador = null, encima = false;
+  var temporizador = null;
   seccion.classList.add("js");
-  function mostrar(cara) {
+  function mostrar(cara, espera) {
     volteo.setAttribute("data-cara", cara);
     paneles.forEach(function (p) {
       var activo = p.getAttribute("data-cara") === cara;
@@ -66,19 +67,15 @@
       p.querySelectorAll("a").forEach(function (a) { a.tabIndex = activo ? 0 : -1; });
     });
     botones.forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-ir") === cara ? "true" : "false"); });
-    programar();
+    programar(espera);
   }
-  function programar() {
+  function programar(espera) {
     clearTimeout(temporizador);
-    if (reducir || encima) return;
+    if (reducir) return;
     temporizador = setTimeout(function () {
-      mostrar(volteo.getAttribute("data-cara") === "libro" ? "peli" : "libro");
-    }, 7000);
+      mostrar(volteo.getAttribute("data-cara") === "libro" ? "peli" : "libro", 10000);
+    }, espera);
   }
-  botones.forEach(function (b) { b.addEventListener("click", function () { mostrar(b.getAttribute("data-ir")); }); });
-  seccion.addEventListener("mouseenter", function () { encima = true; programar(); });
-  seccion.addEventListener("mouseleave", function () { encima = false; programar(); });
-  seccion.addEventListener("focusin", function () { encima = true; programar(); });
-  seccion.addEventListener("focusout", function () { encima = false; programar(); });
-  mostrar("libro");
+  botones.forEach(function (b) { b.addEventListener("click", function () { mostrar(b.getAttribute("data-ir"), 20000); }); });
+  mostrar("libro", 10000);
 })();
