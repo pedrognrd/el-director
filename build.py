@@ -152,6 +152,8 @@ F = {
     "elsalto": ("El Salto: entrevista a David Jiménez", "https://www.elsaltodiario.com/medios/entrevista-david-jimenez-director-mundo-libro-acuerdos-prensa-empresas-ibex-cloacas-estado-informacion-falsa-podemos"),
     "youtube": ("YouTube: canal oficial de David Jiménez", YOUTUBE),
     "dossier": ("Beta Fiction Spain: kit y dossier de prensa oficial", "https://app.box.com/s/623pqrgihzm72b9biwaaolbqvacb66lb"),
+    "publico_cardenal": ("Público: Fernández-Galiano, «El Cardenal»", "https://www.publico.es/economia/fernandez-galiano-cardenal-papel-queria-dominar-mundo.html"),
+    "siglo_cardenal": ("El Siglo de Europa: el despido de Fernández-Galiano", "https://elsiglodeuropa.es/el-despido-de-fernandez-galiano-abre-una-nueva-epoca-en-el-mundo/"),
 }
 
 def fuentes(*claves, horizontal=False):
@@ -646,7 +648,7 @@ PAGINAS["personajes/cardenal/"] = dict(
 <h2 id="donde">Léelo y míralo</h2>
 <p class="lectura">El libro cuenta la versión de Jiménez con más detalle que la película. La película llega a los cines el 20 de noviembre.</p>
 <div class="acciones"><a class="btn" href="{{r}}libro/#donde-leer">Dónde leer el libro</a><a class="btn sec" href="{{r}}pelicula/#donde-ver">Dónde ver la película</a></div>
-{fuentes("wiki_libro", "infobae", "cineconn", "beta")}
+{fuentes("wiki_libro", "publico_cardenal", "siglo_cardenal", "infobae", "cineconn", "beta")}
 {siguiente(("Ficha", "David Jiménez", "personajes/david-jimenez/"), ("Tabla", "Todos los personajes", "personajes/"), ("Contexto", "La historia real", "historia-real/"))}
 </div>""",
     ld=[ld_migas([("Inicio", ""), ("Quién es quién", "personajes/"), ("El Cardenal", "personajes/cardenal/")]),
