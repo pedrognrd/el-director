@@ -602,3 +602,4 @@ p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{
   .js .sitio .menu a{display:block;padding:12px 0;font-size:1.15rem}
   .js .sitio .menu a[aria-current="page"],.js .sitio .menu a:hover{box-shadow:none;color:var(--papel)}
 }
+.enc-invita{margin:28px 0 0;padding-top:16px;border-top:1px solid var(--petroleo-3);color:var(--papel)}

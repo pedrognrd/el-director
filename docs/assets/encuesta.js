@@ -108,7 +108,9 @@
     var p = PELI[idPeli], l = LIBRO[idLibro];
     paso.innerHTML = '<p class="antetitulo">' + (yaVotado ? "Ya votaste este personaje" : "Tu respuesta") + '</p><h2 class="enc-titulo">' + esc(p.nombre) + ' = ' + esc(l.nombre) + '</h2>' +
       '<p class="enc-sub">Así han respondido sobre ' + esc(p.nombre) + ' (' + esc(p.actor) + '):</p>' + barras(idPeli, idLibro) +
-      '<div class="flechas"><button type="button" class="enc-otro">Emparejar otro personaje</button></div>';
+      '<div class="flechas"><button type="button" class="enc-otro">Emparejar otro personaje</button></div>' +
+      '<p class="enc-invita">¿Quieres saber más de cada personaje? La historia completa está en el libro y en la película.</p>' +
+      '<div class="flechas"><a href="' + base + 'libro/#donde-leer">Dónde leer el libro</a><a href="' + base + 'pelicula/#donde-ver">Dónde ver la película</a></div>';
     enfocar(".enc-titulo");
     vivo.textContent = "Voto registrado: " + p.nombre + " con " + l.nombre + ".";
     resumen();

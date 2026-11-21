@@ -995,6 +995,7 @@ PAGINAS["encuesta/"] = dict(
 <h2>Resultados</h2>
 <div id="encuesta-resultados" class="enc-resultados"></div>
 <div class="aviso"><p><strong>Es un juego de opinión.</strong> Los resultados no confirman nada: solo muestran qué piensan quienes participan. Lo confirmado está en <a href="{{r}}personajes/">Quién es quién</a>.</p>
+<p>En internet circulan varias listas que atribuyen nombres reales a los apodos del libro. No las enlazamos ni las damos por buenas: lo nuestro es solo un juego para animar a participar, a leer el libro y a ver la película. La mejor forma de conocer a cada personaje es <a href="{{r}}libro/#donde-leer">leer <i>El director</i></a> y <a href="{{r}}pelicula/#donde-ver">verla en el cine</a>.</p>
 <p>Los apodos son personajes del libro: David Jiménez los usó para proteger a quienes aún trabajaban en el diario. Aquí solo se emparejan con personajes de la película; no intentamos averiguar quién es la persona real detrás de cada apodo.</p>
 <p>David Jiménez y El Cardenal no están en el juego porque su relación ya está confirmada. Las fotos son de Wikimedia Commons; los créditos están en <a href="{{r}}metodologia-y-fuentes/#creditos">metodología</a>.</p></div>
 {fuentes("wiki_libro", "beta")}
