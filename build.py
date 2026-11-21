@@ -8,7 +8,10 @@ import json, os, sys, shutil, html
 
 USUARIO = sys.argv[1] if len(sys.argv) > 1 else "pedrognrd"
 REPO = sys.argv[2] if len(sys.argv) > 2 else "el-director"
-SITE = f"https://{USUARIO.lower()}.github.io/{REPO}/"
+# Dominio propio (GitHub Pages lo sirve gracias al archivo CNAME de docs/)
+DOMINIO = "eldirectorquienesquien.com"
+SITE = f"https://{DOMINIO}/"
+RAIZ = "/"   # ruta absoluta de la web en el dominio (antes /el-director/)
 ISSUES = f"https://github.com/{USUARIO}/{REPO}/issues/new"
 ACTUALIZADO = "2026-11-17"
 ACTUALIZADO_TXT = "17 de noviembre de 2026"
@@ -927,7 +930,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 
 NO_ENCONTRADA = """<div class="contenedor"><p class="antetitulo">Error 404</p><h1>Esta página no está en la edición de hoy</h1>
 <p class="lectura">Puede que la dirección esté mal escrita o que hayamos movido el contenido.</p>
-<div class="acciones"><a class="btn" href="/{repo}/">Ir a la portada</a><a class="btn sec" href="/{repo}/personajes/">Ver quién es quién</a></div></div>"""
+<div class="acciones"><a class="btn" href="/">Ir a la portada</a><a class="btn sec" href="/personajes/">Ver quién es quién</a></div></div>"""
 
 ICONO = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#0f2a2c"/><text x="32" y="46" font-family="Georgia,serif" font-size="40" font-weight="700" text-anchor="middle" fill="#e3b23c">D</text></svg>"""
 
@@ -1065,6 +1068,7 @@ def main():
     shutil.copytree(os.path.join(base, "assets", "img"), os.path.join(docs, "assets", "img"))
     open(os.path.join(docs, "assets", "icono.svg"), "w").write(ICONO)
     open(os.path.join(docs, ".nojekyll"), "w").write("")
+    open(os.path.join(docs, "CNAME"), "w").write(DOMINIO + "\n")
     for ruta, p in PAGINAS.items():
         destino = os.path.join(docs, ruta, "index.html")
         os.makedirs(os.path.dirname(destino), exist_ok=True)
@@ -1073,10 +1077,10 @@ def main():
             fh.write(plantilla(ruta, p["titulo"], p["desc"], cuerpo, p.get("ld"), p.get("activo"), p.get("portada", False), ruta in CABECERAS))
     # 404 con rutas absolutas (GitHub Pages la sirve en cualquier profundidad)
     pagina404 = plantilla("", "Página no encontrada · El Director", "Página no encontrada.", NO_ENCONTRADA.format(repo=REPO))
-    pagina404 = pagina404.replace('href="assets/', f'href="/{REPO}/assets/').replace('src="assets/', f'src="/{REPO}/assets/').replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex">')
+    pagina404 = pagina404.replace('href="assets/', f'href="{RAIZ}assets/').replace('src="assets/', f'src="{RAIZ}assets/').replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex">')
     for u, _ in MENU + [("metodologia-y-fuentes/", ""), ("personajes/", ""), ("libro/", ""), ("pelicula/", ""), ("historia-real/", ""), ("personajes/david-jimenez/", ""), ("preguntas-frecuentes/", ""), ("encuesta/", ""), ("metodologia-y-fuentes/#rectificaciones", "")]:
-        pagina404 = pagina404.replace(f'href="{u}"', f'href="/{REPO}/{u}"')
-    pagina404 = pagina404.replace('<a class="marca" href="">', f'<a class="marca" href="/{REPO}/">')
+        pagina404 = pagina404.replace(f'href="{u}"', f'href="{RAIZ}{u}"')
+    pagina404 = pagina404.replace('<a class="marca" href="">', f'<a class="marca" href="{RAIZ}">')
     open(os.path.join(docs, "404.html"), "w", encoding="utf-8").write(pagina404)
     urls = "".join(f"<url><loc>{SITE}{r}</loc><lastmod>{ACTUALIZADO}</lastmod></url>" for r in PAGINAS)
     open(os.path.join(docs, "sitemap.xml"), "w").write(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>')
