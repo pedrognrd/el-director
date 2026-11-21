@@ -360,10 +360,19 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 <footer class="pie">
   <div class="contenedor">
     <p class="pie-marca"><img class="pie-logo" src="{r}assets/img/portada/logo-web.png" alt="El Director" width="258" height="54" loading="lazy"><span>Del libro a la película</span></p>
-    <div class="pie-aviso">
-      <p><strong>Sobre esta web.</strong> “El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a <a href="{LIBROSDELKO}">Libros del K.O.</a>, Beta Fiction Spain ni David Jiménez.</p>
-      <p>La relación entre personas reales y personajes se basa en fuentes públicas enlazadas en cada página, con su grado de certeza. No emitimos juicios sobre las personas mencionadas. La película es una obra de ficción inspirada en hechos reales.</p>
-      <p><strong>Web no monetizada.</strong> Sin publicidad y sin cookies propias. Los vídeos de YouTube solo se cargan si pulsas reproducir. Los enlaces a librerías y cines son solo informativos. Fotos con licencia libre: <a href="{r}metodologia-y-fuentes/#creditos">créditos</a>.</p>
+    <div class="pie-columnas">
+      <section>
+        <h2>Web independiente</h2>
+        <p>Proyecto informativo y personal. No es la web oficial del libro, de la película ni de su autor, y no tiene relación con <a href="{LIBROSDELKO}">Libros del K.O.</a>, Beta Fiction Spain ni David Jiménez.</p>
+      </section>
+      <section>
+        <h2>Con fuentes</h2>
+        <p>Cada relación entre personas reales y personajes enlaza sus fuentes e indica su grado de certeza. La película es una ficción inspirada en hechos reales.</p>
+      </section>
+      <section>
+        <h2>No monetizada</h2>
+        <p>Sin publicidad ni cookies propias. Los vídeos solo se cargan si pulsas reproducir. Imágenes: <a href="{r}metodologia-y-fuentes/#creditos">créditos</a>.</p>
+      </section>
     </div>
     <hr>
     <nav aria-label="Pie de página">

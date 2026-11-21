@@ -603,3 +603,10 @@ p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{
   .js .sitio .menu a[aria-current="page"],.js .sitio .menu a:hover{box-shadow:none;color:var(--papel)}
 }
 .enc-invita{margin:28px 0 0;padding-top:16px;border-top:1px solid var(--petroleo-3);color:var(--papel)}
+/* Pie en tres columnas */
+.pie-columnas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 40px;max-width:1000px;margin:10px auto 0;text-align:left}
+.pie-columnas section{border-top:2px solid var(--oro);padding-top:12px}
+.pie-columnas h2{margin:0 0 6px;font-family:var(--f-teletipo);font-size:.9rem;letter-spacing:.06em;color:var(--papel)}
+.pie-columnas p{margin:0;font-size:.95rem;line-height:1.5;color:var(--gris)}
+.pie-columnas a{color:var(--papel)}
+@media (max-width:760px){.pie-columnas{grid-template-columns:1fr;gap:20px}}
