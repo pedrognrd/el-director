@@ -368,13 +368,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
     <hr>
     <nav aria-label="Pie de página">
       <ul class="pie-menu">
-        <li><a href="{r}personajes/">Quién es quién</a></li>
-        <li><a href="{r}libro/">El libro</a></li>
-        <li><a href="{r}pelicula/">La película</a></li>
-        <li><a href="{r}historia-real/">Historia real</a></li>
         <li><a href="{r}personajes/david-jimenez/">David Jiménez</a></li>
-        <li><a href="{r}preguntas-frecuentes/">Preguntas frecuentes</a></li>
-        <li><a href="{r}encuesta/">Encuesta</a></li>
         <li><a href="{r}metodologia-y-fuentes/">Metodología y aviso legal</a></li>
         <li><a href="{r}metodologia-y-fuentes/#rectificaciones">Rectificaciones</a></li>
       </ul>
