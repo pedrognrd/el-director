@@ -23,6 +23,8 @@ let salida = args[1]
 let ry = CGFloat(Double(args[2])!), rh = CGFloat(Double(args[3])!)
 args = Array(args.dropFirst(4))
 let oscuro = args.contains("--oscuro"); args.removeAll { $0 == "--oscuro" }
+// --sin-contorno: no añade el borde negro a las siluetas (para figuras que ya traen el borde difuminado).
+let sinContorno = args.contains("--sin-contorno"); args.removeAll { $0 == "--sin-contorno" }
 // --x=inicio:fin recorta también en horizontal (p. ej. para quitar bordes transparentes).
 var rx: CGFloat = 0, rw: CGFloat = -1
 if let i = args.firstIndex(where: { $0.hasPrefix("--x=") }) {
@@ -61,7 +63,7 @@ for capa in args {
         "inputRVector": CIVector(x: 0, y: 0, z: 0, w: 0), "inputGVector": CIVector(x: 0, y: 0, z: 0, w: 0),
         "inputBVector": CIVector(x: 0, y: 0, z: 0, w: 0), "inputAVector": CIVector(x: 0, y: 0, z: 0, w: 1)])
     let contorno = alfa.applyingFilter("CIMorphologyMaximum", parameters: ["inputRadius": 2.5])
-    lienzo = colocada.composited(over: contorno.composited(over: lienzo)).cropped(to: CGRect(x: 0, y: 0, width: W, height: H))
+    lienzo = (sinContorno ? colocada.composited(over: lienzo) : colocada.composited(over: contorno.composited(over: lienzo))).cropped(to: CGRect(x: 0, y: 0, width: W, height: H))
 }
 
 let ctx = CIContext()

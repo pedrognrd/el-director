@@ -489,7 +489,7 @@ SLIDES = [
      [("izq", "David Verdaguer", "David Jiménez")], "58%"),
     ("slide-5-fondo.jpg", "Redacción de la película con dos siluetas: personajes del libro aún sin identificar", "encuesta/", "",
      [("izq", "La Digna, El Señorito, Rasputín…", "Apodos del libro"), ("der", "Ayúdanos a descubrirlos", "Participa en nuestra encuesta")], "50%",
-     [("slide-5-mujer.png", "entra-izq"), ("slide-5-hombre.png", "entra-der")]),
+     [("slide-5-mujer-v2.png", "entra-izq"), ("slide-5-hombre-v2.png", "entra-der")]),
 ]
 
 def slide(img, alt, enlace, tono, textos, foco, capas=()):
