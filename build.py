@@ -391,6 +391,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
     </nav>
   </div>
 </footer>
+<a class="volver-arriba" href="#contenido" aria-label="Volver arriba"></a>
 {AVISO_COOKIES.replace("{r}", r) if GA_ID else ""}
 </body>
 </html>

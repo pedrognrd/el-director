@@ -1,3 +1,19 @@
+// Botón «Volver arriba»: aparece al bajar y sube suavemente al principio de la página.
+(function () {
+  var b = document.querySelector(".volver-arriba");
+  if (!b) return;
+  var reducir = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function revisar() { b.classList.toggle("visible", window.scrollY > 600); }
+  window.addEventListener("scroll", revisar, { passive: true });
+  revisar();
+  b.addEventListener("click", function (e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: reducir ? "auto" : "smooth" });
+    var salto = document.querySelector(".salto");
+    if (salto) salto.focus({ preventScroll: true });
+  });
+})();
+
 // Menú hamburguesa (móvil): abre y cierra la navegación principal.
 (function () {
   var boton = document.querySelector(".menu-boton");

@@ -616,3 +616,11 @@ p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{
 .aviso-cookies p{margin:0;flex:1 1 360px;font-size:.92rem;line-height:1.45}
 .aviso-cookies-botones{display:flex;gap:10px}
 .aviso-cookies .btn{font-size:.85rem;padding:9px 16px}
+/* Botón Volver arriba */
+.volver-arriba{position:fixed;z-index:40;right:20px;bottom:20px;width:48px;height:48px;border-radius:50%;background:var(--oro);box-shadow:0 6px 18px rgba(0,0,0,.4);opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s,transform .25s,visibility 0s .25s,background .2s}
+.volver-arriba::before{content:"";position:absolute;left:50%;top:55%;width:13px;height:13px;border-top:3px solid var(--petroleo);border-left:3px solid var(--petroleo);transform:translate(-50%,-50%) rotate(45deg)}
+.volver-arriba.visible{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .25s,background .2s}
+.volver-arriba:hover,.volver-arriba:focus-visible{background:var(--papel)}
+/* Si el aviso de cookies está abierto, el botón se aparta hacia arriba */
+.aviso-cookies:not([hidden]) ~ .volver-arriba,.volver-arriba:has(~ .aviso-cookies:not([hidden])){bottom:120px}
+@media (max-width:760px){.volver-arriba{right:14px;bottom:14px;width:44px;height:44px}.volver-arriba:has(~ .aviso-cookies:not([hidden])){bottom:190px}}
