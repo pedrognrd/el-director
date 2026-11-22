@@ -216,11 +216,7 @@ ENLACES = [
     ("El Mundo", WIKI + "El_Mundo_(Espa%C3%B1a)"),
     ("Libros del K.O.", LIBROSDELKO),
     ("Beta Fiction Spain", "https://betafiction.es/"),
-    ("Pedro J. Ramírez", WIKI + "Pedro_J._Ram%C3%ADrez"),
-    ("Casimiro García-Abadillo", WIKI + "Casimiro_Garc%C3%ADa-Abadillo"),
     ("Pedro García Cuartango", WIKI + "Pedro_Garc%C3%ADa_Cuartango"),
-    ("César Alierta", WIKI + "C%C3%A9sar_Alierta"),
-    ("Florentino Pérez", WIKI + "Florentino_P%C3%A9rez"),
     ("Unidad Editorial", WIKI + "Unidad_Editorial"),
     ("The New York Times", WIKI + "The_New_York_Times"),
     ("HBO Max", WIKI + "HBO_Max"),
@@ -230,6 +226,10 @@ ENLACES = [
 # Perfiles de Wikipedia de personas con ficha o tarjeta propia en la web.
 # En el texto se enlazan a su ficha interna; Wikipedia solo aparece como «Ver su perfil en Wikipedia».
 WIKI_PERSONAS = {
+    "Florentino Pérez": WIKI + "Florentino_P%C3%A9rez",
+    "César Alierta": WIKI + "C%C3%A9sar_Alierta",
+    "Casimiro García-Abadillo": WIKI + "Casimiro_Garc%C3%ADa-Abadillo",
+    "Pedro J. Ramírez": WIKI + "Pedro_J._Ram%C3%ADrez",
     "David Jiménez": WIKI + "David_Jim%C3%A9nez_Garc%C3%ADa",
     "Dani de la Orden": WIKI + "Dani_de_la_Orden",
     "David Verdaguer": WIKI + "David_Verdaguer",
@@ -246,7 +246,10 @@ WIKI_PERSONAS = {
 def enlaces_internos():
     """Personas que se enlazan dentro del sitio (más tiempo de permanencia): ficha propia o tarjeta del reparto."""
     d = {"David Jiménez": "personajes/david-jimenez/", "Antonio Fernández-Galiano": "personajes/cardenal/",
-         "Dani de la Orden": "pelicula/#dani-de-la-orden"}
+         "Dani de la Orden": "pelicula/#dani-de-la-orden",
+         # Figuras públicas citadas con su nombre en el libro: su fila en «Quién es quién»
+         "Pedro J. Ramírez": "personajes/#persona-pedro-j-ramirez", "Casimiro García-Abadillo": "personajes/#persona-garcia-abadillo",
+         "César Alierta": "personajes/#persona-alierta", "Florentino Pérez": "personajes/#persona-florentino-perez"}
     for _, actor, img, _ in REPARTO:
         d.setdefault(actor, f"pelicula/#actor-{img}")
     return d
@@ -632,10 +635,10 @@ PAGINAS["personajes/"] = dict(
 <caption>Figuras públicas citadas por su nombre</caption>
 <thead><tr><th>Persona</th><th>Papel en el libro</th><th>En la película</th><th>Certeza</th></tr></thead>
 <tbody>
-<tr><td>Pedro J. Ramírez</td><td>Fundador y director histórico de <i>El Mundo</i>; su salida precede a los hechos</td><td>Por confirmar</td><td><span class="sello s-real">Nombre real</span></td></tr>
-<tr><td>Casimiro García-Abadillo</td><td>Director anterior, al que Jiménez sustituye</td><td>Por confirmar</td><td><span class="sello s-real">Nombre real</span></td></tr>
-<tr><td>César Alierta</td><td>Empresario; según el autor, parte del sistema de “Los Acuerdos”</td><td>Por confirmar</td><td><span class="sello s-real">Nombre real</span></td></tr>
-<tr><td>Florentino Pérez</td><td>Empresario; según el autor, parte del sistema de “Los Acuerdos”</td><td>Por confirmar</td><td><span class="sello s-real">Nombre real</span></td></tr>
+<tr id="persona-pedro-j-ramirez"><td>Pedro J. Ramírez<br>{wiki_link("Pedro J. Ramírez", "Wikipedia")}</td><td>Fundador y director histórico de <i>El Mundo</i>; su salida precede a los hechos</td><td>Por confirmar</td><td><span class="sello s-real">Nombre real</span></td></tr>
+<tr id="persona-garcia-abadillo"><td>Casimiro García-Abadillo<br>{wiki_link("Casimiro García-Abadillo", "Wikipedia")}</td><td>Director anterior, al que Jiménez sustituye</td><td>Por confirmar</td><td><span class="sello s-real">Nombre real</span></td></tr>
+<tr id="persona-alierta"><td>César Alierta<br>{wiki_link("César Alierta", "Wikipedia")}</td><td>Empresario; según el autor, parte del sistema de “Los Acuerdos”</td><td>Por confirmar</td><td><span class="sello s-real">Nombre real</span></td></tr>
+<tr id="persona-florentino-perez"><td>Florentino Pérez<br>{wiki_link("Florentino Pérez", "Wikipedia")}</td><td>Empresario; según el autor, parte del sistema de “Los Acuerdos”</td><td>Por confirmar</td><td><span class="sello s-real">Nombre real</span></td></tr>
 </tbody></table></div>
 
 <h2 id="pendientes">Apodos del libro pendientes de confirmar</h2>
