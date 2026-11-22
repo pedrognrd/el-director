@@ -1091,7 +1091,7 @@ def main():
     # 404 con rutas absolutas (GitHub Pages la sirve en cualquier profundidad)
     pagina404 = plantilla("", "Página no encontrada · El Director", "Página no encontrada.", NO_ENCONTRADA.format(repo=REPO))
     pagina404 = pagina404.replace('href="assets/', f'href="{RAIZ}assets/').replace('src="assets/', f'src="{RAIZ}assets/').replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex">')
-    for u, _ in MENU + [("metodologia-y-fuentes/", ""), ("personajes/", ""), ("libro/", ""), ("pelicula/", ""), ("historia-real/", ""), ("personajes/david-jimenez/", ""), ("preguntas-frecuentes/", ""), ("encuesta/", ""), ("metodologia-y-fuentes/#rectificaciones", "")]:
+    for u, _ in MENU + [("metodologia-y-fuentes/", ""), ("personajes/", ""), ("libro/", ""), ("pelicula/", ""), ("historia-real/", ""), ("personajes/david-jimenez/", ""), ("preguntas-frecuentes/", ""), ("encuesta/", ""), ("metodologia-y-fuentes/#rectificaciones", ""), ("metodologia-y-fuentes/#cookies", "")]:
         pagina404 = pagina404.replace(f'href="{u}"', f'href="{RAIZ}{u}"')
     pagina404 = pagina404.replace('<a class="marca" href="">', f'<a class="marca" href="{RAIZ}">')
     open(os.path.join(docs, "404.html"), "w", encoding="utf-8").write(pagina404)
