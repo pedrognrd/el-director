@@ -632,3 +632,8 @@ p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{
 .fuentes:not(.horizontal) ul{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);grid-auto-columns:minmax(0,1fr);gap:4px 32px;list-style:none;padding-left:0}
 .fuentes:not(.horizontal) li{margin:0}
 @media (max-width:760px){.fuentes:not(.horizontal) ul{grid-auto-flow:row;grid-template-rows:none;grid-auto-columns:auto}}
+/* Enlaces a Wikipedia (salida del sitio) */
+a.wiki{font-size:.8rem;color:var(--gris);text-decoration:underline;text-decoration-color:var(--petroleo-3)}
+a.wiki::after{content:" ↗";font-size:.85em}
+a.wiki:hover{color:var(--oro)}
+.actor-tarjeta .wiki{margin-top:4px}

@@ -213,20 +213,9 @@ PELI_LD = {
 # Wikipedia con ese nombre es de otra persona.
 WIKI = "https://es.wikipedia.org/wiki/"
 ENLACES = [
-    ("David Jiménez", WIKI + "David_Jim%C3%A9nez_Garc%C3%ADa"),
     ("El Mundo", WIKI + "El_Mundo_(Espa%C3%B1a)"),
     ("Libros del K.O.", LIBROSDELKO),
     ("Beta Fiction Spain", "https://betafiction.es/"),
-    ("Dani de la Orden", WIKI + "Dani_de_la_Orden"),
-    ("David Verdaguer", WIKI + "David_Verdaguer"),
-    ("Alberto San Juan", WIKI + "Alberto_San_Juan"),
-    ("Fernando Colomo", WIKI + "Fernando_Colomo"),
-    ("Carmen Machi", WIKI + "Carmen_Machi"),
-    ("Emma Vilarasau", WIKI + "Emma_Vilarasau"),
-    ("Guillermo Toledo", WIKI + "Willy_Toledo"),
-    ("Fernando Cayo", WIKI + "Fernando_Cayo"),
-    ("Nacho Fresneda", WIKI + "Nacho_Fresneda"),
-    ("Pau Durà", WIKI + "Pau_Dur%C3%A0"),
     ("Pedro J. Ramírez", WIKI + "Pedro_J._Ram%C3%ADrez"),
     ("Casimiro García-Abadillo", WIKI + "Casimiro_Garc%C3%ADa-Abadillo"),
     ("Pedro García Cuartango", WIKI + "Pedro_Garc%C3%ADa_Cuartango"),
@@ -238,11 +227,39 @@ ENLACES = [
     ("RTVE", WIKI + "RTVE"),
     ("3Cat", WIKI + "3Cat"),
 ]
+# Perfiles de Wikipedia de personas con ficha o tarjeta propia en la web.
+# En el texto se enlazan a su ficha interna; Wikipedia solo aparece como «Ver su perfil en Wikipedia».
+WIKI_PERSONAS = {
+    "David Jiménez": WIKI + "David_Jim%C3%A9nez_Garc%C3%ADa",
+    "Dani de la Orden": WIKI + "Dani_de_la_Orden",
+    "David Verdaguer": WIKI + "David_Verdaguer",
+    "Alberto San Juan": WIKI + "Alberto_San_Juan",
+    "Fernando Colomo": WIKI + "Fernando_Colomo",
+    "Carmen Machi": WIKI + "Carmen_Machi",
+    "Emma Vilarasau": WIKI + "Emma_Vilarasau",
+    "Guillermo Toledo": WIKI + "Willy_Toledo",
+    "Fernando Cayo": WIKI + "Fernando_Cayo",
+    "Nacho Fresneda": WIKI + "Nacho_Fresneda",
+    "Pau Durà": WIKI + "Pau_Dur%C3%A0",
+}
+
+def enlaces_internos():
+    """Personas que se enlazan dentro del sitio (más tiempo de permanencia): ficha propia o tarjeta del reparto."""
+    d = {"David Jiménez": "personajes/david-jimenez/", "Antonio Fernández-Galiano": "personajes/cardenal/",
+         "Dani de la Orden": "pelicula/#dani-de-la-orden"}
+    for _, actor, img, _ in REPARTO:
+        d.setdefault(actor, f"pelicula/#actor-{img}")
+    return d
+
+def wiki_link(nombre, texto="Ver su perfil en Wikipedia"):
+    u = WIKI_PERSONAS.get(nombre)
+    return f'<a class="wiki" href="{u}" rel="noopener">{texto}</a>' if u else ""
+
 # Nombres que se enlazan en todas sus menciones, no solo en la primera de cada página
 ENLAZAR_SIEMPRE = {"Libros del K.O."}
 _NO_ENLAZAR = {"small", "a", "h1", "h2", "h3", "button", "script", "figcaption", "dt", "time", "caption", "th", "nav", "title", "summary"}
 
-def enlazar(html_txt):
+def enlazar(html_txt, r="", ruta=""):
     import re
     partes = re.split(r"(<[^>]+>)", html_txt)
     pila = []
@@ -261,7 +278,7 @@ def enlazar(html_txt):
         salida = ""
         while True:
             mejor = None
-            for nombre, url in ENLACES:
+            for nombre, url in ENLACES + INTERNOS:
                 if nombre in hechos:
                     continue
                 mm = re.search(r"(?<![\\wÁÉÍÓÚáéíóúñÑ])" + re.escape(nombre) + r"(?![\\wÁÉÍÓÚáéíóúñÑ])", trozo)
@@ -270,7 +287,12 @@ def enlazar(html_txt):
             if not mejor:
                 break
             mm, nombre, url = mejor
-            salida += trozo[:mm.start()] + f'<a class="ref" href="{url}" rel="noopener">{nombre}</a>'
+            if url.startswith(("http://", "https://")):
+                salida += trozo[:mm.start()] + f'<a class="ref" href="{url}" rel="noopener">{nombre}</a>'
+            elif url.split("#")[0] == ruta:
+                salida += trozo[:mm.start()] + nombre   # no se enlaza a la misma página
+            else:
+                salida += trozo[:mm.start()] + f'<a class="ref interno" href="{r}{url}">{nombre}</a>'
             trozo = trozo[mm.end():]
             if nombre not in ENLAZAR_SIEMPRE:
                 hechos.add(nombre)
@@ -310,7 +332,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
         {"@type": "WebPage", "@id": canonica, "url": canonica, "name": titulo, "description": descripcion,
          "isPartOf": {"@id": SITE + "#web"}, "dateModified": ACTUALIZADO, "inLanguage": "es"},
     ] + (ld or [])}
-    cuerpo = enlazar(cuerpo.replace("{r}", r))
+    cuerpo = enlazar(cuerpo.replace("{r}", r), r, ruta)
     return externos_nueva_pestana(f"""<!doctype html>
 <html lang="es"{f' data-ga="{GA_ID}"' if GA_ID else ""}>
 <head>
@@ -440,6 +462,7 @@ REPARTO = [
     ("Ministro", "Fernando Cayo", "ministro", True),
 ]
 INSPIRADO = {"David": ("personajes/david-jimenez/", "David Jiménez"), "Cardenal": ("personajes/cardenal/", "Antonio Fernández-Galiano")}
+INTERNOS = list(enlaces_internos().items())
 
 def tarjetas_reparto():
     t = []
@@ -447,8 +470,9 @@ def tarjetas_reparto():
         extra = '<span class="especial">Colaboración especial</span>' if esp else ""
         insp = INSPIRADO.get(pers)
         insp_txt = f'<a class="inspira" href="{{r}}{insp[0]}">Inspirado en {insp[1]}</a>' if insp else '<span class="inspira pend">Persona real: pendiente</span>'
-        t.append(f'<li class="actor-tarjeta"><img src="{{r}}assets/img/reparto/{img}.jpg" alt="{actor} como {pers}" width="360" height="360" loading="lazy" decoding="async">'
-                 f'{extra}<span class="pers">{pers}</span><strong>{actor}</strong>{insp_txt}</li>')
+        w = wiki_link(actor, "Wikipedia")
+        t.append(f'<li class="actor-tarjeta" id="actor-{img}"><img src="{{r}}assets/img/reparto/{img}.jpg" alt="{actor} como {pers}" width="360" height="360" loading="lazy" decoding="async">'
+                 f'{extra}<span class="pers">{pers}</span><strong>{actor}</strong>{insp_txt}{w}</li>')
     return '<ul class="reparto-grid">' + "".join(t) + "</ul>"
 
 def filas_reparto():
@@ -705,6 +729,7 @@ PAGINAS["personajes/david-jimenez/"] = dict(
   <dt>En la película</dt><dd>David Jiménez</dd>
   <dt>Actor</dt><dd>David Verdaguer</dd>
   <dt>Director de El Mundo</dt><dd>30 de abril de 2015 – 25 de mayo de 2016</dd>
+  <dt>Más información</dt><dd>{wiki_link("David Jiménez")}</dd>
 </dl>
 <div class="lectura">
 <h2>Trayectoria</h2>
@@ -808,9 +833,9 @@ PAGINAS["pelicula/"] = dict(
 {tarjetas_reparto()}
 <h2>Fotogramas</h2>
 <div class="fotogramas">{"".join(f'<img src="{{r}}assets/img/fotogramas/fotograma-{n}.jpg" alt="Fotograma de El Director" width="1100" height="618" loading="lazy" decoding="async">' for n in range(1, FOTOGRAMAS + 1))}</div>
-<div class="careo" style="grid-template-columns:minmax(0,180px) minmax(0,1fr);max-width:640px">
+<div class="careo" id="dani-de-la-orden" style="grid-template-columns:minmax(0,180px) minmax(0,1fr);max-width:640px">
   {foto("dani-de-la-orden", "Dani de la Orden · director")}
-  <p class="nota" style="margin:0">Director de <i>Barcelona, noche de verano</i> y <i>Litus</i>.</p>
+  <p class="nota" style="margin:0">Director de <i>Barcelona, noche de verano</i> y <i>Litus</i>.<br>{wiki_link("Dani de la Orden")}</p>
 </div>
 <div class="lectura">
 <h2>Cómo se ve</h2>
