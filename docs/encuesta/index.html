@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-ga="G-KYJ48RR145">
 <head>
 <meta charset="utf-8">
 <script>document.documentElement.classList.add("js")</script>
@@ -28,11 +28,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Anton&family=Oswald:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="../assets/estilos.css?v=daa5c16e">
+<link rel="stylesheet" href="../assets/estilos.css?v=52688d0f">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://eldirectorquienesquien.com/#web", "name": "El Director. Del libro a la película", "url": "https://eldirectorquienesquien.com/", "inLanguage": "es"}, {"@type": "WebPage", "@id": "https://eldirectorquienesquien.com/encuesta/", "url": "https://eldirectorquienesquien.com/encuesta/", "name": "Encuesta: ¿quién es quién en El Director? · Juega a emparejar", "description": "Elige un personaje de la película El Director y di qué personaje del libro de David Jiménez crees que es. Un juego de opinión, con resultados.", "isPartOf": {"@id": "https://eldirectorquienesquien.com/#web"}, "dateModified": "2026-11-17", "inLanguage": "es"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://eldirectorquienesquien.com/"}, {"@type": "ListItem", "position": 2, "name": "Encuesta", "item": "https://eldirectorquienesquien.com/encuesta/"}]}]}</script>
-<script src="../assets/video.js?v=daa5c16e" defer></script>
-<script src="../assets/slider.js?v=daa5c16e" defer></script>
-<script src="../assets/encuesta.js?v=daa5c16e" defer></script>
+<script src="../assets/video.js?v=52688d0f" defer></script>
+<script src="../assets/slider.js?v=52688d0f" defer></script>
+<script src="../assets/encuesta.js?v=52688d0f" defer></script>
+<script src="../assets/cookies.js?v=52688d0f" defer></script>
 </head>
 <body class="con-hero">
 <a class="salto" href="#contenido">Saltar al contenido</a>
@@ -54,7 +55,7 @@
 <div class="contenedor">
 <div class="lectura">
 </div>
-<div class="aviso enc-aviso"><p><strong>Cómo funciona.</strong> Puedes votar una vez por cada personaje de la película. Solo guardamos la pareja que eliges y la fecha: ni tu nombre, ni tu correo, ni cookies. El servicio que guarda los votos (Supabase) registra técnicamente la IP de la conexión, como cualquier servidor web.</p></div>
+<div class="aviso enc-aviso"><p><strong>Cómo funciona.</strong> Puedes votar una vez por cada personaje de la película. Solo guardamos la pareja que eliges y la fecha: ni tu nombre ni tu correo. El servicio que guarda los votos (Supabase) registra técnicamente la IP de la conexión, como cualquier servidor web.</p></div>
 <section id="encuesta" class="encuesta" data-base="../" data-supabase-url="https://chfqajnvbydhopqglsfj.supabase.co" data-supabase-key="sb_publishable__lsAxOw4mUCSPmH-8cjugg_9JSWLt6K" aria-label="Juego de emparejar personajes">
   <div class="enc-paso"><noscript><p>La encuesta necesita JavaScript.</p></noscript></div>
   <p class="enc-vivo" aria-live="polite"></p>
@@ -83,7 +84,7 @@
       </section>
       <section>
         <h2>No monetizada</h2>
-        <p>Sin publicidad ni cookies propias. Los vídeos solo se cargan si pulsas reproducir. Imágenes: <a href="../metodologia-y-fuentes/#creditos">créditos</a>.</p>
+        <p>Sin publicidad. Google Analytics solo se activa si lo aceptas, y los vídeos solo se cargan si pulsas reproducir. Imágenes: <a href="../metodologia-y-fuentes/#creditos">créditos</a>.</p>
       </section>
     </div>
     <hr>
@@ -92,9 +93,14 @@
         <li><a href="../personajes/david-jimenez/">David Jiménez</a></li>
         <li><a href="../metodologia-y-fuentes/">Metodología y aviso legal</a></li>
         <li><a href="../metodologia-y-fuentes/#rectificaciones">Rectificaciones</a></li>
+        <li><a href="#" data-abrir-cookies>Preferencias de cookies</a></li>
       </ul>
     </nav>
   </div>
 </footer>
+<div id="aviso-cookies" class="aviso-cookies" role="dialog" aria-live="polite" aria-label="Aviso de cookies" hidden>
+  <p><strong>¿Nos dejas medir las visitas?</strong> Usamos Google Analytics para saber cuánta gente visita la web y qué páginas lee. Solo se activa si aceptas. <a href="../metodologia-y-fuentes/#cookies">Más información</a>.</p>
+  <div class="aviso-cookies-botones"><button type="button" class="btn" data-cookies="si">Aceptar</button><button type="button" class="btn sec" data-cookies="no">Rechazar</button></div>
+</div>
 </body>
 </html>

@@ -610,3 +610,9 @@ p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{
 .pie-columnas p{margin:0;font-size:.95rem;line-height:1.5;color:var(--gris)}
 .pie-columnas a{color:var(--papel)}
 @media (max-width:760px){.pie-columnas{grid-template-columns:1fr;gap:20px}}
+/* Aviso de cookies */
+.aviso-cookies{position:fixed;z-index:50;left:16px;right:16px;bottom:16px;max-width:720px;margin:0 auto;background:var(--noche);border:1px solid var(--oro);box-shadow:0 12px 32px rgba(0,0,0,.5);padding:16px 18px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+.aviso-cookies[hidden]{display:none}
+.aviso-cookies p{margin:0;flex:1 1 360px;font-size:.92rem;line-height:1.45}
+.aviso-cookies-botones{display:flex;gap:10px}
+.aviso-cookies .btn{font-size:.85rem;padding:9px 16px}

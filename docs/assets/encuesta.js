@@ -139,6 +139,7 @@
       enviar(idp, idl).then(function (ok) {
         if (!ok) { b.disabled = false; vivo.textContent = "No se ha podido guardar el voto. Inténtalo de nuevo."; alert("No se ha podido guardar el voto. Inténtalo de nuevo."); return; }
         almacen.votar(idp, idl, true);
+        if (window.gtag) window.gtag("event", "voto_encuesta", { personaje_pelicula: idp, personaje_libro: idl });
         return cargarRemotos().then(function () { paso3(idp, idl); });
       });
     }

@@ -10,6 +10,8 @@ USUARIO = sys.argv[1] if len(sys.argv) > 1 else "pedrognrd"
 REPO = sys.argv[2] if len(sys.argv) > 2 else "el-director"
 # Dominio propio (GitHub Pages lo sirve gracias al archivo CNAME de docs/)
 DOMINIO = "eldirectorquienesquien.com"
+# Google Analytics 4 (solo se carga si la persona acepta en el aviso de cookies). Vacío = sin Analytics ni aviso.
+GA_ID = "G-KYJ48RR145"
 SITE = f"https://{DOMINIO}/"
 RAIZ = "/"   # ruta absoluta de la web en el dominio (antes /el-director/)
 ISSUES = f"https://github.com/{USUARIO}/{REPO}/issues/new"
@@ -18,7 +20,7 @@ ACTUALIZADO_TXT = "17 de noviembre de 2026"
 import hashlib
 _BASE = os.path.dirname(os.path.abspath(__file__))
 # Versión de los recursos para evitar que el navegador use CSS/JS antiguos en caché
-VERSION = hashlib.md5(b"".join(open(os.path.join(_BASE, "assets", f), "rb").read() for f in ("estilos.css", "video.js", "slider.js", "encuesta.js"))).hexdigest()[:8]
+VERSION = hashlib.md5(b"".join(open(os.path.join(_BASE, "assets", f), "rb").read() for f in ("estilos.css", "video.js", "slider.js", "encuesta.js", "cookies.js"))).hexdigest()[:8]
 # Supabase (encuesta). La clave es la pública (publishable / anon): va en la web por diseño.
 # Si la clave está vacía, la encuesta funciona en modo prueba (votos solo en el navegador).
 SUPABASE_URL = "https://chfqajnvbydhopqglsfj.supabase.co"
@@ -310,7 +312,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
     ] + (ld or [])}
     cuerpo = enlazar(cuerpo.replace("{r}", r))
     return externos_nueva_pestana(f"""<!doctype html>
-<html lang="es">
+<html lang="es"{f' data-ga="{GA_ID}"' if GA_ID else ""}>
 <head>
 <meta charset="utf-8">
 <script>document.documentElement.classList.add("js")</script>
@@ -344,6 +346,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
 <script src="{r}assets/video.js?v={VERSION}" defer></script>
 <script src="{r}assets/slider.js?v={VERSION}" defer></script>
 <script src="{r}assets/encuesta.js?v={VERSION}" defer></script>
+<script src="{r}assets/cookies.js?v={VERSION}" defer></script>
 </head>
 <body{' class="es-portada"' if portada else (' class="con-hero"' if hero else '')}>
 <a class="salto" href="#contenido">Saltar al contenido</a>
@@ -374,7 +377,7 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
       </section>
       <section>
         <h2>No monetizada</h2>
-        <p>Sin publicidad ni cookies propias. Los vídeos solo se cargan si pulsas reproducir. Imágenes: <a href="{r}metodologia-y-fuentes/#creditos">créditos</a>.</p>
+        <p>Sin publicidad. Google Analytics solo se activa si lo aceptas, y los vídeos solo se cargan si pulsas reproducir. Imágenes: <a href="{r}metodologia-y-fuentes/#creditos">créditos</a>.</p>
       </section>
     </div>
     <hr>
@@ -383,13 +386,20 @@ def plantilla(ruta, titulo, descripcion, cuerpo, ld=None, activo=None, portada=F
         <li><a href="{r}personajes/david-jimenez/">David Jiménez</a></li>
         <li><a href="{r}metodologia-y-fuentes/">Metodología y aviso legal</a></li>
         <li><a href="{r}metodologia-y-fuentes/#rectificaciones">Rectificaciones</a></li>
+        {'<li><a href="#" data-abrir-cookies>Preferencias de cookies</a></li>' if GA_ID else ''}
       </ul>
     </nav>
   </div>
 </footer>
+{AVISO_COOKIES.replace("{r}", r) if GA_ID else ""}
 </body>
 </html>
 """)
+
+AVISO_COOKIES = """<div id="aviso-cookies" class="aviso-cookies" role="dialog" aria-live="polite" aria-label="Aviso de cookies" hidden>
+  <p><strong>¿Nos dejas medir las visitas?</strong> Usamos Google Analytics para saber cuánta gente visita la web y qué páginas lee. Solo se activa si aceptas. <a href="{r}metodologia-y-fuentes/#cookies">Más información</a>.</p>
+  <div class="aviso-cookies-botones"><button type="button" class="btn" data-cookies="si">Aceptar</button><button type="button" class="btn sec" data-cookies="no">Rechazar</button></div>
+</div>"""
 
 def siguiente(*items):
     a = "".join(f'<a href="{{r}}{u}"><span class="antetitulo">{e}</span><strong>{t}</strong></a>' for e, t, u in items)
@@ -885,7 +895,7 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 <h1>Metodología, fuentes y aviso legal</h1>
 <div class="lectura">
 <h2>Qué es esta web</h2>
-<p>“El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez. Es una web no monetizada: no tiene publicidad ni cookies propias y no recibe dinero de nadie. Los enlaces a librerías y cines son solo informativos.</p>
+<p>“El Director. Del libro a la película” es un proyecto independiente con fines informativos. No es la web oficial del libro, de la película ni de su autor, y no está vinculado a Libros del K.O., Beta Fiction Spain ni David Jiménez. Es una web no monetizada: no tiene publicidad y no recibe dinero de nadie. Solo mide las visitas con Google Analytics si lo aceptas (ver «Cookies y medición»). Los enlaces a librerías y cines son solo informativos.</p>
 <h2>Cómo verificamos</h2>
 <ul>
 <li><span class="sello s-conf">Confirmado</span> Lo publican el autor, la productora o la distribuidora, o al menos dos medios independientes.</li>
@@ -918,6 +928,9 @@ PAGINAS["metodologia-y-fuentes/"] = dict(
 </tbody></table></div>
 <div class="lectura">
 <p>Son ilustraciones propias, sin derechos de terceros: el papel triturado, el patio de butacas ilustrado y la silueta “sin foto”.</p>
+<h2 id="cookies">Cookies y medición</h2>
+<p>Para saber cuánta gente visita la web y qué páginas lee usamos Google Analytics 4. <strong>Solo se activa si lo aceptas</strong> en el aviso que aparece al entrar: si lo rechazas o no eliges, no se carga nada de Google. Analytics usa las cookies <span class="mono">_ga</span> y <span class="mono">_ga_*</span>, que duran hasta dos años, y Google recibe tu IP, que no se guarda completa. Los datos solo se usan para estadísticas de la web y no se cruzan con publicidad.</p>
+<p>Tu elección se guarda en tu navegador y puedes cambiarla cuando quieras desde «Preferencias de cookies», en el pie de cada página. La encuesta no usa cookies: solo recuerda en tu navegador qué personajes has votado.</p>
 <h2 id="rectificaciones">Rectificaciones</h2>
 <p>Si eres una de las personas mencionadas o ves un error, <a href="{ISSUES}" rel="noopener">abre una incidencia en el repositorio de la web</a> (necesitas una cuenta de GitHub). Revisaremos cada petición en un máximo de 72 horas y corregiremos lo que proceda, indicando la fecha del cambio.</p>
 <h2>Fuentes consultadas</h2>
@@ -978,7 +991,7 @@ def datos_encuesta():
     return json.dumps({"peli": peli, "libro": libro}, ensure_ascii=False).replace("</", "<\\/")
 
 AVISO_ENCUESTA = ('<div class="aviso enc-aviso"><p><strong>Cómo funciona.</strong> Puedes votar una vez por cada personaje de la película. '
-    'Solo guardamos la pareja que eliges y la fecha: ni tu nombre, ni tu correo, ni cookies. El servicio que guarda los votos (Supabase) registra técnicamente la IP de la conexión, como cualquier servidor web.</p></div>'
+    'Solo guardamos la pareja que eliges y la fecha: ni tu nombre ni tu correo. El servicio que guarda los votos (Supabase) registra técnicamente la IP de la conexión, como cualquier servidor web.</p></div>'
     if SUPABASE_KEY else
     '<div class="aviso enc-aviso"><p><strong>Modo de prueba.</strong> Tus respuestas se guardan solo en este navegador y no se envían a ningún sitio. Los porcentajes solo cuentan los votos hechos aquí.</p>'
     '<p class="enc-herramientas"><button type="button" class="btn sec" id="enc-simular">Simular 50 votos</button> <button type="button" class="btn sec" id="enc-borrar">Borrar votos de prueba</button></p></div>')
@@ -1063,7 +1076,7 @@ def main():
     os.makedirs(os.path.join(docs, "assets"))
     base = os.path.dirname(os.path.abspath(__file__))
     shutil.copy(os.path.join(base, "assets", "estilos.css"), os.path.join(docs, "assets", "estilos.css"))
-    for js in ("video.js", "slider.js", "encuesta.js"):
+    for js in ("video.js", "slider.js", "encuesta.js", "cookies.js"):
         shutil.copy(os.path.join(base, "assets", js), os.path.join(docs, "assets", js))
     shutil.copytree(os.path.join(base, "assets", "img"), os.path.join(docs, "assets", "img"))
     open(os.path.join(docs, "assets", "icono.svg"), "w").write(ICONO)
