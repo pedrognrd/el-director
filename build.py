@@ -479,7 +479,7 @@ HITOS = [
 # ---------- Slider "Vida real, libro y película" ----------
 # (imagen, alt, enlace, tono, [(lado, blanco, amarillo), ...], posición del foco en móvil)
 SLIDES = [
-    ("slide-1.jpg", "Silueta en lugar de Antonio Fernández-Galiano, del que no hay foto con licencia libre", "personajes/cardenal/", "",
+    ("slide-1-v2.jpg", "Silueta en lugar de Antonio Fernández-Galiano, del que no hay foto con licencia libre, en una reunión", "personajes/cardenal/", "",
      [("izq", "Antonio Fernández-Galiano", "En el libro “El Cardenal”")], "50%"),
     ("slide-2.jpg", "Alberto San Juan como Cardenal en El Director", "personajes/cardenal/", "",
      [("der", "Cardenal", "Alberto San Juan")], "50%"),
