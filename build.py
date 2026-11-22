@@ -586,7 +586,12 @@ PAGINAS["personajes/"] = dict(
 <h1>Personajes reales de <span class="el">El</span> Director</h1>
 <div class="lectura">
 <p class="entradilla">David Jiménez escribió su libro con dos reglas: los políticos, empresarios y miembros de la monarquía aparecen con nombre y apellidos; los periodistas y directivos del diario, con apodos. La película cambia algunos nombres más: según el dossier de prensa oficial, salvo David, los personajes llevan nombres de ficción o un cargo, como el Ministro o la Vicepresidenta.</p>
-<p>Cada fila lleva un sello: <span class="sello s-conf">Confirmado</span> cuando lo publican el autor, la productora o varios medios; <span class="sello s-real">Nombre real</span> cuando la persona aparece con su nombre en el libro; <span class="sello s-pend">Pendiente</span> cuando aún no hay datos fiables.</p>
+<p>Cada fila lleva un sello:</p>
+<ul class="leyenda-sellos">
+<li><span class="sello s-conf">Confirmado</span> cuando lo publican el autor, la productora o varios medios.</li>
+<li><span class="sello s-real">Nombre real</span> cuando la persona aparece con su nombre en el libro.</li>
+<li><span class="sello s-pend">Pendiente</span> cuando aún no hay datos fiables.</li>
+</ul>
 </div>
 
 <h2>Confirmados</h2>

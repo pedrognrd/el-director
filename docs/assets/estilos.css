@@ -83,7 +83,7 @@ a.par:hover .nombre{color:var(--oro)}
 @media (max-width:560px){.par{grid-template-columns:1fr;gap:4px}.par .der{text-align:left}.par .igual{font-size:1.2rem}}
 
 /* Sellos de certeza */
-.sello{display:inline-block;font-family:var(--f-teletipo);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border:1px solid currentColor;white-space:nowrap;vertical-align:middle}
+.sello{display:inline-block;font-family:var(--f-teletipo);font-size: 1rem;letter-spacing:.08em;text-transform:uppercase;padding: 8px 16px;border:1px solid currentColor;white-space:nowrap;vertical-align:middle;margin: 5px 0px;}
 .s-conf{color:var(--ok)}
 .s-pend{color:var(--gris);border-style:dashed}
 .s-real{color:var(--oro)}
@@ -92,7 +92,7 @@ a.par:hover .nombre{color:var(--oro)}
 .tabla{overflow-x:auto;margin: 18px 0px;border:1px solid var(--petroleo-3)}
 table{border-collapse:collapse;width:100%;min-width:600px;font-size: 1.2rem;}
 caption{text-align:left;padding:10px 12px;font-family:var(--f-teletipo);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gris)}
-th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--petroleo-3);vertical-align:top}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--petroleo-3);vertical-align: middle;}
 th{font-family:var(--f-teletipo);font-weight:500;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);background:var(--petroleo-2)}
 tbody tr:last-child td{border-bottom:0}
 
@@ -624,3 +624,11 @@ p strong,li strong,dd strong,td strong,.aviso strong,.faldon strong,.pie strong{
 /* Si el aviso de cookies está abierto, el botón se aparta hacia arriba */
 .aviso-cookies:not([hidden]) ~ .volver-arriba,.volver-arriba:has(~ .aviso-cookies:not([hidden])){bottom:120px}
 @media (max-width:760px){.volver-arriba{right:14px;bottom:14px;width:44px;height:44px}.volver-arriba:has(~ .aviso-cookies:not([hidden])){bottom:190px}}
+/* Leyenda de sellos: uno debajo de otro */
+.leyenda-sellos{list-style:none;padding:0;margin:.4rem 0 1.2rem}
+.leyenda-sellos li{display:flex;align-items:center;gap:12px;margin:6px 0}
+.leyenda-sellos .sello{min-width:150px;text-align:center;margin:0}
+/* Fuentes en columnas de tres */
+.fuentes:not(.horizontal) ul{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);grid-auto-columns:minmax(0,1fr);gap:4px 32px;list-style:none;padding-left:0}
+.fuentes:not(.horizontal) li{margin:0}
+@media (max-width:760px){.fuentes:not(.horizontal) ul{grid-auto-flow:row;grid-template-rows:none;grid-auto-columns:auto}}
