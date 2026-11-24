@@ -83,7 +83,7 @@ a.par:hover .nombre{color:var(--oro)}
 @media (max-width:560px){.par{grid-template-columns:1fr;gap:4px}.par .der{text-align:left}.par .igual{font-size:1.2rem}}
 
 /* Sellos de certeza */
-.sello{display:inline-block;font-family:var(--f-teletipo);font-size: 1rem;letter-spacing:.08em;text-transform:uppercase;padding: 8px 16px;border:1px solid currentColor;white-space:nowrap;vertical-align:middle;margin: 5px 0px;}
+.sello{display:inline-block;font-family:var(--f-teletipo);font-size: 1rem;letter-spacing:.08em;text-transform:uppercase;padding: 8px 16px;border:1px solid currentColor;white-space:nowrap;vertical-align:middle;margin: 10px 10px 10px 0px;min-width: 130px;text-align: center;}
 .s-conf{color:var(--ok)}
 .s-pend{color:var(--gris);border-style:dashed}
 .s-real{color:var(--oro)}
